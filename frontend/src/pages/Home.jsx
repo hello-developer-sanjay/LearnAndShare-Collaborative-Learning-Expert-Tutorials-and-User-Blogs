@@ -32,7 +32,7 @@ const HomeContainer = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('/src/assets/homebg.webp') no-repeat center center fixed;
+    background: url('https://sanjaybasket.s3.ap-south-1.amazonaws.com/HogwartsEdX/homebg.webp') no-repeat center center fixed;
     background-size: cover;
     filter: blur(5px);
     z-index: -1;
