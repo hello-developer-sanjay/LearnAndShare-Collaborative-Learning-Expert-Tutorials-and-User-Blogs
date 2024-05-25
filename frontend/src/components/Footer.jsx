@@ -28,7 +28,7 @@ const SocialIconWrapper = ({ icon, label, link }) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 0.8rem;
   margin-top: 2rem;
 `;
 const Next = styled.h1`
@@ -66,12 +66,12 @@ const SocialIcon = styled(motion.a)`
   }
 
   @media (max-width: 768px) {
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 3rem;
+    height: 3rem;
   }
 
   &:not(:last-child) {
-    margin-right: 1rem;
+    margin-right: 0.8rem;
   }
 
   &:before {
@@ -300,7 +300,6 @@ const FooterContact = () => {
     return (
         <animated.div ref={contactRef} className="footer-contact" style={contactSpring}>
             <h2>Contact Us</h2>
-            <p>Email: contact@hogwartsedx.com</p>
             <Next>
   Contact Us 
   <button 
