@@ -1,0 +1,119 @@
+<!-- sitemap.xml -->
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+
+  <!-- Navigation links EduXcel -->
+
+ <url>
+    <loc>https://eduxcel.vercel.app/about-us</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+ <url>
+    <loc>https://eduxcel.vercel.app/sanjay-patidar-founder-eduxcel</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+  
+ <url>
+    <loc>https://eduxcel.vercel.app/profile</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+  <url>
+    <loc>https://eduxcel.vercel.app/signup</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+  <url>
+    <loc>https://eduxcel.vercel.app/signin</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+  
+  <url>
+    <loc>https://eduxcel.vercel.app/forgot-password</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+
+  
+  <url>
+    <loc>https://eduxcel.vercel.app/reset</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+  
+  <url>
+    <loc>https://eduxcel.vercel.app/reset</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+    <!-- colleges info by EduXcel -->
+ <url>
+    <loc>https://eduxcel.vercel.app/institutes</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+   <url>
+    <loc>https://eduxcel.vercel.app/institute/chandigarh-university-articles/discover-chandigarh-universitycu-cuims-about-information</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+
+  <!-- Courses Provided by EduXcel -->
+
+     <url>
+    <loc>https://eduxcel.vercel.app/course/html_courses</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+     <url>
+    <loc>https://eduxcel.vercel.app/course/css_courses</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+  <url>
+    <loc>https://eduxcel.vercel.app/html_courses/introduction-to-html-history-purpose-role</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+<url>
+    <loc>https://eduxcel.vercel.app/html_courses/html-elements-and-tags</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+<url>
+    <loc>https://eduxcel.vercel.app/html_courses/html-document-structure</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+
+    <!-- Careers page  EduXcel-->
+  
+<url>
+    <loc>https://eduxcel.vercel.app/careers</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+  <url>
+    <loc>https://eduxcel.vercel.app/careers/frontend_development_careers</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+  
+  <url>
+    <loc>https://eduxcel.vercel.app/careers/backend_development_careers</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+  <url>
+    <loc>https://eduxcel.vercel.app/careers/backend_development_careers</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+
+  
+     <url>
+    <loc>https://eduxcel.vercel.app/signup</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+
+     <url>
+    <loc>https://eduxcel.vercel.app/profile</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+    
+      <!-- Blogs -->
+
+    <url>
+    <loc>https://eduxcel.vercel.app/blogs/tools/introduction-to-visual-studio-code-vs-code</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+
+
+    <url>
+    <loc>https://eduxcel.vercel.app/blogs/tools/introduction-to-web-scraping-robotic-process-automation</loc>
+  <lastmod>2023-02-21</lastmod>  </url>
+  
+</urlset>

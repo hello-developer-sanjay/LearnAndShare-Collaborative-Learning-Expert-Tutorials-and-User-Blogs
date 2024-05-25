@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Goudy+Bookletter+1911&display=swap');
+
+
+.category {
+    padding: 20px;
+    max-width: 1000px;
+    margin: auto;
+    text-align: center;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.category h2 {
+    font-family: 'Goudy Bookletter 1911', serif;
+    font-size: 3rem;
+    margin-bottom: 2px;
+    color: #b08d57;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.category ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.category-item {
+    margin: 15px;
+    padding: 15px;
+    border: 2px solid #6b4b3a;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    background-color: #6b4b3a;
+    position: relative;
+    overflow: hidden;
+}
+
+.category-item::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle,#b08d57 10%, transparent 10.01%);
+    background-size: 10px 10px;
+    animation: sparkles 5s linear infinite;
+    pointer-events: none;
+}
+
+.category-item:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    background-color:#745c50;
+}
+
+.category-item a {
+    text-decoration: none;
+    color: #fdf3e3;
+    display: flex;
+    align-items: center;
+    font-family: 'Goudy Bookletter 1911', serif;
+    position: relative;
+    z-index: 1;
+}
+
+.category-item a span {
+    margin-left: 10px;
+    font-size: 1.5rem;
+}
+
+.category-item a svg {
+    font-size: 2.5rem;
+    color: #b08d57;
+}
+
+@keyframes sparkles {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(100%, 100%, 0);
+    }
+}
+
+@media (max-width: 600px) {
+    .category-item {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .category-item a span {
+        margin-left: 0;
+        margin-top: 5px;
+    }
+}
