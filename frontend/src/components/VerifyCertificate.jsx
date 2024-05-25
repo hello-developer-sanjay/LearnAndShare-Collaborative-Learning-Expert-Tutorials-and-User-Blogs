@@ -161,7 +161,7 @@ const VerifyCertificate = () => {
   useEffect(() => {
     if (uniqueId) {
       setLoading(true);
-      axios.get(`http://localhost:5000/api/certificates/${uniqueId}`)
+      axios.get(`https://hogwartsedx-backend-api-25may.onrender.com/api/certificates/${uniqueId}`)
         .then(response => {
           setCertificate(response.data);
           setLoading(false);
@@ -182,7 +182,7 @@ const VerifyCertificate = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    axios.get('http://localhost:5000/api/certificates', { params: searchCriteria })
+    axios.get('https://hogwartsedx-backend-api-25may.onrender.com/api/certificates', { params: searchCriteria })
       .then(response => {
         setCertificates(response.data);
         setLoading(false);
@@ -194,7 +194,7 @@ const VerifyCertificate = () => {
   };
 
   const handleDownload = (cert) => {
-    axios.get(`http://localhost:5000/api/certificates/${cert.uniqueId}/download`, {
+    axios.get(`https://hogwartsedx-backend-api-25may.onrender.com/api/certificates/${cert.uniqueId}/download`, {
       responseType: 'blob'
     })
       .then(response => {
