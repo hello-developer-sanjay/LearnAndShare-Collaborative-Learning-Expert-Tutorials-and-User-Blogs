@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=Marck+Script&family=Roboto:wght@400;700&display=swap');
+
+.footer {
+    background: linear-gradient(135deg, #2d2a2e 0%, #2b2a32 100%);
+    color: #ffffff;
+    padding: 60px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-logo h1 {
+    font-family: 'IM Fell English SC', serif;
+    font-size: 36px;
+    margin: 0;
+}
+
+.footer-logo p {
+    font-family: 'Marck Script', cursive;
+    margin: 5px 0 20px;
+    font-size: 18px;
+    color: #fdd835;
+}
+
+.footer-links,
+.footer-contact,
+.footer-about {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
+}
+
+.footer-links h2,
+.footer-contact h2,
+.footer-about h2 {
+    font-family: 'IM Fell English SC', serif;
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #fdd835;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links ul li {
+    margin: 5px 0;
+    position: relative;
+    opacity: 0;
+}
+
+.footer-links ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    position: relative;
+    display: inline-block;
+}
+
+.footer-links ul li a:hover {
+    text-decoration: underline;
+    color: #fdd835;
+}
+
+.footer-contact p,
+.footer-about p {
+    margin: 10px 0;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.footer-about .footer-social a {
+    display: inline-block;
+    margin: 5px 10px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 24px;
+    position: relative;
+}
+
+.footer-about .footer-social a:hover {
+    text-decoration: underline;
+    color: #fdd835;
+}
+
+.footer-bottom {
+    margin-top: 20px;
+}
+
+.footer-bottom p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.footer-logo,
+.footer-links,
+.footer-contact,
+.footer-about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-links,
+    .footer-contact,
+    .footer-about {
+        margin: 20px 0;
+    }
+}
