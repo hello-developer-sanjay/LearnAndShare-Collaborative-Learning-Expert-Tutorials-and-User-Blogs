@@ -22,7 +22,6 @@
                 'Content-Type': 'application/json'
             }
         };
-
         const body = JSON.stringify({ email, password });
 
         try {
