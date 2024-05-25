@@ -17,7 +17,7 @@ export const FETCH_POST_SUCCESS = 'FETCH_POST_SUCCESS';
 
 export const fetchPostBySlug = (slug) => async dispatch => {
     try {
-        const res = await axios.get(`http://localhost:5000/api/posts/post/${slug}`);
+        const res = await axios.get(`https://hogwartsedx-backend-api-25may.onrender.com/api/posts/post/${slug}`);
         dispatch({ type: FETCH_POST_SUCCESS, payload: res.data });
     } catch (error) {
         console.error('Error fetching post:', error);
@@ -26,7 +26,7 @@ export const fetchPostBySlug = (slug) => async dispatch => {
 // Search blog posts
 export const searchPosts = (keyword) => async (dispatch) => {
     try {
-        const res = await axios.get(`http://localhost:5000/api/posts/search?keyword=${keyword}`);
+        const res = await axios.get(`https://hogwartsedx-backend-api-25may.onrender.com/api/posts/search?keyword=${keyword}`);
         dispatch({ type: 'SEARCH_POSTS_SUCCESS', payload: res.data });
     } catch (error) {
         console.error('Error searching posts:', error);
@@ -37,7 +37,7 @@ export const fetchPosts = () => async dispatch => {
         setAuthToken(localStorage.token);
     }
     try {
-        const res = await axios.get('http://localhost:5000/api/posts');
+        const res = await axios.get('https://hogwartsedx-backend-api-25may.onrender.com/api/posts');
         dispatch({ type: FETCH_POSTS_SUCCESS, payload: res.data });
     } catch (error) {
         console.error('Error fetching posts:', error);
@@ -53,7 +53,7 @@ export const fetchUserPosts = () => async dispatch => {
     dispatch({ type: FETCH_USER_POSTS_REQUEST });
 
     try {
-        const res = await axios.get('http://localhost:5000/api/posts/user', {
+        const res = await axios.get('https://hogwartsedx-backend-api-25may.onrender.com/api/posts/user', {
             headers: {
                 'x-auth-token': token
             }
@@ -73,7 +73,7 @@ export const addPost = (title, content, category, subtitles, summary, titleImage
         return;
     }
     try {
-        const res = await axios.post('http://localhost:5000/api/posts', { 
+        const res = await axios.post('https://hogwartsedx-backend-api-25may.onrender.com/api/posts', { 
             title, content, category, subtitles, summary, titleImage, titleVideo, author: user._id 
         }, {
             headers: {
@@ -95,7 +95,7 @@ export const updatePost = (postId, title, content) => async (dispatch, getState)
         console.log(user);
     }
     try {
-        const res = await axios.put(`http://localhost:5000/api/posts/${postId}`, { title, content }, {
+        const res = await axios.put(`https://hogwartsedx-backend-api-25may.onrender.com/api/posts/${postId}`, { title, content }, {
             headers: {
                 'x-auth-token': token
             }
@@ -112,7 +112,7 @@ export const deletePost = (postId) => async dispatch => {
         setAuthToken(localStorage.token);
     }
     try {
-        await axios.delete(`http://localhost:5000/api/posts/${postId}`, {
+        await axios.delete(`https://hogwartsedx-backend-api-25may.onrender.com/api/posts/${postId}`, {
             headers: {
                 'x-auth-token': token
             }
@@ -135,7 +135,7 @@ export const markPostAsCompleted = (postId) => async (dispatch, getState) => {
     }
 
     try {
-        const res = await axios.put(`http://localhost:5000/api/posts/complete/${postId}`, null, {
+        const res = await axios.put(`https://hogwartsedx-backend-api-25may.onrender.com/api/posts/complete/${postId}`, null, {
             headers: {
                 'x-auth-token': token
             }
@@ -152,7 +152,7 @@ export const fetchCompletedPosts = () => async (dispatch, getState) => {
     if (!token) return;
 
     try {
-        const res = await axios.get('http://localhost:5000/api/posts/completed', {
+        const res = await axios.get('https://hogwartsedx-backend-api-25may.onrender.com/api/posts/completed', {
             headers: {
                 'x-auth-token': token
             }
