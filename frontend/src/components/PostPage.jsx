@@ -197,7 +197,7 @@ const PostPage = () => {
                 {post.titleImage && (
                     <Zoom>
                         <img
-                            src={`http://localhost:5000${post.titleImage}`}
+                            src={`https://hogwartsedx-backend-api-25may.onrender.com${post.titleImage}`}
                             alt={post.title}
                             style={{ width: '100%', maxWidth: '600px', margin: '0 auto', display: 'block' }}
                         />
@@ -205,7 +205,7 @@ const PostPage = () => {
                 )}
                 {post.titleVideo && (
                     <video controls style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}>
-                        <source src={`http://localhost:5000${post.titleVideo}`} type="video/mp4" />
+                        <source src={`https://hogwartsedx-backend-api-25may.onrender.com${post.titleVideo}`} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                 )}
@@ -220,7 +220,7 @@ const PostPage = () => {
                         {subtitle.image && (
                             <Zoom>
                                 <img
-                                    src={`http://localhost:5000${subtitle.image}`}
+                                    src={`https://hogwartsedx-backend-api-25may.onrender.com${subtitle.image}`}
                                     alt={subtitle.title}
                                     style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}
                                 />
@@ -228,7 +228,7 @@ const PostPage = () => {
                         )}
                         {subtitle.video && (
                             <video controls style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}>
-                                <source src={`http://localhost:5000${subtitle.video}`} type="video/mp4" />
+                                <source src={`https://hogwartsedx-backend-api-25may.onrender.com${subtitle.video}`} type="video/mp4" />
                                 Your browser does not support the video tag.
                             </video>
                         )}
@@ -239,7 +239,7 @@ const PostPage = () => {
                                     {point.image && (
                                         <Zoom>
                                             <img
-                                                src={`http://localhost:5000${point.image}`}
+                                                src={`https://hogwartsedx-backend-api-25may.onrender.com${point.image}`}
                                                 alt={point.text}
                                                 style={{ width: '100%', maxWidth: '200px', margin: '10px 0' }}
                                             />
@@ -247,7 +247,7 @@ const PostPage = () => {
                                     )}
                                     {point.video && (
                                         <video controls style={{ width: '100%', maxWidth: '400px', margin: '10px 0' }}>
-                                            <source src={`http://localhost:5000${point.video}`} type="video/mp4" />
+                                            <source src={`https://hogwartsedx-backend-api-25may.onrender.com${point.video}`} type="video/mp4" />
                                             Your browser does not support the video tag.
                                         </video>
                                     )}
