@@ -1,10 +1,10 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React , {useEffect}from 'react';
+
+import { BrowserRouter as Router, Routes, Route,useLocation } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
-import Layout from './components/Layout'; // Import the Layout component
+import Layout from './components/Layout'; 
 import Home from './pages/Home';
-import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import AdminDashboard from './components/AdminDashboard';
@@ -16,12 +16,24 @@ import ResetPassword from './pages/ResetPassword';
 import VerifyCertificate from './components/VerifyCertificate';
 import Category from './pages/Category';
 import SignInSignUp from './components/SignInSignUp';
-
+import Footer from './components/Footer';
+const ScrollToTop = () => {
+    const { pathname } = useLocation();
+  
+    useEffect(() => {
+      window.scrollTo(0, 0); // Scroll to the top of the page when the route changes.
+    }, [pathname]);
+  
+    return null; // This component doesn't render anything.
+  };
 const App = () => {
     return (
         <Provider store={store}>
             <Router>
-                <Layout> {/* Wrap your Routes in the Layout component */}
+                <Layout> 
+                    
+                <ScrollToTop />
+
                     <Routes>
                         <Route exact path="/" element={<Home />} />
                         <Route path = "/category" element = {<Category/>}   />                   
@@ -37,6 +49,8 @@ const App = () => {
                         <Route exact path="/verify/:uniqueId" element={<VerifyCertificate />} />
                         <Route exact path="/certificate-verification" element={<VerifyCertificate />} />
                     </Routes>
+                    <Footer/>
+
                 </Layout>
             </Router>
         </Provider>
