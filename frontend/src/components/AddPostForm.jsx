@@ -98,7 +98,7 @@ const AddPostForm = () => {
         formData.append('image', file);
 
         try {
-            const res = await axios.post('http://localhost:5000/upload/image', formData, {
+            const res = await axios.post('https://hogwartsedx-backend-api-25may.onrender.com/upload/image', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setImage(res.data.filePath);
@@ -113,7 +113,7 @@ const AddPostForm = () => {
         formData.append('video', file);
 
         try {
-            const res = await axios.post('http://localhost:5000/upload/video', formData, {
+            const res = await axios.post('https://hogwartsedx-backend-api-25may.onrender.com/upload/video', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setVideo(res.data.filePath);
