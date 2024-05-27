@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { login } from '../actions/authActions';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { RingLoader } from 'react-spinners';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,44 +14,69 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 50vh;
   padding: 2rem;
-  background-color: #f7f7f7;
 `;
 
 const LoginForm = styled.form`
-  background-color: #fff;
+  background: linear-gradient(135deg, #8a2387, #e94057, #f27121);
   padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   max-width: 400px;
   width: 100%;
+  transform: perspective(1000px) rotateY(10deg);
+  transition: transform 0.5s ease;
+  &:hover {
+    transform: perspective(1000px) rotateY(0);
+  }
+`;
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 `;
 
+const Title = styled.h2`
+  font-family: 'Cinzel Decorative', cursive;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 2rem;
+  animation: ${fadeIn} 1s ease-in-out;
+`;
 const Input = styled.input`
   padding: 0.75rem;
   margin-bottom: 1rem;
-  border: 1px solid #ced4da;
-  border-radius: 5px;
+  border: 2px solid #f27121;
+  border-radius: 10px;
   font-size: 1rem;
   width: 100%;
+  background-color: #fff;
+  transition: border-color 0.3s;
   &:focus {
-    border-color: #495057;
+    border-color: #e94057;
     outline: none;
   }
 `;
 
 const Button = styled.button`
   padding: 0.75rem;
-  background-color: #007bff;
+  background-color: #8a2387;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   font-size: 1rem;
   cursor: pointer;
   width: 100%;
+  transition: background-color 0.3s, transform 0.3s;
   &:hover {
-    background-color: #0056b3;
+    background-color: #f27121;
+    transform: scale(1.05);
   }
 `;
 
@@ -60,33 +86,65 @@ const PasswordContainer = styled.div`
 
 const ToggleIcon = styled(FontAwesomeIcon)`
   position: absolute;
-  right: 10px;
-  top: 50%;
+  right: 0px;
+  top: 40%;
   transform: translateY(-50%);
   cursor: pointer;
-`;
-
-const ErrorMessage = styled.div`
-  color: red;
-  margin-bottom: 1rem;
+  color: #f27121;
 `;
 
 const ForgotPasswordLink = styled(Link)`
-  display: block;
-  text-align: center;
-  color: #007bff;
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #fff;
   text-decoration: none;
-  margin-top: 1rem;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    transition: all 0.5s ease;
+    pointer-events: none; /* Ensure the pseudo-elements do not block pointer events */
+  }
+
+  &:before {
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(to right, #007BFF, #0056b3);
+    visibility: hidden;
+    transform: scaleX(0);
+  }
+
+  &:hover:before {
+    visibility: visible;
+    transform: scaleX(1);
+  }
+
+  &:after {
+    top: 0;
+    left: 0;
+    background: linear-gradient(to right, transparent, #0056b3, transparent);
+    visibility: hidden;
+    transform: scaleX(0);
+  }
+
+  &:hover:after {
+    visibility: visible;
+    transform: scaleX(1);
+  }
+
+  &:hover {
+    text-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
 `;
 
-const HomeLink = styled(Link)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: #007bff;
-  margin-top: 1rem;
-`;
+
 
 const HomeIcon = styled(FontAwesomeIcon)`
   margin-right: 0.5rem;
@@ -94,6 +152,7 @@ const HomeIcon = styled(FontAwesomeIcon)`
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -114,23 +173,24 @@ const Login = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true);
-    try {
-      const response = await dispatch(login(email, password));
-      if (response.error) {
-        toast.error('Invalid email or password');
-      } else {
-        toast.success('Login successful');
-      }
-    } catch (err) {
-      console.error(err);
-      toast.error('Failed to login. Please try again later.');
-    }
+    const response = await dispatch(login(email, password));
     setLoading(false);
+    if (response.success) {
+      toast.success('Login successful');
+      if (response.role === 'admin') {
+        navigate('/admin-dashboard');
+      } else {
+        navigate('/dashboard');
+      }
+    } else {
+      toast.error(response.message || 'Invalid email or password');
+    }
   };
 
   return (
     <Container>
       <LoginForm onSubmit={handleSubmit}>
+        <Title>HogwartsEdx</Title>
         <Input
           type="email"
           placeholder="Email"
@@ -163,12 +223,8 @@ const Login = () => {
         <ForgotPasswordLink to="/forgot-password">
           Forgot Password? Click to reset
         </ForgotPasswordLink>
-        <HomeLink to="/">
-          <HomeIcon icon={faHome} />
-          Home
-        </HomeLink>
+      
       </LoginForm>
-      <ToastContainer />
     </Container>
   );
 };
