@@ -9,7 +9,7 @@
 
         }
         try {
-            const res = await axios.get('http://localhost:5000/api/auth/user');
+            const res = await axios.get('https://hogwartsedx-backend-api-25may.onrender.com/api/auth/user');
             localStorage.setItem('user', JSON.stringify(res.data.user));
             dispatch({ type: FETCH_USER_SUCCESS, payload: { user: res.data.user, token: localStorage.token } });
             dispatch({ type: AUTHENTICATE_USER, payload: { user: res.data.user, token: localStorage.token } });
@@ -32,7 +32,7 @@
         const body = JSON.stringify({ email, password });
 
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/login', body, config);
+            const res = await axios.post('https://hogwartsedx-backend-api-25may.onrender.com/api/auth/login', body, config);
             dispatch({ type: LOGIN_SUCCESS, payload: { user: res.data.user, token: res.data.token } });
             setAuthToken(res.data.token);
             localStorage.setItem('token', res.data.token);
@@ -53,7 +53,7 @@
         };
 
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/register', formData, config);
+            const res = await axios.post('https://hogwartsedx-backend-api-25may.onrender.com/api/auth/register', formData, config);
             dispatch({ type: LOGIN_SUCCESS, payload: { user: res.data.user, token: res.data.token } });
             setAuthToken(res.data.token);
             localStorage.setItem('token', res.data.token);
