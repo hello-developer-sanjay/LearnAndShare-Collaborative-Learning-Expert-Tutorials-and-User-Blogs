@@ -5,7 +5,7 @@ import { FaHome, FaBook, FaCertificate, FaUserPlus, FaFileUpload, FaCog } from '
 import CategoryCarousel from '../components/CategoryCarousel';
 import SettingComponent from './SettingComponent.jsx';
 import { useSelector } from 'react-redux';
-import Notifications from '../components/Notifications'; // Import the Notification component
+import Notification from '../components/Notification'; // Import the Notification component
 
 // Sidebar styles
 const Sidebar = styled.div`
@@ -131,7 +131,7 @@ const Layout = ({ children }) => {
             </Icon>
           </SidebarItem>
         </NavContainer>
-        <Notifications /> {/* Include the Notification component here */}
+        <Notification /> {/* Include the Notification component here */}
 
       </Sidebar>
       <MainContent
