@@ -1,5 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSpring, animated } from 'react-spring';
+import { useDispatch, useSelector } from 'react-redux';
+import { followCategory, unfollowCategory } from '../actions/notificationActions';
+import '../styles/Category.css';
 import {
     FaHtml5, FaCss3Alt, FaJs, FaNodeJs, FaReact, FaAngular, FaVuejs,
     FaPython, FaJava, FaPhp, FaSwift, FaGithub
@@ -8,11 +12,7 @@ import {
     SiTypescript, SiGatsby, SiSvelte, SiGraphql, SiRuby, SiCsharp,
     SiCplusplus, SiKotlin, SiDart, SiFlutter, SiReactos
 } from 'react-icons/si';
-import { useSpring, animated } from 'react-spring';
-import { useDispatch, useSelector } from 'react-redux';
-import { followCategory, unfollowCategory } from '../actions/notificationActions';
-import '../styles/Category.css';
-
+import Modal from '../components/Modal'; // Import the modal component
 const categories = [
     { name: 'VS Code', icon: <FaGithub /> },
     { name: 'HTML', icon: <FaHtml5 /> },
@@ -42,49 +42,70 @@ const categories = [
 ];
 
 const Category = () => {
-    const dispatch = useDispatch();
-    const followedCategories = useSelector(state => state.notifications.followedCategories);
-    const token = useSelector(state => state.auth.token);
+  const dispatch = useDispatch();
+  const followedCategories = useSelector(state => state.notifications.followedCategories);
+  const token = useSelector(state => state.auth.token);
 
-    const handleFollow = async (category) => {
-        dispatch(followCategory(category, token));
-    };
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [categoryToUnfollow, setCategoryToUnfollow] = useState('');
 
-    const handleUnfollow = async (category) => {
-        dispatch(unfollowCategory(category, token));
-    };
+  const handleFollow = (category) => {
+    dispatch(followCategory(category, token));
+  };
 
-    return (
-        <div className="category">
-            <h2>Categories</h2>
-            <ul>
-                {categories.map((category, index) => {
-                    const animationProps = useSpring({
-                        from: { opacity: 0, transform: 'translate3d(0,-40px,0)' },
-                        to: { opacity: 1, transform: 'translate3d(0,0px,0)' },
-                        config: { duration: 1000 },
-                        delay: index * 200,
-                    });
+  const handleUnfollow = (category) => {
+    setCategoryToUnfollow(category);
+    setShowConfirmation(true);
+  };
 
-                    const isFollowed = followedCategories.includes(category.name);
+  const confirmUnfollow = () => {
+    dispatch(unfollowCategory(categoryToUnfollow, token));
+    setShowConfirmation(false);
+  };
 
-                    return (
-                        <animated.li key={category.name} className="category-item" style={animationProps}>
-                            <Link to={`/category/${category.name}`}>
-                                {category.icon}
-                                <span>{category.name}</span>
-                            </Link>
-                            {isFollowed ? (
-                                <button onClick={() => handleUnfollow(category.name)}>Unfollow</button>
-                            ) : (
-                                <button onClick={() => handleFollow(category.name)}>Follow</button>
-                            )}
-                        </animated.li>
-                    );
-                })}
-            </ul>
-        </div>
-    );
+  const cancelUnfollow = () => {
+    setShowConfirmation(false);
+  };
+
+  return (
+    <div className="category">
+      <h2>Categories</h2>
+      <ul>
+        {categories.map((category, index) => {
+          const animationProps = useSpring({
+            from: { opacity: 0, transform: 'translate3d(0,-40px,0)' },
+            to: { opacity: 1, transform: 'translate3d(0,0px,0)' },
+            config: { duration: 1000 },
+            delay: index * 200,
+          });
+
+          const isFollowed = followedCategories.includes(category.name);
+
+          return (
+            <animated.li key={category.name} className="category-item" style={animationProps}>
+              <Link to={`/category/${category.name}`}>
+                {category.icon}
+                <span>{category.name}</span>
+              </Link>
+              {isFollowed ? (
+                <button onClick={() => handleUnfollow(category.name)}>Unfollow</button>
+              ) : (
+                <button onClick={() => handleFollow(category.name)}>Follow</button>
+              )}
+            </animated.li>
+          );
+        })}
+      </ul>
+      {/* Confirmation modal */}
+      {showConfirmation && (
+        <Modal
+          message={`Are you sure you want to unfollow ${categoryToUnfollow}?`}
+          onConfirm={confirmUnfollow}
+          onCancel={cancelUnfollow}
+        />
+      )}
+    </div>
+  );
 };
 
 export default Category;
