@@ -22,9 +22,9 @@ const Content = styled.div`
     padding: 10px;
     overflow-y: auto;
     background-color: #f4f4f9;
-    color: #333;
-    font-family: 'Arial, sans-serif';
-`;
+    color: ${({ color }) => color}; /* Use color from Redux state */
+    font-family: ${({ fontFamily }) => fontFamily}; /* Use font family from Redux state */
+    `;
 
 const SidebarContainer = styled.div`
     width: 250px;
