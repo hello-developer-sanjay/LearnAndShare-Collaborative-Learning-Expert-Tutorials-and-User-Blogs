@@ -21,7 +21,7 @@ export const fetchNotifications = () => async dispatch => {
     console.log('Fetching notifications...');
     console.log('token is : ', token);
     try {
-        const response = await axios.get('http://localhost:5000/api/categories/notifications', {
+        const response = await axios.get('https://hogwartsedx-backend-api-25may.onrender.com/api/categories/notifications', {
             headers: {
                 'x-auth-token': token
             }
@@ -37,7 +37,7 @@ export const fetchNotifications = () => async dispatch => {
 export const addNotification = (notification) => async dispatch => {
     console.log('Adding notification:', notification);
     try {
-        const response = await axios.post('http://localhost:5000/api/categories/notifications', notification);
+        const response = await axios.post('https://hogwartsedx-backend-api-25may.onrender.com/api/categories/notifications', notification);
         console.log('Notification added successfully:', response.data);
         dispatch({ type: ADD_NOTIFICATION_SUCCESS, payload: response.data });
     } catch (error) {
@@ -59,7 +59,7 @@ export const markNotificationAsRead = (id, token) => async dispatch => {
         
 
         const response = await axios.put(
-            `http://localhost:5000/api/notifications/${id}/read`,
+            `https://hogwartsedx-backend-api-25may.onrender.com/api/notifications/${id}/read`,
             {},  // Ensure the body is correctly set
             {
                 headers: {
@@ -79,7 +79,7 @@ export const followCategory = (category, token, user) => async dispatch => {
     console.log('user trying to follow', token);
     try {
         const response = await axios.post(
-            'http://localhost:5000/api/categories/follow-category',
+            'https://hogwartsedx-backend-api-25may.onrender.com/api/categories/follow-category',
             { category },
             {
                 headers: {
@@ -99,7 +99,7 @@ export const unfollowCategory = (category, token) => async dispatch => {
     console.log(`Unfollowing category: ${category}`);
     try {
         const response = await axios.post(
-            'http://localhost:5000/api/categories/unfollow-category',
+            'https://hogwartsedx-backend-api-25may.onrender.com/api/categories/unfollow-category',
             { category },
             {
                 headers: {
@@ -123,7 +123,7 @@ export const fetchFollowedCategories = () => async (dispatch) => {
 
     console.log('Fetching followed categories...');
     try {
-        const response = await axios.get('http://localhost:5000/api/categories/followed', {
+        const response = await axios.get('https://hogwartsedx-backend-api-25may.onrender.com/api/categories/followed', {
             headers: {
                 'x-auth-token': token,
             },
