@@ -1,8 +1,8 @@
-import { FETCH_USER_SUCCESS, LOGIN_SUCCESS } from '../actions/types';
+import { FETCH_USER_SUCCESS, LOGIN_SUCCESS,AUTHENTICATE_USER  } from '../actions/types';
 
 const initialState = {
     token: localStorage.getItem('token'),
-    isAuthenticated: false,
+    isAuthenticated: localStorage.getItem('token') ? true : false, // Initialize from localStorage
     loading: true,
     user: null
 };
@@ -22,6 +22,11 @@ const authReducer = (state = initialState, action) => {
                 isAuthenticated: true,
                 loading: false,
                 user: payload.user 
+            };
+            case AUTHENTICATE_USER:
+            return {
+                ...state,
+                isAuthenticated: payload
             };
         default:    
             console.log('No action taken:', action); // Add console log for default case
