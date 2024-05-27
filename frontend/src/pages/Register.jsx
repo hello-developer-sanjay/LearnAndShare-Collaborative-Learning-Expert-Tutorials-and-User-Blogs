@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { register } from '../actions/authActions';
 import styled from 'styled-components';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height:100vh;
+  height: 70vh;
 `;
 
 const FormContainer = styled.div`
@@ -18,8 +20,6 @@ const FormContainer = styled.div`
   width: 100%;
   max-width: 400px;
 `;
-
-
 
 const FormGroup = styled.div`
   margin-bottom: 1rem;
@@ -69,6 +69,16 @@ const Button = styled.button`
   }
 `;
 
+const TogglePasswordButton = styled.button`
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+`;
+
 const RegisterForm = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
@@ -79,14 +89,24 @@ const RegisterForm = () => {
   });
 
   const { name, email, password, role } = formData;
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    dispatch(register(formData));
+    const response = await dispatch(register(formData));
+    if (response.success) {
+      toast.success(`Registration successful! Welcome, ${name}!`);
+    } else {
+      toast.error(response.message || 'Registration failed. Please try again.');
+    }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -120,7 +140,7 @@ const RegisterForm = () => {
           <FormGroup>
             <Label htmlFor="password">Password:</Label>
             <Input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               id="password"
               placeholder="Enter your password"
               name="password"
@@ -128,6 +148,9 @@ const RegisterForm = () => {
               onChange={handleChange}
               required
             />
+            <TogglePasswordButton onClick={togglePasswordVisibility}>
+              {showPassword ? 'Hide' : 'Show'}
+            </TogglePasswordButton>
           </FormGroup>
           <FormGroup>
             <Label htmlFor="role">Role:</Label>
