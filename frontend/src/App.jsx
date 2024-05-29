@@ -9,6 +9,8 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import AdminDashboard from './components/AdminDashboard';
 import PostPage from './components/PostPage';
+import PostList from './components/PostList';
+
 import CategoryPage from './components/CategoryPage';
 import AddPostForm from './components/AddPostForm';
 import ForgotPassword from './pages/ForgotPassword'; 
@@ -42,6 +44,8 @@ const App = () => {
                         <Route exact path="/dashboard" element={<Dashboard />} />
                         <Route path="/add-post" element={<AddPostForm/>} />
                         <Route exact path="/admin-dashboard" element={<AdminDashboard />} />
+                                                <Route exact path="/explore" element={<PostList />} />
+
                         <Route path="/post/:slug" element={<PostPage/>} />
                         <Route path="/category/:category" element={<CategoryPage/>} />
                         <Route exact path="/forgot-password" element={<ForgotPassword />} />
