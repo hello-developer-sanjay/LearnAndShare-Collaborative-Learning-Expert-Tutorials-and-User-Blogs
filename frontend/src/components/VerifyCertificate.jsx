@@ -6,6 +6,7 @@ import styled, { keyframes } from 'styled-components';
 import { useInView } from 'react-intersection-observer';
 import { ClipLoader } from 'react-spinners';
 import { Helmet } from 'react-helmet';
+
 // Keyframes for animations
 const fadeInUp = keyframes`
   from {
@@ -158,10 +159,10 @@ const VerifyCertificate = () => {
     date: ''
   });
 
-  useEffect(() => {
+  useEffect(() => { 
     if (uniqueId) {
       setLoading(true);
-      axios.get(`https://hogwartsedx-backend-api-25may.onrender.com/api/certificates/${uniqueId}`)
+      axios.get(`http://localhost:5000/api/certificates/${uniqueId}`)
         .then(response => {
           setCertificate(response.data);
           setLoading(false);
@@ -182,7 +183,7 @@ const VerifyCertificate = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    axios.get('https://hogwartsedx-backend-api-25may.onrender.com/api/certificates', { params: searchCriteria })
+    axios.get('http://localhost:5000/api/certificates', { params: searchCriteria })
       .then(response => {
         setCertificates(response.data);
         setLoading(false);
@@ -194,14 +195,12 @@ const VerifyCertificate = () => {
   };
 
   const handleDownload = (cert) => {
-    axios.get(`https://hogwartsedx-backend-api-25may.onrender.com/api/certificates/${cert.uniqueId}/download`, {
-      responseType: 'blob'
-    })
+    console.log(`Requesting download for certificate with uniqueId: ${cert.uniqueId}`);
+    axios.get(`http://localhost:5000/api/certificates/${cert.uniqueId}/download`)
       .then(response => {
-        const formattedDate = new Date(cert.date).toISOString().split('T')[0];
-        const userName = cert.user.name.replace(/\s+/g, '_');
-        const fileName = `${userName}_${cert.category}_${formattedDate}.pdf`;
-        saveAs(response.data, fileName);
+        console.log('Signed URL received:', response.data.url);
+        const url = response.data.url;
+        window.location.href = url;
       })
       .catch(error => {
         console.error('Error downloading certificate:', error);
@@ -210,6 +209,7 @@ const VerifyCertificate = () => {
 
   return (
     <Container>
+          
     <Helmet>
     
     <title>Verify Your Certificates - HogwartsEdX | Fast and Easy Certificate Verification and Download</title>
@@ -501,15 +501,15 @@ Interactive elements like buttons have advanced styles and hover effects to enha
       )}
       <Subtitle>Search Certificates</Subtitle>
       <Form onSubmit={handleSubmit}>
-      <label htmlFor="userName">User Name:</label>
-<Input type="text" id="userName" name="userName" placeholder="Enter User Name" value={searchCriteria.userName} onChange={handleChange} />
+        <label htmlFor="userName">User Name:</label>
+        <Input type="text" id="userName" name="userName" placeholder="Enter User Name" value={searchCriteria.userName} onChange={handleChange} />
 
-<label htmlFor="uniqueId">Unique ID:</label>
-<Input type="text" id="uniqueId" name="uniqueId" placeholder="Enter Unique ID" value={searchCriteria.uniqueId} onChange={handleChange} />
+        <label htmlFor="uniqueId">Unique ID:</label>
+        <Input type="text" id="uniqueId" name="uniqueId" placeholder="Enter Unique ID" value={searchCriteria.uniqueId} onChange={handleChange} />
 
-<label htmlFor="date">Date:</label>
-<Input type="date" id="date" name="date" value={searchCriteria.date} onChange={handleChange} />
-    <Button type="submit">Search Certificates</Button>
+        <label htmlFor="date">Date:</label>
+        <Input type="date" id="date" name="date" value={searchCriteria.date} onChange={handleChange} />
+        <Button type="submit">Search Certificates</Button>
       </Form>
       {loading && (
         <LoadingMessage>
@@ -538,11 +538,10 @@ Interactive elements like buttons have advanced styles and hover effects to enha
   );
 };
 
-// Wrapper component for intersection observer
 const CertificateItemWrapper = ({ children }) => {
   const [ref, inView] = useInView({
     triggerOnce: true,
-    threshold: 0.1
+    threshold: 0.1,
   });
 
   return children({ ref, inView });
