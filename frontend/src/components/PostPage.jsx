@@ -165,11 +165,10 @@ const PostPage = () => {
         const section = document.getElementById(id);
         if (section) {
             section.scrollIntoView({ behavior: 'smooth' });
-            if (isSidebarOpen) setSidebarOpen(false); // Close sidebar after navigation
+            if (isSidebarOpen) setSidebarOpen(false);
         }
     };
     const handleCopyCode = () => {
-        // Show toast message when code is copied
         toast.success('Code copied to clipboard!', {
             position: "top-right",
             autoClose: 2000,
@@ -197,15 +196,15 @@ const PostPage = () => {
                 {post.titleImage && (
                     <Zoom>
                         <img
-                            src={`https://hogwartsedx-backend-api-25may.onrender.com${post.titleImage}`}
+                            src={post.titleImage} 
                             alt={post.title}
                             style={{ width: '100%', maxWidth: '600px', margin: '0 auto', display: 'block' }}
                         />
                     </Zoom>
                 )}
-                {post.titleVideo && (
+ {post.titleVideo && (
                     <video controls style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}>
-                        <source src={`https://hogwartsedx-backend-api-25may.onrender.com${post.titleVideo}`} type="video/mp4" />
+                        <source src={post.titleVideo} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                 )}
@@ -220,7 +219,7 @@ const PostPage = () => {
                         {subtitle.image && (
                             <Zoom>
                                 <img
-                                    src={`https://hogwartsedx-backend-api-25may.onrender.com${subtitle.image}`}
+                                    src={subtitle.image} 
                                     alt={subtitle.title}
                                     style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}
                                 />
@@ -228,8 +227,8 @@ const PostPage = () => {
                         )}
                         {subtitle.video && (
                             <video controls style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}>
-                                <source src={`https://hogwartsedx-backend-api-25may.onrender.com${subtitle.video}`} type="video/mp4" />
-                                Your browser does not support the video tag.
+                                    src={subtitle.video} 
+                                    alt={subtitle.video}                                Your browser does not support the video tag.
                             </video>
                         )}
                         <ul>
@@ -237,17 +236,17 @@ const PostPage = () => {
                                 <li key={pointIndex} style={{ marginBottom: '10px' }}>
                                     {point.text}
                                     {point.image && (
-                                        <Zoom>
-                                            <img
-                                                src={`https://hogwartsedx-backend-api-25may.onrender.com${point.image}`}
-                                                alt={point.text}
-                                                style={{ width: '100%', maxWidth: '200px', margin: '10px 0' }}
-                                            />
-                                        </Zoom>
+                                          <Zoom>
+                                          <img
+                                              src={subtitle.image} 
+                                              alt={subtitle.title}
+                                              style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}
+                                          />
+                                      </Zoom>
                                     )}
                                     {point.video && (
                                         <video controls style={{ width: '100%', maxWidth: '400px', margin: '10px 0' }}>
-                                            <source src={`https://hogwartsedx-backend-api-25may.onrender.com${point.video}`} type="video/mp4" />
+                                            <source src={point.video} />
                                             Your browser does not support the video tag.
                                         </video>
                                     )}
