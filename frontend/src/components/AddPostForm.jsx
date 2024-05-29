@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addPost } from '../actions/postActions';
 import { loadUser } from '../actions/authActions';
 import axios from 'axios';
-import DOMPurify from 'dompurify'; // Import DOMPurify for sanitization
+import DOMPurify from 'dompurify';
 import styled from 'styled-components';
 
 // Styled Components
@@ -52,7 +52,6 @@ const Button = styled.button`
     }
 `;
 
-// Component
 const AddPostForm = () => {
     const dispatch = useDispatch();
     const [title, setTitle] = useState('');
@@ -98,7 +97,7 @@ const AddPostForm = () => {
         formData.append('image', file);
 
         try {
-            const res = await axios.post('https://hogwartsedx-backend-api-25may.onrender.com/upload/image', formData, {
+            const res = await axios.post('https://hogwartsedx-backend-29may.onrender.com/upload/image', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setImage(res.data.filePath);
@@ -113,7 +112,7 @@ const AddPostForm = () => {
         formData.append('video', file);
 
         try {
-            const res = await axios.post('https://hogwartsedx-backend-api-25may.onrender.com/upload/video', formData, {
+            const res = await axios.post('https://hogwartsedx-backend-29may.onrender.com/   upload/video', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setVideo(res.data.filePath);
@@ -143,7 +142,7 @@ const AddPostForm = () => {
                 ...sub,
                 bulletPoints: sub.bulletPoints.map(point => ({
                     ...point,
-                    codeSnippet: DOMPurify.sanitize(point.codeSnippet) // Sanitize code snippet
+                    codeSnippet: DOMPurify.sanitize(point.codeSnippet)
                 }))
             }));
             dispatch(addPost(title, content, category, sanitizedSubtitles, summary, titleImage, video));
