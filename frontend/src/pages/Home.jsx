@@ -1,8 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
-import { motion } from "framer-motion";
-import { styles } from "../styles";
 
 const fadeIn = keyframes`
   from {
@@ -122,7 +120,7 @@ const Home = () => {
   }, []);
 
   const handleGetStartedClick = () => {
-    navigate('/category');
+    navigate('/explore');
   };
 
   return (
