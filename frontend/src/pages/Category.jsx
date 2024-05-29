@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { useSpring, animated } from 'react-spring';
 import { useDispatch, useSelector } from 'react-redux';
 import { followCategory, unfollowCategory } from '../actions/notificationActions';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../styles/Category.css';
 import {
     FaHtml5, FaCss3Alt, FaJs, FaNodeJs, FaReact, FaAngular, FaVuejs,
@@ -13,6 +15,7 @@ import {
     SiCplusplus, SiKotlin, SiDart, SiFlutter, SiReactos
 } from 'react-icons/si';
 import Modal from '../components/Modal'; // Import the modal component
+
 const categories = [
     { name: 'VS Code', icon: <FaGithub /> },
     { name: 'HTML', icon: <FaHtml5 /> },
@@ -50,10 +53,18 @@ const Category = () => {
   const [categoryToUnfollow, setCategoryToUnfollow] = useState('');
 
   const handleFollow = (category) => {
+    if (!token) {
+      toast.error('You need to be logged in to follow categories.');
+      return;
+    }
     dispatch(followCategory(category, token));
   };
 
   const handleUnfollow = (category) => {
+    if (!token) {
+      toast.error('You need to be logged in to unfollow categories.');
+      return;
+    }
     setCategoryToUnfollow(category);
     setShowConfirmation(true);
   };
