@@ -95,9 +95,9 @@ const CategoryCarousel = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 100) {
-        setVisible(true);
-      } else {
         setVisible(false);
+      } else {
+        setVisible(true);
       }
     };
 
