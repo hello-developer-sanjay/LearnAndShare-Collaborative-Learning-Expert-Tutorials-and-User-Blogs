@@ -209,12 +209,17 @@ const PostPage = () => {
             name="description"
             content={post.content}
         />
-        
-        <meta property="og:title" content={post.title} />
-        <meta property="og:image" content={post.titleImage} />
-        <meta name="twitter:image" content={post.titleImage} />
-
-                    </Helmet>
+            <meta property="og:title" content={post.title} />
+            <meta property="og:description" content={post.content} />
+            <meta property="og:image" content={post.titleImage} />
+            <meta property="og:url" content={window.location.href} />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={post.title} />
+            <meta name="twitter:description" content={post.content} />
+            <meta name="twitter:image" content={post.titleImage} />
+            <link rel="icon" type="image/svg+xml" href={post.titleImage} />
+    </Helmet>
+            
             <Content>
                 <ToggleButton onClick={() => setSidebarOpen(!isSidebarOpen)}>
                     {isSidebarOpen ? 'Close' : 'Menu'}
