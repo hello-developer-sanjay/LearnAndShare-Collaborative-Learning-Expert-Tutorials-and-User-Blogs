@@ -17,6 +17,7 @@
     "codesandbox-client": "^1.0.0",
     "dompurify": "^3.1.4",
         "react-slick": "^0.29.0",
+    "slick-carousel": "^1.8.1",
 
     "file-saver": "^2.0.5",
     "framer-motion": "^10.18.0",
