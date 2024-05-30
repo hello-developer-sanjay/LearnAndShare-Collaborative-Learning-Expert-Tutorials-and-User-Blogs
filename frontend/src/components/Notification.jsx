@@ -98,7 +98,7 @@ const Notification = () => {
   useEffect(() => {
     const fetchFollowedCategories = async () => {
       try {
-        const res = await axios.get('https://hogwartsedx-backend-api-25may.onrender.com/api/auth/user', {
+        const res = await axios.get('https://hogwartsedx-backend-29may.onrender.com/api/auth/user', {
           headers: {
             'x-auth-token': token
           }
