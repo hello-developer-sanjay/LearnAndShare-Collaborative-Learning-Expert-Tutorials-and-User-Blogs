@@ -8,7 +8,8 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import styled from 'styled-components';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from 'react-helmet';
 
 const Container = styled.div`
@@ -22,9 +23,9 @@ const Content = styled.div`
     padding: 10px;
     overflow-y: auto;
     background-color: #f4f4f9;
-    color: ${({ color }) => color}; /* Use color from Redux state */
-    font-family: ${({ fontFamily }) => fontFamily}; /* Use font family from Redux state */
-    `;
+    color: ${({ color }) => color};
+    font-family: ${({ fontFamily }) => fontFamily};
+`;
 
 const SidebarContainer = styled.div`
     width: 250px;
@@ -135,6 +136,18 @@ const CopyButton = styled.button`
     }
 `;
 
+const CompleteButton = styled.button`
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: ${({ isCompleted }) => (isCompleted ? '#27ae60' : '#2c3e50')};
+    color: #ecf0f1;
+    border: none;
+    cursor: ${({ isCompleted }) => (isCompleted ? 'not-allowed' : 'pointer')};
+    &:hover {
+        background-color: ${({ isCompleted }) => (isCompleted ? '#27ae60' : '#34495e')};
+    }
+`;
+
 const PostPage = () => {
     const { slug } = useParams();
     const dispatch = useDispatch();
@@ -143,11 +156,13 @@ const PostPage = () => {
     const completedPosts = useSelector((state) => state.postReducer.completedPosts);
 
     const [isSidebarOpen, setSidebarOpen] = useState(false);
+
     useEffect(() => {
         if (post && post.title) {
             document.title = `${post.title} | HogwartsEdx`;
         }
     }, [post]);
+
     useEffect(() => {
         dispatch(fetchPostBySlug(slug));
         dispatch(fetchCompletedPosts());
@@ -168,6 +183,7 @@ const PostPage = () => {
             if (isSidebarOpen) setSidebarOpen(false);
         }
     };
+
     const handleCopyCode = () => {
         toast.success('Code copied to clipboard!', {
             position: "top-right",
@@ -179,14 +195,15 @@ const PostPage = () => {
             progress: undefined,
         });
     };
+
     if (!post) {
         return <div>Loading...</div>;
     }
 
     return (
         <Container>
-              <Helmet>
-              <title>{post ? `${post.title} | HogwartsEdx` : 'Loading...'}</title>
+            <Helmet>
+                <title>{post ? `${post.title} | HogwartsEdx` : 'Loading...'}</title>
             </Helmet>
             <Content>
                 <ToggleButton onClick={() => setSidebarOpen(!isSidebarOpen)}>
@@ -196,30 +213,29 @@ const PostPage = () => {
                 {post.titleImage && (
                     <Zoom>
                         <img
-                            src={post.titleImage} 
+                            src={post.titleImage}
                             alt={post.title}
                             style={{ width: '100%', maxWidth: '600px', margin: '0 auto', display: 'block' }}
                         />
                     </Zoom>
                 )}
- {post.titleVideo && (
+                {post.titleVideo && (
                     <video controls style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}>
                         <source src={post.titleVideo} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                 )}
-                  <p>Date Published : {post.date}</p>
-
-<p>Author: {post.author}</p>    
+                <p>Date Published : {post.date}</p>
+                <p>Author: {post.author}</p>
                 <p>{post.content}</p>
-              
+
                 {post.subtitles.map((subtitle, index) => (
                     <div key={index} id={`subtitle-${index}`}>
                         <SubtitleHeader>{subtitle.title}</SubtitleHeader>
                         {subtitle.image && (
                             <Zoom>
                                 <img
-                                    src={subtitle.image} 
+                                    src={subtitle.image}
                                     alt={subtitle.title}
                                     style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}
                                 />
@@ -227,8 +243,8 @@ const PostPage = () => {
                         )}
                         {subtitle.video && (
                             <video controls style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}>
-                                    src={subtitle.video} 
-                                    alt={subtitle.video}                                Your browser does not support the video tag.
+                                <source src={subtitle.video} type="video/mp4" />
+                                Your browser does not support the video tag.
                             </video>
                         )}
                         <ul>
@@ -236,25 +252,25 @@ const PostPage = () => {
                                 <li key={pointIndex} style={{ marginBottom: '10px' }}>
                                     {point.text}
                                     {point.image && (
-                                          <Zoom>
-                                          <img
-                                              src={subtitle.image} 
-                                              alt={subtitle.title}
-                                              style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}
-                                          />
-                                      </Zoom>
+                                        <Zoom>
+                                            <img
+                                                src={point.image}
+                                                alt={point.text}
+                                                style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}
+                                            />
+                                        </Zoom>
                                     )}
                                     {point.video && (
                                         <video controls style={{ width: '100%', maxWidth: '400px', margin: '10px 0' }}>
-                                            <source src={point.video} />
+                                            <source src={point.video} type="video/mp4" />
                                             Your browser does not support the video tag.
                                         </video>
                                     )}
                                     {point.codeSnippet && (
                                         <CodeSnippetContainer>
-                                           <CopyToClipboard text={point.codeSnippet} onCopy={handleCopyCode}>
-    <CopyButton>Copy</CopyButton>
-</CopyToClipboard>
+                                            <CopyToClipboard text={point.codeSnippet} onCopy={handleCopyCode}>
+                                                <CopyButton>Copy</CopyButton>
+                                            </CopyToClipboard>
                                             <SyntaxHighlighter language="javascript" style={vs}>
                                                 {point.codeSnippet}
                                             </SyntaxHighlighter>
@@ -271,13 +287,13 @@ const PostPage = () => {
                         <p>{post.summary}</p>
                     </SummaryContainer>
                 )}
-                <button
+                <CompleteButton
                     onClick={handleMarkAsCompleted}
                     disabled={isCompleted}
-                    style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#2c3e50', color: '#ecf0f1', border: 'none', cursor: 'pointer' }}
+                    isCompleted={isCompleted}
                 >
                     {isCompleted ? 'Completed' : 'Mark as Completed'}
-                </button>
+                </CompleteButton>
             </Content>
             <SidebarContainer isOpen={isSidebarOpen}>
                 <SidebarHeader>Contents</SidebarHeader>
@@ -287,7 +303,7 @@ const PostPage = () => {
                             <Button onClick={() => scrollToSection(`subtitle-${index}`)}>{subtitle.title}</Button>
                         </SubtitleItem>
                     ))}
-                    {post.summary && (
+                      {post.summary && (
                         <SubtitleItem>
                             <Button onClick={() => scrollToSection('summary')}>Summary</Button>
                         </SubtitleItem>
