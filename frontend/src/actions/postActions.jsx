@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { setAuthToken } from '../utils/setAuthToken';
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const FETCH_USER_POSTS_SUCCESS = 'FETCH_USER_POSTS_SUCCESS';
@@ -67,6 +68,7 @@ export const fetchUserPosts = () => async dispatch => {
 };
 export const addPost = (title, content, category, subtitles, summary, titleImage, titleVideo) => async (dispatch, getState) => {
     const token = localStorage.getItem("token");
+
     const { user } = getState().auth || JSON.parse(localStorage.getItem('user'));
     if (!user) {
         console.error('No user found');
@@ -141,9 +143,26 @@ export const markPostAsCompleted = (postId) => async (dispatch, getState) => {
             }
         });
         dispatch({ type: MARK_POST_COMPLETED_SUCCESS, payload: res.data });
+        toast.success('Post marked as completed!', {
+            position: 'top-right',
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
     } catch (error) {
-        console.error('Error marking post as completed:', error);
-    }
+        console.error('Error marking post as completed: ', error);
+        toast.error('Failed to mark post as completed. Please try again.', {
+            position: 'top-right',
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });    }
 };
 
 
