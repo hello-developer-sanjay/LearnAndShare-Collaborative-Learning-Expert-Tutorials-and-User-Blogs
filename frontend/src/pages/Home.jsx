@@ -2,6 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { Helmet } from 'react-helmet';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const fadeIn = keyframes`
   from {
@@ -94,6 +97,25 @@ const CallToAction = styled.button`
   }
 `;
 
+const CarouselContainer = styled.div`
+  width: 100%;
+
+  .slick-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+const CarouselImage = styled.img`
+  width: 100%;
+  max-width: 800px;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+
+ 
+`;
+
 const Home = () => {
   const sectionsRef = useRef([]);
   const navigate = useNavigate();
@@ -124,9 +146,33 @@ const Home = () => {
     navigate('/explore');
   };
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 2200,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+        }
+      }
+    ]
+  };
+
   return (
     <HomeContainer>
- <Helmet>
+      <Helmet>
     
     <title>HogwartsEdX: Where Magic Meets Technology for Next-Level Learning</title>
 <meta
@@ -136,8 +182,8 @@ HogwartsEdX is an innovative technology platform that seamlessly merges the ench
 
 Furthermore, HogwartsEdX offers a unique feature where users can choose to follow or unfollow specific categories, allowing for a customized learning journey. By following a category, users receive timely notifications via their registered email whenever new posts are added, empowering them to stay updated on the latest magical discoveries and educational content. With HogwartsEdX, the possibilities for magical learning are endless, combining the allure of the wizarding world with the transformative power of technology for an unparalleled educational experience."
 />
-<link rel="icon" type="image/svg+xml" href="src/assets/hogwarts_logo.png" />
 
+<link rel="icon" type="image/svg+xml" href="src/assets/hogwarts_logo.png" />
 
 <meta property="og:title" content="HogwartsEdX: Where Magic Meets Technology for Next-Level Learning" />
 <meta property="og:description" content="HogwartsEdX is an innovative technology platform that seamlessly merges the enchanting world of magic with cutting-edge learning experiences. At HogwartsEdX, users have the power to create curated category modules and posts tailored to their interests and learning goals. With a focus on personalized learning, users can mark completed posts within specific categories, earning certificates that validate their mastery in magical subjects. These certificates can be easily verified through the dedicated 'certificate-verification' page, ensuring credibility and recognition of users' achievements.
@@ -354,7 +400,19 @@ Furthermore, HogwartsEdX offers a unique feature where users can choose to follo
 
 
   </Helmet>	
-
+      <CarouselContainer>
+        <Slider {...settings}>
+          <div>
+            <CarouselImage src="https://sanjaybasket.s3.ap-south-1.amazonaws.com/HogwartsEdX/house+2.webp" alt="Hogwarts Logo" />
+          </div>
+          <div>
+            <CarouselImage src="https://sanjaybasket.s3.ap-south-1.amazonaws.com/HogwartsEdX/house+1.webp" alt="Hogwarts House" />
+          </div>
+          <div>
+            <CarouselImage src="https://sanjaybasket.s3.ap-south-1.amazonaws.com/HogwartsEdX/house_3.webp" alt="Hogwarts Logo" />
+          </div>
+        </Slider>
+      </CarouselContainer>
       <Section ref={el => sectionsRef.current[0] = el}>
         <Title>Welcome to HogwartsEdX</Title>
       </Section>
@@ -367,9 +425,9 @@ Furthermore, HogwartsEdX offers a unique feature where users can choose to follo
       <Section ref={el => sectionsRef.current[3] = el}>
         <CallToAction onClick={handleGetStartedClick} aria-label="Get Started">Get Started</CallToAction>
       </Section>
-      </HomeContainer>
+    
+    </HomeContainer>
   );
 };
 
 export default Home;
-    
