@@ -136,6 +136,7 @@ HogwartsEdX is an innovative technology platform that seamlessly merges the ench
 
 Furthermore, HogwartsEdX offers a unique feature where users can choose to follow or unfollow specific categories, allowing for a customized learning journey. By following a category, users receive timely notifications via their registered email whenever new posts are added, empowering them to stay updated on the latest magical discoveries and educational content. With HogwartsEdX, the possibilities for magical learning are endless, combining the allure of the wizarding world with the transformative power of technology for an unparalleled educational experience."
 />
+<link rel="icon" type="image/svg+xml" href="src/assets/hogwarts_logo.png" />
 
 
 <meta property="og:title" content="HogwartsEdX: Where Magic Meets Technology for Next-Level Learning" />
