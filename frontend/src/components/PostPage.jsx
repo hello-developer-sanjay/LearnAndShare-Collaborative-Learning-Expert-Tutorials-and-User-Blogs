@@ -202,16 +202,19 @@ const PostPage = () => {
 
     return (
         <Container>
-        <Helmet>
+                  <Helmet>
                     <title>{post ? `${post.title} | HogwartsEdx` : 'Loading...'}</title>
                                     <title>{post ? `${post.title} | HogwartsEdx` : 'Loading...'}</title>
-                                    {post && (
         <meta
             name="description"
             content={post.content}
         />
-    )}
-                </Helmet>
+        
+        <meta property="og:title" content={post.title} />
+        <meta property="og:image" content={post.titleImage} />
+        <meta name="twitter:image" content={post.titleImage} />
+
+                    </Helmet>
             <Content>
                 <ToggleButton onClick={() => setSidebarOpen(!isSidebarOpen)}>
                     {isSidebarOpen ? 'Close' : 'Menu'}
