@@ -258,7 +258,7 @@ const PostPage = () => {
                         )}
                         {subtitle.video && (
                             <video controls style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}>
-                                <source src={subtitle.video} type="video/mp4" />
+                                <source src={subtitle.video} />
                                 Your browser does not support the video tag.
                             </video>
                         )}
