@@ -62,7 +62,10 @@ export const fetchUserPosts = () => async dispatch => {
     }
 };
 
-export const addPost = (title, content, category, subtitles, summary, superTitles, titleImage, titleVideo) => async (dispatch, getState) => {
+export const addPost = (title, content, category, subtitles, summary, titleImage, superTitles, titleVideo) => async (
+    dispatch,
+    getState
+) => {
     const token = localStorage.getItem("token");
 
     const { user } = getState().auth || JSON.parse(localStorage.getItem('user'));
@@ -70,19 +73,29 @@ export const addPost = (title, content, category, subtitles, summary, superTitle
         return;
     }
     try {
-        const res = await axios.post('https://hogwarts-api-31may.onrender.com/api/posts', { 
-            title, content, category, subtitles, summary,superTitles, titleImage, titleVideo, author: user._id 
+        const res = await axios.post('https://hogwarts-api-31may.onrender.com/api/posts', {
+            title,
+            content,
+            category,
+            subtitles,
+            summary,
+            titleImage,
+            superTitles,
+            titleVideo,
+            author: user._id
         }, {
             headers: {
                 'x-auth-token': token
             }
         });
-        
+
         dispatch({ type: ADD_POST_SUCCESS, payload: res.data });
 
     } catch (error) {
+        console.error('Error adding post:', error);
     }
 };
+
 
 export const updatePost = (postId, title, content) => async (dispatch, getState) => {
     const token = localStorage.getItem("token");
