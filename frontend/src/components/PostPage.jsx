@@ -27,6 +27,60 @@ const Content = styled.div`
     font-family: ${({ fontFamily }) => fontFamily};
 `;
 
+const ComparisonTableContainer = styled.div`
+    margin-top: 20px;
+    overflow-x: auto;
+`;
+
+const ComparisonTable = styled.table`
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 800px;
+`;
+
+const TableHeader = styled.th`
+    background-color: #34495e;
+    color: #ecf0f1;
+    padding: 15px;
+    border: 1px solid #34495e;
+`;
+
+const TableCell = styled.td`
+    border: 1px solid #34495e;
+    padding: 15px;
+    vertical-align: top;
+`;
+
+const ResponsiveContent = styled.div`
+    overflow: auto;
+    white-space: nowrap;
+`;
+
+const ResponsiveTable = styled.table`
+    border-collapse: collapse;
+    width: auto;
+    min-width: 800px;
+`;
+
+const ResponsiveHeader = styled.th`
+    background-color: #34495e;
+    color: #ecf0f1;
+    padding: 15px;
+    border: 1px solid #34495e;
+    min-width: 150px;
+`;
+
+const ResponsiveCell = styled.td`
+    border: 1px solid #34495e;
+    padding: 15px;
+    vertical-align: top;
+    min-width: 150px;
+    max-width: 300px; /* Adjust the max-width as needed */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+`;
+
 const SidebarContainer = styled.div`
     width: 250px;
     background-color: #2c3e50;
@@ -296,6 +350,46 @@ const PostPage = () => {
                         </ul>
                     </div>
                 ))}
+{post.superTitles && post.superTitles.length > 0 && (
+    <ComparisonTableContainer>
+        <SubtitleHeader>Comparison</SubtitleHeader>
+        <ResponsiveContent>
+            <ResponsiveTable>
+                <thead>
+                    <tr>
+                        <TableHeader>Attribute</TableHeader>
+                        {post.superTitles.map((superTitle, index) => (
+                            <ResponsiveHeader key={index}>{superTitle.superTitle}</ResponsiveHeader>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {post.superTitles[0].attributes.map((attr, attrIndex) => (
+                        <tr key={attrIndex}>
+                            <TableCell>{attr.attribute}</TableCell>
+                            {post.superTitles.map((superTitle, superIndex) => (
+                                <ResponsiveCell key={superIndex}>
+                                    {superTitle.attributes[attrIndex] &&
+                                        superTitle.attributes[attrIndex].items.map((item, itemIndex) => (
+                                            <div key={itemIndex}>
+                                                <strong>{item.title}</strong>
+                                                <ul>
+                                                    {item.bulletPoints.map((point, pointIndex) => (
+                                                        <li key={pointIndex}>{point}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        ))}
+                                </ResponsiveCell>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </ResponsiveTable>
+        </ResponsiveContent>
+    </ComparisonTableContainer>
+)}
+                
                 {post.summary && (
                     <SummaryContainer id="summary">
                         <SubtitleHeader>Summary</SubtitleHeader>
