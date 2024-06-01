@@ -84,12 +84,29 @@ export const acceptPolicy = () => async dispatch => {
         const { user } = res.data;
         console.log('Policy acceptance response:', res.data);
 
-        // Update user object in local storage
         localStorage.setItem('user', JSON.stringify(user));
 
         dispatch({ type: ACCEPT_POLICY_SUCCESS, payload: user });
+        toast.success('Policy acceptance successful !', {
+            position: 'top-right',
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
         console.log('Policy acceptance successful:', res.data);
     } catch (error) {
         console.error('Error accepting policy:', error);
+        toast.error('Error accepting policy. Please Login and try again.', {
+            position: 'top-right',
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });  
     }
 };
