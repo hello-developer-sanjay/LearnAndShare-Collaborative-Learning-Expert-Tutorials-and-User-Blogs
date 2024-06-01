@@ -62,7 +62,7 @@ export const fetchUserPosts = () => async dispatch => {
     }
 };
 
-export const addPost = (title, content, category, subtitles, summary, titleImage, titleVideo) => async (dispatch, getState) => {
+export const addPost = (title, content, category, subtitles, summary, superTitles, titleImage, titleVideo) => async (dispatch, getState) => {
     const token = localStorage.getItem("token");
 
     const { user } = getState().auth || JSON.parse(localStorage.getItem('user'));
@@ -71,7 +71,7 @@ export const addPost = (title, content, category, subtitles, summary, titleImage
     }
     try {
         const res = await axios.post('https://hogwarts-api-31may.onrender.com/api/posts', { 
-            title, content, category, subtitles, summary, titleImage, titleVideo, author: user._id 
+            title, content, category, subtitles, superTitles, summary, titleImage, titleVideo, author: user._id 
         }, {
             headers: {
                 'x-auth-token': token
