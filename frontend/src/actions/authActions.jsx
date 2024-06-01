@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { setAuthToken } from '../utils/setAuthToken';
 import { FETCH_USER_SUCCESS, LOGIN_SUCCESS, FOLLOW_CATEGORY_SUCCESS, AUTHENTICATE_USER,ACCEPT_POLICY_SUCCESS } from './types';
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const loadUser = () => async dispatch => {
     if (localStorage.token) {
         setAuthToken(localStorage.token);
