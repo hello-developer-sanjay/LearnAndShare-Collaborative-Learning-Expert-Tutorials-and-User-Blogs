@@ -350,7 +350,24 @@ const PostPage = () => {
                         </ul>
                     </div>
                 ))}
-{post.superTitles && post.superTitles.length > 0 && (
+{post.superTitles && 
+ post.superTitles.length > 0 && 
+ post.superTitles.some(superTitle => 
+    superTitle.superTitle.trim() !== '' &&
+    superTitle.attributes && 
+    superTitle.attributes.length > 0 && 
+    superTitle.attributes.some(attr => 
+        attr.attribute.trim() !== '' &&
+        attr.items && 
+        attr.items.length > 0 && 
+        attr.items.some(item => 
+            item.title.trim() !== '' &&
+            item.bulletPoints && 
+            item.bulletPoints.length > 0 &&
+            item.bulletPoints.some(point => point.trim() !== '')
+        )
+    )
+) && (
     <ComparisonTableContainer>
         <SubtitleHeader>Comparison</SubtitleHeader>
         <ResponsiveContent>
@@ -359,30 +376,37 @@ const PostPage = () => {
                     <tr>
                         <TableHeader>Attribute</TableHeader>
                         {post.superTitles.map((superTitle, index) => (
-                            <ResponsiveHeader key={index}>{superTitle.superTitle}</ResponsiveHeader>
+                            superTitle.superTitle.trim() !== '' && superTitle.attributes && superTitle.attributes.length > 0 && (
+                                <ResponsiveHeader key={index}>{superTitle.superTitle}</ResponsiveHeader>
+                            )
                         ))}
                     </tr>
                 </thead>
                 <tbody>
                     {post.superTitles[0].attributes.map((attr, attrIndex) => (
-                        <tr key={attrIndex}>
-                            <TableCell>{attr.attribute}</TableCell>
-                            {post.superTitles.map((superTitle, superIndex) => (
-                                <ResponsiveCell key={superIndex}>
-                                    {superTitle.attributes[attrIndex] &&
-                                        superTitle.attributes[attrIndex].items.map((item, itemIndex) => (
-                                            <div key={itemIndex}>
-                                                <strong>{item.title}</strong>
-                                                <ul>
-                                                    {item.bulletPoints.map((point, pointIndex) => (
-                                                        <li key={pointIndex}>{point}</li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        ))}
-                                </ResponsiveCell>
-                            ))}
-                        </tr>
+                        attr.attribute.trim() !== '' && attr.items && attr.items.length > 0 && attr.items.some(item => item.title.trim() !== '' || (item.bulletPoints && item.bulletPoints.length > 0 && item.bulletPoints.some(point => point.trim() !== ''))) && (
+                            <tr key={attrIndex}>
+                                <TableCell>{attr.attribute}</TableCell>
+                                {post.superTitles.map((superTitle, superIndex) => (
+                                    superTitle.attributes[attrIndex] && superTitle.attributes[attrIndex].items && superTitle.attributes[attrIndex].items.length > 0 && (
+                                        <ResponsiveCell key={superIndex}>
+                                            {superTitle.attributes[attrIndex].items.map((item, itemIndex) => (
+                                                (item.title.trim() !== '' || (item.bulletPoints && item.bulletPoints.length > 0 && item.bulletPoints.some(point => point.trim() !== ''))) && (
+                                                    <div key={itemIndex}>
+                                                        <strong>{item.title}</strong>
+                                                        <ul>
+                                                            {item.bulletPoints.map((point, pointIndex) => (
+                                                                point.trim() !== '' && <li key={pointIndex}>{point}</li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                )
+                                            ))}
+                                        </ResponsiveCell>
+                                    )
+                                ))}
+                            </tr>
+                        )
                     ))}
                 </tbody>
             </ResponsiveTable>
