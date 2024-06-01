@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setAuthToken } from '../utils/setAuthToken';
-import { FETCH_USER_SUCCESS, LOGIN_SUCCESS, FOLLOW_CATEGORY_SUCCESS, AUTHENTICATE_USER } from './types';
+import { FETCH_USER_SUCCESS, LOGIN_SUCCESS, FOLLOW_CATEGORY_SUCCESS, AUTHENTICATE_USER,ACCEPT_POLICY_SUCCESS } from './types';
 
 export const loadUser = () => async dispatch => {
     if (localStorage.token) {
@@ -12,7 +12,7 @@ export const loadUser = () => async dispatch => {
         const user = res.data.user; // Ensure user object is correctly extracted
 
         localStorage.setItem('user', JSON.stringify(res.data.user));
-        dispatch({ type: FETCH_USER_SUCCESS, payload: { user: res.data.user, token: localStorage.token } });
+        dispatch({ type: FETCH_USER_SUCCESS, payload: { user: res.data.user, token: localStorage.token, policyAccepted: res.data.policyAccepted } });
         dispatch({ type: FOLLOW_CATEGORY_SUCCESS, payload: res.data.user.followedCategories });
 
         console.log('User loaded successfully:', res.data.user);
@@ -76,5 +76,20 @@ export const register = formData => async dispatch => {
         return { success: true, role: user.role };
     } catch (error) {
         console.error('Error registering user:', error);
+    }
+};
+export const acceptPolicy = () => async dispatch => {
+    try {
+        const res = await axios.post('https://hogwarts-api-31may.onrender.com/api/auth/accept-policy');
+        const { user } = res.data;
+        console.log('Policy acceptance response:', res.data);
+
+        // Update user object in local storage
+        localStorage.setItem('user', JSON.stringify(user));
+
+        dispatch({ type: ACCEPT_POLICY_SUCCESS, payload: user });
+        console.log('Policy acceptance successful:', res.data);
+    } catch (error) {
+        console.error('Error accepting policy:', error);
     }
 };
