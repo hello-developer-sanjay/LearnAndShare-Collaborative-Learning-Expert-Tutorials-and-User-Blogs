@@ -6,6 +6,7 @@ export const GET_CERTIFICATES = 'GET_CERTIFICATES';
 export const CERTIFICATES_ERROR = 'CERTIFICATES_ERROR';
 export const AUTHENTICATE_USER = 'AUTHENTICATE_USER';  // New action type
 export const FETCH_FOLLOWED_CATEGORIES_SUCCESS = 'FETCH_FOLLOWED_CATEGORIES_SUCCESS'; // New action type
+export const ACCEPT_POLICY_SUCCESS = 'ACCEPT_POLICY_SUCCESS'; // New action type
 
 // actionTypes.js
 
