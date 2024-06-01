@@ -17,7 +17,7 @@ import VerifyCertificate from './components/VerifyCertificate';
 import Category from './pages/Category';
 import SignInSignUp from './components/SignInSignUp';
 import Footer from './components/Footer';
-import Notifications from './components/Notifications';
+import Notification from './components/Notification';
 import Policy from './components/Policy';
 import { loadUser } from './actions/authActions'; 
 
@@ -71,7 +71,7 @@ const App = () => {
                         <Route exact path="/forgot-password" element={<ForgotPassword />} />
                         <Route path="/reset-password/:token" element={<ResetPassword />} />
                         <Route exact path="/verify/:uniqueId" element={<VerifyCertificate />} />
-                        <Route exact path="/posts-notification" element={<Notifications />} />
+                        <Route exact path="/posts-notification" element={<Notification />} />
                         <Route exact path="/explore" element={<PostList />} />
                         <Route exact path="/certificate-verification" element={<VerifyCertificate />} />
                     </Routes>
