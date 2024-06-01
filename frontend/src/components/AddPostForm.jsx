@@ -67,6 +67,49 @@ const AddPostForm = () => {
         'Gatsby', 'Svelte', 'TypeScript', 'GraphQL', 'PHP', 'Python', 'Ruby', 'Java', 'C#', 'C++', 'Swift', 
         'Kotlin', 'Dart', 'Flutter', 'React Native'
     ];
+    const [attributes, setAttributes] = useState([{ superTitle: '', attributes: [{ attributeName: '', titleItems: [{ title: '' }] }] }]);
+    const [superTitles, setSuperTitles] = useState([{ superTitle: '', attributes: [{ attribute: '', items: [{ title: '', bulletPoints: [''] }] }] }]);
+
+   
+ // Handle changes in super titles
+const handleSuperTitleChange = (index, field, value) => {
+    const newSuperTitles = [...superTitles];
+    newSuperTitles[index][field] = value;
+    setSuperTitles(newSuperTitles);
+};
+
+// Handle changes in attributes
+const handleAttributeChange = (superTitleIndex, attributeIndex, field, value) => {
+    const newSuperTitles = [...superTitles];
+    newSuperTitles[superTitleIndex].attributes[attributeIndex][field] = value;
+    setSuperTitles(newSuperTitles);
+};
+
+// Handle changes in items
+const handleItemChange = (superTitleIndex, attributeIndex, itemIndex, field, value) => {
+    const newSuperTitles = [...superTitles];
+    newSuperTitles[superTitleIndex].attributes[attributeIndex].items[itemIndex][field] = value;
+    setSuperTitles(newSuperTitles);
+};
+
+// Add a new super title
+const addSuperTitle = () => {
+    setSuperTitles([...superTitles, { superTitle: '', attributes: [{ attribute: '', items: [{ title: '', bulletPoints: [''] }] }] }]);
+};
+
+// Add a new attribute under a super title
+const addAttribute = (superTitleIndex) => {
+    const newSuperTitles = [...superTitles];
+    newSuperTitles[superTitleIndex].attributes.push({ attribute: '', items: [{ title: '', bulletPoints: [''] }] });
+    setSuperTitles(newSuperTitles);
+};
+
+// Add a new item under an attribute
+const addItem = (superTitleIndex, attributeIndex) => {
+    const newSuperTitles = [...superTitles];
+    newSuperTitles[superTitleIndex].attributes[attributeIndex].items.push({ title: '', bulletPoints: [''] });
+    setSuperTitles(newSuperTitles);
+};
 
     useEffect(() => {
         if (!user) {
@@ -145,7 +188,7 @@ const AddPostForm = () => {
                     codeSnippet: DOMPurify.sanitize(point.codeSnippet)
                 }))
             }));
-            dispatch(addPost(title, content, category, sanitizedSubtitles, summary, titleImage, video));
+            dispatch(addPost(title, content, category, sanitizedSubtitles, summary, titleImage,superTitles, video));
             setTitle('');
             setTitleImage(null);
             setContent('');
@@ -153,6 +196,8 @@ const AddPostForm = () => {
             setCategory('VS Code');
             setSubtitles([{ title: '', image: null, bulletPoints: [{ text: '', image: null, codeSnippet: '' }] }]);
             setSummary('');
+            setSuperTitles([{ superTitle: '', attributes: [{ attribute: '', items: [{ title: '', bulletPoints: [''] }] }] }]);
+
         } catch (error) {
             console.error('Error submitting post:', error);
         }
@@ -257,10 +302,77 @@ const AddPostForm = () => {
                             <Button type="button" onClick={() => addBulletPoint(index)}>Add Bullet Point</Button>
                         </FormGroup>
                     </div>
-                ))}
+                ))} 
+
+
                 <FormGroup>
                     <Button type="button" onClick={addSubtitle}>Add Subtitle</Button>
                 </FormGroup>
+
+
+{superTitles.map((superTitle, superTitleIndex) => (
+    <div key={superTitleIndex}>
+        <FormGroup>
+            <Label>Super Title</Label>
+            <Input
+                type="text"
+                placeholder="Super Title"
+                value={superTitle.superTitle}
+                onChange={(e) => handleSuperTitleChange(superTitleIndex, 'superTitle', e.target.value)}
+            />
+        </FormGroup>
+        {superTitle.attributes.map((attribute, attributeIndex) => (
+            <div key={attributeIndex}>
+                <FormGroup>
+                    <Label>Attribute</Label>
+                    <Input
+                        type="text"
+                        placeholder="Attribute"
+                        value={attribute.attribute}
+                        onChange={(e) => handleAttributeChange(superTitleIndex, attributeIndex, 'attribute', e.target.value)}
+                    />
+                </FormGroup>
+                {attribute.items.map((item, itemIndex) => (
+                    <div key={itemIndex}>
+                        <FormGroup>
+                            <Label>Title</Label>
+                            <Input
+                                type="text"
+                                placeholder="Title"
+                                value={item.title}
+                                onChange={(e) => handleItemChange(superTitleIndex, attributeIndex, itemIndex, 'title', e.target.value)}
+                            />
+                        </FormGroup>
+                        {item.bulletPoints.map((bulletPoint, bulletPointIndex) => (
+                            <FormGroup key={bulletPointIndex}>
+                                <Label>Bullet Point</Label>
+                                <Input
+                                    type="text"
+                                    placeholder="Bullet Point"
+                                    value={bulletPoint}
+                                    onChange={(e) => {
+                                        const newBulletPoints = [...superTitles[superTitleIndex].attributes[attributeIndex].items[itemIndex].bulletPoints];
+                                        newBulletPoints[bulletPointIndex] = e.target.value;
+                                        handleItemChange(superTitleIndex, attributeIndex, itemIndex, 'bulletPoints', newBulletPoints);
+                                    }}
+                                />
+                            </FormGroup>
+                        ))}
+                        <FormGroup>
+                            <Button type="button" onClick={() => addItem(superTitleIndex, attributeIndex)}>Add Bullet Point</Button>
+                        </FormGroup>
+                    </div>
+                ))}
+                <FormGroup>
+                    <Button type="button" onClick={() => addAttribute(superTitleIndex)}>Add Attribute</Button>
+                </FormGroup>
+            </div>
+        ))}
+        <FormGroup>
+            <Button type="button" onClick={addSuperTitle}>Add Super Title</Button>
+        </FormGroup>
+    </div>
+))}
                 <FormGroup>
                     <Label>Summary</Label>
                     <TextArea 
