@@ -71,7 +71,7 @@ export const addPost = (title, content, category, subtitles, summary, superTitle
     }
     try {
         const res = await axios.post('https://hogwarts-api-31may.onrender.com/api/posts', { 
-            title, content, category, subtitles, superTitles, summary, titleImage, titleVideo, author: user._id 
+            title, content, category, subtitles, summary,superTitles, titleImage, titleVideo, author: user._id 
         }, {
             headers: {
                 'x-auth-token': token
