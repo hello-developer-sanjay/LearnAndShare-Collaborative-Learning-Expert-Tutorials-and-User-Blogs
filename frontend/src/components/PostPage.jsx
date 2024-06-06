@@ -267,6 +267,7 @@ const PostPage = () => {
     return (
         <LoadingOverlay>
             <RingLoader color="#2c3e50" />
+            size={150}
         </LoadingOverlay>
     );
 }
