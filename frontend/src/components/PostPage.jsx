@@ -11,6 +11,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from 'react-helmet';
+import { RingLoader } from 'react-spinners';
 
 const Container = styled.div`
     display: flex;
@@ -25,6 +26,18 @@ const Content = styled.div`
     background-color: #f4f4f9;
     color: ${({ color }) => color};
     font-family: ${({ fontFamily }) => fontFamily};
+`;
+const LoadingOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+  z-index: 9999; /* Ensure it's above other elements */
 `;
 
 const ComparisonTableContainer = styled.div`
@@ -250,9 +263,14 @@ const PostPage = () => {
         });
     };
 
-    if (!post) {
-        return <div>Loading...</div>;
-    }
+   if (!post) {
+    return (
+        <LoadingOverlay>
+            <RingLoader color="#2c3e50" />
+        </LoadingOverlay>
+    );
+}
+
 
     return (
         <Container>
