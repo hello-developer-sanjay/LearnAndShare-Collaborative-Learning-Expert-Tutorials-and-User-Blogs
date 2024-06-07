@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts } from '../actions/postActions';
 import { Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
-import SearchBlog from './SearchBlog';
-
+const SearchBlog = lazy(() => import('./SearchBlog'));
 // Styled Components
 const Container = styled.div`
   max-width: 100%;
