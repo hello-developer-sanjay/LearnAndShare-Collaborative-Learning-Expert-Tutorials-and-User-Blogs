@@ -4,6 +4,7 @@ import { fetchPosts } from '../actions/postActions';
 import { Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 const SearchBlog = lazy(() => import('./SearchBlog'));
+
 // Styled Components
 const Container = styled.div`
   max-width: 100%;
@@ -116,28 +117,28 @@ const LoadingSpinner = styled.div`
 
 const PostList = () => {
   const dispatch = useDispatch();
-  const [page, setPage] = useState(1); // State to track current page
-  const [loadingMore, setLoadingMore] = useState(false); // State to track loading state
+  const [page, setPage] = useState(1);
+  const [loadingMore, setLoadingMore] = useState(false);
   const posts = useSelector(state => state.postReducer.posts);
 
   useEffect(() => {
-    dispatch(fetchPosts(page)); // Fetch posts for the current page
+    dispatch(fetchPosts(page));
   }, [dispatch, page]);
 
-  // Function to load more posts when user scrolls to the bottom
   const loadMorePosts = () => {
-    setPage(prevPage => prevPage + 1); // Increment page number
-    setLoadingMore(true); // Set loading state to true
+    setPage(prevPage => prevPage + 1);
+    setLoadingMore(true);
   };
 
-  // When new posts are loaded, set loading state to false
   useEffect(() => {
     setLoadingMore(false);
   }, [posts]);
 
   return (
     <Container>
-      <SearchBlog />
+      <Suspense fallback={<div>Loading...</div>}>
+        <SearchBlog />
+      </Suspense>
       <Title>Latest Posts</Title>
       <PostListContainer>
         {posts.slice(0, page * 5).map(post => (
