@@ -1,22 +1,17 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPostBySlug, markPostAsCompleted, fetchCompletedPosts } from '../actions/postActions';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from 'react-helmet';
 import { RingLoader } from 'react-spinners';
+import 'react-toastify/dist/ReactToastify.css';
 
-// Lazy loading components
-const Zoom = React.lazy(() => import('react-medium-image-zoom'));
-const SyntaxHighlighter = React.lazy(() =>
-    import('react-syntax-highlighter').then(module => ({ default: module.Prism }))
-);
-const vs = React.lazy(() =>
-    import('react-syntax-highlighter/dist/esm/styles/prism').then(module => ({ default: module.vs }))
-);
-const CopyToClipboard = React.lazy(() => import('react-copy-to-clipboard'));
+const Zoom = lazy(() => import('react-medium-image-zoom'));
+const SyntaxHighlighter = lazy(() => import('react-syntax-highlighter').then(module => ({ default: module.Prism })));
+const vs = lazy(() => import('react-syntax-highlighter/dist/esm/styles/prism').then(module => ({ default: module.vs })));
+const CopyToClipboard = lazy(() => import('react-copy-to-clipboard'));
 
 const Container = styled.div`
     display: flex;
@@ -34,27 +29,21 @@ const Content = styled.div`
 `;
 
 const LoadingOverlay = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(255, 255, 255, 0.7);
-    z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 9999;
 `;
 
 const ComparisonTableContainer = styled.div`
     margin-top: 20px;
     overflow-x: auto;
-`;
-
-const ComparisonTable = styled.table`
-    border-collapse: collapse;
-    width: 100%;
-    min-width: 800px;
 `;
 
 const TableHeader = styled.th`
@@ -286,140 +275,191 @@ const PostPage = () => {
                 <meta property="og:description" content={post.content} />
                 <meta property="og:image" content={post.titleImage} />
                 <meta property="og:url" content={window.location.href} />
+                <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content={post.title} />
                 <meta name="twitter:description" content={post.content} />
                 <meta name="twitter:image" content={post.titleImage} />
-                <meta name="twitter:card" content="summary_large_image" />
+                <link rel="icon" type="image/svg+xml" href={post.titleImage} />
             </Helmet>
-            <ToastContainer />
-            <ToggleButton onClick={() => setSidebarOpen(!isSidebarOpen)}>
-                {isSidebarOpen ? 'Close Sidebar' : 'Open Sidebar'}
-            </ToggleButton>
+            
+            <Content>
+                <ToggleButton onClick={() => setSidebarOpen(!isSidebarOpen)}>
+                    {isSidebarOpen ? 'Close' : 'Menu'}
+                </ToggleButton>
+                <PostHeader>{post.title}</PostHeader>
+                {post.titleImage && (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <Zoom>
+                            <img
+                                src={post.titleImage}
+                                alt={post.title}
+                                style={{ width: '100%', maxWidth: '600px', margin: '0 auto', display: 'block' }}
+                            />
+                        </Zoom>
+                    </Suspense>
+                )}
+                {post.titleVideo && (
+                    <video controls style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}>
+                        <source src={post.titleVideo} type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                )}
+                <p>Date Published : {post.date}</p>
+                <p>Author: {post.author}</p>
+                <p>{post.content}</p>
+
+                {post.subtitles.map((subtitle, index) => (
+                    <div key={index} id={`subtitle-${index}`}>
+                        <SubtitleHeader>{subtitle.title}</SubtitleHeader>
+                        {subtitle.image && (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Zoom>
+                                    <img
+                                        src={subtitle.image}
+                                        alt={subtitle.title}
+                                        style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}
+                                    />
+                                </Zoom>
+                            </Suspense>
+                        )}
+                        {subtitle.video && (
+                            <video controls style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}>
+                                <source src={subtitle.video} />
+                                Your browser does not support the video tag.
+                            </video>
+                        )}
+                        <ul>
+                            {subtitle.bulletPoints.map((point, pointIndex) => (
+                                <li key={pointIndex} style={{ marginBottom: '10px' }}>
+                                    {point.text}
+                                    {point.image && (
+                                        <Suspense fallback={<div>Loading...</div>}>
+                                            <Zoom>
+                                                <img
+                                                    src={point.image}
+                                                    alt={point.text}
+                                                    style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}
+                                                />
+                                            </Zoom>
+                                        </Suspense>
+                                    )}
+                                    {point.video && (
+                                        <video controls style={{ width: '100%', maxWidth: '400px', margin: '10px 0' }}>
+                                            <source src={point.video} type="video/mp4" />
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    )}
+                                    {point.codeSnippet && (
+                                        <Suspense fallback={<div>Loading...</div>}>
+                                            <CodeSnippetContainer>
+                                                <CopyToClipboard text={point.codeSnippet} onCopy={handleCopyCode}>
+                                                    <CopyButton>Copy</CopyButton>
+                                                </CopyToClipboard>
+                                                <SyntaxHighlighter language="javascript" style={vs}>
+                                                    {point.codeSnippet}
+                                                </SyntaxHighlighter>
+                                            </CodeSnippetContainer>
+                                        </Suspense>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+                {post.superTitles && 
+                    post.superTitles.length > 0 && 
+                    post.superTitles.some(superTitle => 
+                        superTitle.superTitle.trim() !== '' &&
+                        superTitle.attributes && 
+                        superTitle.attributes.length > 0 && 
+                        superTitle.attributes.some(attr => 
+                            attr.attribute.trim() !== '' &&
+                            attr.items && 
+                            attr.items.length > 0 && 
+                            attr.items.some(item => 
+                                item.title.trim() !== '' &&
+                                item.bulletPoints && 
+                                item.bulletPoints.length > 0 &&
+                                item.bulletPoints.some(point => point.trim() !== '')
+                            )
+                        )
+                    ) && (
+                    <ComparisonTableContainer>
+                        <SubtitleHeader>Comparison</SubtitleHeader>
+                        <ResponsiveContent>
+                            <ResponsiveTable>
+                                <thead>
+                                    <tr>
+                                        <TableHeader>Attribute</TableHeader>
+                                        {post.superTitles.map((superTitle, index) => (
+                                            superTitle.superTitle.trim() !== '' && superTitle.attributes && superTitle.attributes.length > 0 && (
+                                                <ResponsiveHeader key={index}>{superTitle.superTitle}</ResponsiveHeader>
+                                            )
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {post.superTitles[0].attributes.map((attr, attrIndex) => (
+                                        attr.attribute.trim() !== '' && attr.items && attr.items.length > 0 && attr.items.some(item => item.title.trim() !== '' || (item.bulletPoints && item.bulletPoints.length > 0 && item.bulletPoints.some(point => point.trim() !== ''))) && (
+                                            <tr key={attrIndex}>
+                                                <TableCell>{attr.attribute}</TableCell>
+                                                {post.superTitles.map((superTitle, superIndex) => (
+                                                    superTitle.attributes[attrIndex] && superTitle.attributes[attrIndex].items && superTitle.attributes[attrIndex].items.length > 0 && (
+                                                        <ResponsiveCell key={superIndex}>
+                                                            {superTitle.attributes[attrIndex].items.map((item, itemIndex) => (
+                                                                (item.title.trim() !== '' || (item.bulletPoints && item.bulletPoints.length > 0 && item.bulletPoints.some(point => point.trim() !== ''))) && (
+                                                                    <div key={itemIndex}>
+                                                                        <strong>{item.title}</strong>
+                                                                        <ul>
+                                                                            {item.bulletPoints.map((point, pointIndex) => (
+                                                                                point.trim() !== '' && <li key={pointIndex}>{point}</li>
+                                                                            ))}
+                                                                        </ul>
+                                                                    </div>
+                                                                )
+                                                            ))}
+                                                        </ResponsiveCell>
+                                                    )
+                                                ))}
+                                            </tr>
+                                        )
+                                    ))}
+                                </tbody>
+                            </ResponsiveTable>
+                        </ResponsiveContent>
+                    </ComparisonTableContainer>
+                )}
+                
+                {post.summary && (
+                    <SummaryContainer id="summary">
+                        <SubtitleHeader>Summary</SubtitleHeader>
+                        <p>{post.summary}</p>
+                    </SummaryContainer>
+                )}
+                <CompleteButton
+                    onClick={handleMarkAsCompleted}
+                    disabled={isCompleted}
+                    isCompleted={isCompleted}
+                >
+                    {isCompleted ? 'Completed' : 'Mark as Completed'}
+                </CompleteButton>
+            </Content>
             <SidebarContainer isOpen={isSidebarOpen}>
-                <SidebarHeader>Subtitles</SidebarHeader>
+                <SidebarHeader>Contents</SidebarHeader>
                 <SubtitlesList>
                     {post.subtitles.map((subtitle, index) => (
                         <SubtitleItem key={index}>
-                            <Button onClick={() => scrollToSection(subtitle.id)}>
-                                {subtitle.title}
-                            </Button>
+                            <Button onClick={() => scrollToSection(`subtitle-${index}`)}>{subtitle.title}</Button>
                         </SubtitleItem>
                     ))}
+                    {post.summary && (
+                        <SubtitleItem>
+                            <Button onClick={() => scrollToSection('summary')}>Summary</Button>
+                        </SubtitleItem>
+                    )}
                 </SubtitlesList>
             </SidebarContainer>
-            <Content color={post.textColor} fontFamily={post.fontFamily}>
-                <PostHeader>{post.title}</PostHeader>
-                {post.content.split('\n').map((paragraph, index) => (
-                    <p key={index}>{paragraph}</p>
-                ))}
-                {post.subtitles.map((subtitle, index) => (
-                    <div key={index}>
-                        <SubtitleHeader id={subtitle.id}>{subtitle.title}</SubtitleHeader>
-                        {subtitle.content.split('\n').map((paragraph, idx) => (
-                            <p key={idx}>{paragraph}</p>
-                        ))}
-                        {subtitle.images.map((image, idx) => (
-                            <Suspense key={idx} fallback={<div>Loading image...</div>}>
-                                <Zoom>
-                                    <img src={image.url} alt={image.caption} style={{ maxWidth: '100%', margin: '20px 0' }} />
-                                </Zoom>
-                            </Suspense>
-                        ))}
-                        {subtitle.codeSnippets.map((codeSnippet, idx) => (
-                            <CodeSnippetContainer key={idx}>
-                                <Suspense fallback={<div>Loading code snippet...</div>}>
-                                    <CopyToClipboard text={codeSnippet.code} onCopy={handleCopyCode}>
-                                        <CopyButton>Copy</CopyButton>
-                                    </CopyToClipboard>
-                                    <SyntaxHighlighter language={codeSnippet.language} style={vs}>
-                                        {codeSnippet.code}
-                                    </SyntaxHighlighter>
-                                </Suspense>
-                            </CodeSnippetContainer>
-                        ))}
-                        {subtitle.videos.map((video, idx) => (
-                            <video key={idx} controls style={{ maxWidth: '100%', margin: '20px 0' }} loading="lazy">
-                                <source src={video.url} type="video/mp4" />
-                                Your browser does not support the video tag.
-                            </video>
-                        ))}
-                        {post.superTitles && 
- post.superTitles.length > 0 && 
- post.superTitles.some(superTitle => 
-    superTitle.superTitle.trim() !== '' &&
-    superTitle.attributes && 
-    superTitle.attributes.length > 0 && 
-    superTitle.attributes.some(attr => 
-        attr.attribute.trim() !== '' &&
-        attr.items && 
-        attr.items.length > 0 && 
-        attr.items.some(item => 
-            item.title.trim() !== '' &&
-            item.bulletPoints && 
-            item.bulletPoints.length > 0 &&
-            item.bulletPoints.some(point => point.trim() !== '')
-        )
-    )
-) && (
-    <ComparisonTableContainer>
-        <SubtitleHeader>Comparison</SubtitleHeader>
-        <ResponsiveContent>
-            <ResponsiveTable>
-                <thead>
-                    <tr>
-                        <TableHeader>Attribute</TableHeader>
-                        {post.superTitles.map((superTitle, index) => (
-                            superTitle.superTitle.trim() !== '' && superTitle.attributes && superTitle.attributes.length > 0 && (
-                                <ResponsiveHeader key={index}>{superTitle.superTitle}</ResponsiveHeader>
-                            )
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {post.superTitles[0].attributes.map((attr, attrIndex) => (
-                        attr.attribute.trim() !== '' && attr.items && attr.items.length > 0 && attr.items.some(item => item.title.trim() !== '' || (item.bulletPoints && item.bulletPoints.length > 0 && item.bulletPoints.some(point => point.trim() !== ''))) && (
-                            <tr key={attrIndex}>
-                                <TableCell>{attr.attribute}</TableCell>
-                                {post.superTitles.map((superTitle, superIndex) => (
-                                    superTitle.attributes[attrIndex] && superTitle.attributes[attrIndex].items && superTitle.attributes[attrIndex].items.length > 0 && (
-                                        <ResponsiveCell key={superIndex}>
-                                            {superTitle.attributes[attrIndex].items.map((item, itemIndex) => (
-                                                (item.title.trim() !== '' || (item.bulletPoints && item.bulletPoints.length > 0 && item.bulletPoints.some(point => point.trim() !== ''))) && (
-                                                    <div key={itemIndex}>
-                                                        <strong>{item.title}</strong>
-                                                        <ul>
-                                                            {item.bulletPoints.map((point, pointIndex) => (
-                                                                point.trim() !== '' && <li key={pointIndex}>{point}</li>
-                                                            ))}
-                                                        </ul>
-                                                    </div>
-                                                )
-                                            ))}
-                                        </ResponsiveCell>
-                                    )
-                                ))}
-                            </tr>
-                        )
-                    ))}
-                </tbody>
-            </ResponsiveTable>
-        </ResponsiveContent>
-    </ComparisonTableContainer>
-)}
- {subtitle.summary && (
-                            <SummaryContainer>
-                                <h3>Summary</h3>
-                                {subtitle.summary.split('\n').map((paragraph, idx) => (
-                                    <p key={idx}>{paragraph}</p>
-                                ))}
-                            </SummaryContainer>
-                        )}
-                    </div>
-                ))}
-                <CompleteButton onClick={handleMarkAsCompleted} isCompleted={isCompleted}>
-                    {isCompleted ? 'Post Completed' : 'Mark as Completed'}
-                </CompleteButton>
-            </Content>
+            <ToastContainer />
         </Container>
     );
 };
