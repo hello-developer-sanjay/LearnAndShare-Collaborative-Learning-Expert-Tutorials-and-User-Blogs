@@ -1,17 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPostBySlug, markPostAsCompleted, fetchCompletedPosts } from '../actions/postActions';
 import { useParams } from 'react-router-dom';
-import Zoom from 'react-medium-image-zoom';
-import 'react-medium-image-zoom/dist/styles.css';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import styled from 'styled-components';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from 'react-helmet';
 import { RingLoader } from 'react-spinners';
+
+// Lazy loading components
+const Zoom = React.lazy(() => import('react-medium-image-zoom'));
+const SyntaxHighlighter = React.lazy(() =>
+    import('react-syntax-highlighter').then(module => ({ default: module.Prism }))
+);
+const vs = React.lazy(() =>
+    import('react-syntax-highlighter/dist/esm/styles/prism').then(module => ({ default: module.vs }))
+);
+const CopyToClipboard = React.lazy(() => import('react-copy-to-clipboard'));
 
 const Container = styled.div`
     display: flex;
@@ -27,17 +32,18 @@ const Content = styled.div`
     color: ${({ color }) => color};
     font-family: ${({ fontFamily }) => fontFamily};
 `;
+
 const LoadingOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
-  z-index: 9999; /* Ensure it's above other elements */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 9999;
 `;
 
 const ComparisonTableContainer = styled.div`
@@ -88,7 +94,7 @@ const ResponsiveCell = styled.td`
     padding: 15px;
     vertical-align: top;
     min-width: 150px;
-    max-width: 300px; /* Adjust the max-width as needed */
+    max-width: 300px;
     word-wrap: break-word;
     overflow-wrap: break-word;
     white-space: normal;
@@ -263,113 +269,81 @@ const PostPage = () => {
         });
     };
 
-   if (!post) {
-    return (
-        <LoadingOverlay>
-            <RingLoader color="#2c3e50"  size={150}
- />
-        </LoadingOverlay>
-    );
-}
-
+    if (!post) {
+        return (
+            <LoadingOverlay>
+                <RingLoader color="#2c3e50" size={150} />
+            </LoadingOverlay>
+        );
+    }
 
     return (
         <Container>
-                  <Helmet>
-                    <title>{post ? `${post.title} | HogwartsEdx` : 'Loading...'}</title>
-                                    <title>{post ? `${post.title} | HogwartsEdx` : 'Loading...'}</title>
-        <meta
-            name="description"
-            content={post.content}
-        />
-            <meta property="og:title" content={post.title} />
-            <meta property="og:description" content={post.content} />
-            <meta property="og:image" content={post.titleImage} />
-            <meta property="og:url" content={window.location.href} />
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" content={post.title} />
-            <meta name="twitter:description" content={post.content} />
-            <meta name="twitter:image" content={post.titleImage} />
-            <link rel="icon" type="image/svg+xml" href={post.titleImage} />
-    </Helmet>
-            
-            <Content>
-                <ToggleButton onClick={() => setSidebarOpen(!isSidebarOpen)}>
-                    {isSidebarOpen ? 'Close' : 'Menu'}
-                </ToggleButton>
+            <Helmet>
+                <title>{post ? `${post.title} | HogwartsEdx` : 'Loading...'}</title>
+                <meta name="description" content={post.content} />
+                <meta property="og:title" content={post.title} />
+                <meta property="og:description" content={post.content} />
+                <meta property="og:image" content={post.titleImage} />
+                <meta property="og:url" content={window.location.href} />
+                <meta name="twitter:title" content={post.title} />
+                <meta name="twitter:description" content={post.content} />
+                <meta name="twitter:image" content={post.titleImage} />
+                <meta name="twitter:card" content="summary_large_image" />
+            </Helmet>
+            <ToastContainer />
+            <ToggleButton onClick={() => setSidebarOpen(!isSidebarOpen)}>
+                {isSidebarOpen ? 'Close Sidebar' : 'Open Sidebar'}
+            </ToggleButton>
+            <SidebarContainer isOpen={isSidebarOpen}>
+                <SidebarHeader>Subtitles</SidebarHeader>
+                <SubtitlesList>
+                    {post.subtitles.map((subtitle, index) => (
+                        <SubtitleItem key={index}>
+                            <Button onClick={() => scrollToSection(subtitle.id)}>
+                                {subtitle.title}
+                            </Button>
+                        </SubtitleItem>
+                    ))}
+                </SubtitlesList>
+            </SidebarContainer>
+            <Content color={post.textColor} fontFamily={post.fontFamily}>
                 <PostHeader>{post.title}</PostHeader>
-                {post.titleImage && (
-                    <Zoom>
-                        <img
-                            src={post.titleImage}
-                            alt={post.title}
-                            style={{ width: '100%', maxWidth: '600px', margin: '0 auto', display: 'block' }}
-                        />
-                    </Zoom>
-                )}
-                {post.titleVideo && (
-                    <video controls style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}>
-                        <source src={post.titleVideo} type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
-                )}
-                <p>Date Published : {post.date}</p>
-                <p>Author: {post.author}</p>
-                <p>{post.content}</p>
-
+                {post.content.split('\n').map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
+                ))}
                 {post.subtitles.map((subtitle, index) => (
-                    <div key={index} id={`subtitle-${index}`}>
-                        <SubtitleHeader>{subtitle.title}</SubtitleHeader>
-                        {subtitle.image && (
-                            <Zoom>
-                                <img
-                                    src={subtitle.image}
-                                    alt={subtitle.title}
-                                    style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}
-                                />
-                            </Zoom>
-                        )}
-                        {subtitle.video && (
-                            <video controls style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}>
-                                <source src={subtitle.video} />
+                    <div key={index}>
+                        <SubtitleHeader id={subtitle.id}>{subtitle.title}</SubtitleHeader>
+                        {subtitle.content.split('\n').map((paragraph, idx) => (
+                            <p key={idx}>{paragraph}</p>
+                        ))}
+                        {subtitle.images.map((image, idx) => (
+                            <Suspense key={idx} fallback={<div>Loading image...</div>}>
+                                <Zoom>
+                                    <img src={image.url} alt={image.caption} style={{ maxWidth: '100%', margin: '20px 0' }} />
+                                </Zoom>
+                            </Suspense>
+                        ))}
+                        {subtitle.codeSnippets.map((codeSnippet, idx) => (
+                            <CodeSnippetContainer key={idx}>
+                                <Suspense fallback={<div>Loading code snippet...</div>}>
+                                    <CopyToClipboard text={codeSnippet.code} onCopy={handleCopyCode}>
+                                        <CopyButton>Copy</CopyButton>
+                                    </CopyToClipboard>
+                                    <SyntaxHighlighter language={codeSnippet.language} style={vs}>
+                                        {codeSnippet.code}
+                                    </SyntaxHighlighter>
+                                </Suspense>
+                            </CodeSnippetContainer>
+                        ))}
+                        {subtitle.videos.map((video, idx) => (
+                            <video key={idx} controls style={{ maxWidth: '100%', margin: '20px 0' }} loading="lazy">
+                                <source src={video.url} type="video/mp4" />
                                 Your browser does not support the video tag.
                             </video>
-                        )}
-                        <ul>
-                            {subtitle.bulletPoints.map((point, pointIndex) => (
-                                <li key={pointIndex} style={{ marginBottom: '10px' }}>
-                                    {point.text}
-                                    {point.image && (
-                                        <Zoom>
-                                            <img
-                                                src={point.image}
-                                                alt={point.text}
-                                                style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }}
-                                            />
-                                        </Zoom>
-                                    )}
-                                    {point.video && (
-                                        <video controls style={{ width: '100%', maxWidth: '400px', margin: '10px 0' }}>
-                                            <source src={point.video} type="video/mp4" />
-                                            Your browser does not support the video tag.
-                                        </video>
-                                    )}
-                                    {point.codeSnippet && (
-                                        <CodeSnippetContainer>
-                                            <CopyToClipboard text={point.codeSnippet} onCopy={handleCopyCode}>
-                                                <CopyButton>Copy</CopyButton>
-                                            </CopyToClipboard>
-                                            <SyntaxHighlighter language="javascript" style={vs}>
-                                                {point.codeSnippet}
-                                            </SyntaxHighlighter>
-                                        </CodeSnippetContainer>
-                                    )}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                ))}
-{post.superTitles && 
+                        ))}
+                        {post.superTitles && 
  post.superTitles.length > 0 && 
  post.superTitles.some(superTitle => 
     superTitle.superTitle.trim() !== '' &&
@@ -432,36 +406,20 @@ const PostPage = () => {
         </ResponsiveContent>
     </ComparisonTableContainer>
 )}
-                
-                {post.summary && (
-                    <SummaryContainer id="summary">
-                        <SubtitleHeader>Summary</SubtitleHeader>
-                        <p>{post.summary}</p>
-                    </SummaryContainer>
-                )}
-                <CompleteButton
-                    onClick={handleMarkAsCompleted}
-                    disabled={isCompleted}
-                    isCompleted={isCompleted}
-                >
-                    {isCompleted ? 'Completed' : 'Mark as Completed'}
+ {subtitle.summary && (
+                            <SummaryContainer>
+                                <h3>Summary</h3>
+                                {subtitle.summary.split('\n').map((paragraph, idx) => (
+                                    <p key={idx}>{paragraph}</p>
+                                ))}
+                            </SummaryContainer>
+                        )}
+                    </div>
+                ))}
+                <CompleteButton onClick={handleMarkAsCompleted} isCompleted={isCompleted}>
+                    {isCompleted ? 'Post Completed' : 'Mark as Completed'}
                 </CompleteButton>
             </Content>
-            <SidebarContainer isOpen={isSidebarOpen}>
-                <SidebarHeader>Contents</SidebarHeader>
-                <SubtitlesList>
-                    {post.subtitles.map((subtitle, index) => (
-                        <SubtitleItem key={index}>
-                            <Button onClick={() => scrollToSection(`subtitle-${index}`)}>{subtitle.title}</Button>
-                        </SubtitleItem>
-                    ))}
-                      {post.summary && (
-                        <SubtitleItem>
-                            <Button onClick={() => scrollToSection('summary')}>Summary</Button>
-                        </SubtitleItem>
-                    )}
-                </SubtitlesList>
-            </SidebarContainer>
         </Container>
     );
 };
