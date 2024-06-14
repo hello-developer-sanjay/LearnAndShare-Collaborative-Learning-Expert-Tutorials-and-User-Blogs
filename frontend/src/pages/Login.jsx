@@ -179,7 +179,7 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = 'https://hogwarts-api-31may.onrender.com/api/auth/google';
+    window.location.href = 'https://hogwarts-api-14jun.onrender.com/api/auth/google';
   };
 
   return (
