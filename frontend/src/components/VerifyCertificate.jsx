@@ -183,7 +183,7 @@ const VerifyCertificate = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    axios.get('https://hogwarts-api-31may.onrender.com/api/certificates', { params: searchCriteria })
+    axios.get('https://hogwarts-api-14jun.onrender.com/api/certificates', { params: searchCriteria })
       .then(response => {
         setCertificates(response.data);
         setLoading(false);
@@ -196,7 +196,7 @@ const VerifyCertificate = () => {
 
   const handleDownload = (cert) => {
     console.log(`Requesting download for certificate with uniqueId: ${cert.uniqueId}`);
-    axios.get(`https://hogwarts-api-31may.onrender.com/api/certificates/${cert.uniqueId}/download`)
+    axios.get(`https://hogwarts-api-14jun.onrender.com/api/certificates/${cert.uniqueId}/download`)
       .then(response => {
         console.log('Signed URL received:', response.data.url);
         const url = response.data.url;
