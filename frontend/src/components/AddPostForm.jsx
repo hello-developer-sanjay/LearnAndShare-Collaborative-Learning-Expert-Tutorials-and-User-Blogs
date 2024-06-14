@@ -140,7 +140,7 @@ const addItem = (superTitleIndex, attributeIndex) => {
         formData.append('image', file);
 
         try {
-            const res = await axios.post('https://hogwartsedx-backend-29may.onrender.com/upload/image', formData, {
+            const res = await axios.post('https://hogwarts-api-14jun.onrender.com/upload/image', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setImage(res.data.filePath);
@@ -155,7 +155,7 @@ const addItem = (superTitleIndex, attributeIndex) => {
         formData.append('video', file);
 
         try {
-            const res = await axios.post('https://hogwartsedx-backend-29may.onrender.com/   upload/video', formData, {
+            const res = await axios.post('https://hogwarts-api-14jun.onrender.com/upload/video', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setVideo(res.data.filePath);
