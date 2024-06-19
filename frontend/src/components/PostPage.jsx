@@ -278,10 +278,7 @@ const PostPage = () => {
                   <Helmet>
                     <title>{post ? `${post.title} | HogwartsEdx` : 'Loading...'}</title>
                                     <title>{post ? `${post.title} | HogwartsEdx` : 'Loading...'}</title>
-        <meta
-            name="description"
-            content={post.content}
-        />
+      
             <meta property="og:title" content={post.title} />
             <meta property="og:description" content={post.content} />
             <meta property="og:image" content={post.titleImage} />
