@@ -7,7 +7,6 @@ import DOMPurify from 'dompurify';
 import styled from 'styled-components';
 import { Tooltip } from '@material-ui/core';
 
-// Styled Components
 const FormContainer = styled.div`
     max-width: 800px;
     margin: 0 auto;
