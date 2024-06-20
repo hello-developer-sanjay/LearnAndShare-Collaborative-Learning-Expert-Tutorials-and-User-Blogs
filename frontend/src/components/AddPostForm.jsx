@@ -1,121 +1,106 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { addPost } from '../redux/actions/postActions';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import DOMPurify from 'dompurify';
-import { addPost } from '../../actions/postActions';
 
-const FormContainer = styled(motion.div)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-  background: #f9f9f9;
-  border-radius: 10px;
+const FormContainer = styled.div`
+  width: 100%;
   max-width: 1200px;
   margin: auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  box-sizing: border-box;
 `;
 
-const Title = styled.h1`
-  font-size: 2.5rem;
-  color: #333;
-  margin-bottom: 1rem;
+const Title = styled.h2`
   text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Arial, sans-serif';
+  color: #333;
 `;
 
 const GridContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem;
-  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (min-width: 1024px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 `;
 
 const Card = styled(motion.div)`
-  background: white;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  flex: 1;
-  min-width: 280px;
-  max-width: 400px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  align-items: center;
+  box-sizing: border-box;
 `;
 
-const CardTitle = styled.h2`
-  font-size: 1.25rem;
+const CardTitle = styled.h3`
+  margin-bottom: 20px;
+  font-family: 'Arial, sans-serif';
   color: #555;
-  margin-bottom: 0.5rem;
 `;
 
 const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  width: 100%;
+  margin-bottom: 15px;
 `;
 
 const Label = styled.label`
-  font-size: 1rem;
-  color: #777;
+  display: block;
+  margin-bottom: 5px;
+  font-family: 'Arial, sans-serif';
+  color: #666;
 `;
 
 const Input = styled.input`
-  padding: 0.75rem;
-  font-size: 1rem;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  &:focus {
-    outline: none;
-    border-color: #007BFF;
-  }
+  border-radius: 4px;
+  font-family: 'Arial, sans-serif';
+  box-sizing: border-box;
 `;
 
 const TextArea = styled.textarea`
-  padding: 0.75rem;
-  font-size: 1rem;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  resize: none;
-  &:focus {
-    outline: none;
-    border-color: #007BFF;
-  }
+  border-radius: 4px;
+  font-family: 'Arial, sans-serif';
+  box-sizing: border-box;
+  min-height: 100px;
 `;
 
-const Button = styled(motion.button)`
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  color: white;
+const AddButton = styled(motion.button)`
   background: #007BFF;
+  color: white;
+  padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  font-family: 'Arial, sans-serif';
+  transition: background 0.3s;
+
   &:hover {
     background: #0056b3;
   }
-  &:active {
-    background: #004080;
-  }
-`;
 
-const AddButton = styled(Button)`
-  background: #28a745;
-  &:hover {
-    background: #218838;
-  }
   &:active {
-    background: #1e7e34;
+    background: #003f7f;
   }
 `;
 
 const AddPostForm = () => {
-  const dispatch = useDispatch();
-  const user = useSelector(state => state.auth.user);
-
   const [title, setTitle] = useState('');
   const [titleImage, setTitleImage] = useState(null);
   const [content, setContent] = useState('');
@@ -124,10 +109,13 @@ const AddPostForm = () => {
   const [summary, setSummary] = useState('');
   const [video, setVideo] = useState(null);
   const [superTitles, setSuperTitles] = useState([{ superTitle: '', attributes: [{ attribute: '', items: [{ title: '', bulletPoints: [''] }] }] }]);
-  const categories = ['VS Code', 'React', 'JavaScript', 'CSS', 'HTML'];
 
-  const handleImageUpload = (e, setImage) => {
-    const file = e.target.files[0];
+  const dispatch = useDispatch();
+  const categories = ['VS Code', 'React', 'JavaScript', 'CSS', 'HTML']; // example categories
+  const user = useSelector(state => state.auth.user);
+
+  const handleImageUpload = (event, setImage) => {
+    const file = event.target.files[0];
     const reader = new FileReader();
     reader.onloadend = () => {
       setImage(reader.result);
@@ -137,8 +125,8 @@ const AddPostForm = () => {
     }
   };
 
-  const handleVideoUpload = e => {
-    const file = e.target.files[0];
+  const handleVideoUpload = (event) => {
+    const file = event.target.files[0];
     const reader = new FileReader();
     reader.onloadend = () => {
       setVideo(reader.result);
@@ -148,38 +136,16 @@ const AddPostForm = () => {
     }
   };
 
-  const handleSubtitleChange = (index, field, value) => {
+  const handleSubtitleChange = (index, key, value) => {
     const newSubtitles = [...subtitles];
-    newSubtitles[index][field] = value;
+    newSubtitles[index][key] = value;
     setSubtitles(newSubtitles);
   };
 
-  const handleBulletPointChange = (subtitleIndex, pointIndex, field, value) => {
+  const handleBulletPointChange = (subtitleIndex, pointIndex, key, value) => {
     const newSubtitles = [...subtitles];
-    newSubtitles[subtitleIndex].bulletPoints[pointIndex][field] = value;
+    newSubtitles[subtitleIndex].bulletPoints[pointIndex][key] = value;
     setSubtitles(newSubtitles);
-  };
-
-  const handleSuperTitleChange = (superIndex, field, value) => {
-    const newSuperTitles = [...superTitles];
-    newSuperTitles[superIndex][field] = value;
-    setSuperTitles(newSuperTitles);
-  };
-
-  const handleAttributeChange = (superIndex, attrIndex, field, value) => {
-    const newSuperTitles = [...superTitles];
-    newSuperTitles[superIndex].attributes[attrIndex][field] = value;
-    setSuperTitles(newSuperTitles);
-  };
-
-  const handleItemChange = (superIndex, attrIndex, itemIndex, field, value) => {
-    const newSuperTitles = [...superTitles];
-    newSuperTitles[superIndex].attributes[attrIndex].items[itemIndex][field] = value;
-    setSuperTitles(newSuperTitles);
-  };
-
-  const addSubtitle = () => {
-    setSubtitles([...subtitles, { title: '', image: null, bulletPoints: [{ text: '', image: null, codeSnippet: '' }] }]);
   };
 
   const addBulletPoint = (index) => {
@@ -188,13 +154,25 @@ const AddPostForm = () => {
     setSubtitles(newSubtitles);
   };
 
-  const addSuperTitle = () => {
-    setSuperTitles([...superTitles, { superTitle: '', attributes: [{ attribute: '', items: [{ title: '', bulletPoints: [''] }] }] }]);
+  const addSubtitle = () => {
+    setSubtitles([...subtitles, { title: '', image: null, bulletPoints: [{ text: '', image: null, codeSnippet: '' }] }]);
   };
 
-  const addAttribute = (superIndex) => {
+  const handleSuperTitleChange = (index, key, value) => {
     const newSuperTitles = [...superTitles];
-    newSuperTitles[superIndex].attributes.push({ attribute: '', items: [{ title: '', bulletPoints: [''] }] });
+    newSuperTitles[index][key] = value;
+    setSuperTitles(newSuperTitles);
+  };
+
+  const handleAttributeChange = (superIndex, attrIndex, key, value) => {
+    const newSuperTitles = [...superTitles];
+    newSuperTitles[superIndex].attributes[attrIndex][key] = value;
+    setSuperTitles(newSuperTitles);
+  };
+
+  const handleItemChange = (superIndex, attrIndex, itemIndex, key, value) => {
+    const newSuperTitles = [...superTitles];
+    newSuperTitles[superIndex].attributes[attrIndex].items[itemIndex][key] = value;
     setSuperTitles(newSuperTitles);
   };
 
@@ -204,8 +182,18 @@ const AddPostForm = () => {
     setSuperTitles(newSuperTitles);
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
+  const addAttribute = (superIndex) => {
+    const newSuperTitles = [...superTitles];
+    newSuperTitles[superIndex].attributes.push({ attribute: '', items: [{ title: '', bulletPoints: [''] }] });
+    setSuperTitles(newSuperTitles);
+  };
+
+  const addSuperTitle = () => {
+    setSuperTitles([...superTitles, { superTitle: '', attributes: [{ attribute: '', items: [{ title: '', bulletPoints: [''] }] }] }]);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
     try {
       const sanitizedContent = DOMPurify.sanitize(content);
       const sanitizedSummary = DOMPurify.sanitize(summary);
@@ -224,11 +212,7 @@ const AddPostForm = () => {
   };
 
   return (
-    <FormContainer
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
+    <FormContainer>
       <Title>Add Post</Title>
       <form onSubmit={handleSubmit}>
         <GridContainer>
@@ -254,117 +238,7 @@ const AddPostForm = () => {
                 type="file"
                 onChange={e => handleImageUpload(e, setTitleImage)}
               />
-              {titleImage && <img src={titleImage} alt="Title" style={{ width: '100%', borderRadius: '10px', marginTop: '10px' }} />}
-            </FormGroup>
-          </Card>
-          <Card
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <CardTitle>Content</CardTitle>
-            <FormGroup>
-              <Label>Content</Label>
-              <TextArea
-                rows="6"
-                placeholder="Content"
-                value={content}
-                onChange={e => setContent(e.target.value)}
-                required
-              />
-            </FormGroup>
-          </Card>
-          <Card
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <CardTitle>Category</CardTitle>
-            <FormGroup>
-              <Label>Category</Label>
-              <Input
-                as="select"
-                value={category}
-                onChange={e => setCategory(e.target.value)}
-              >
-                {categories.map(cat => (
-                  <option key={cat} value={cat}>{cat}</option>
-                ))}
-              </Input>
-            </FormGroup>
-          </Card>
-          <Card
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <CardTitle>Subtitles</CardTitle>
-            {subtitles.map((subtitle, index) => (
-              <Card
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <FormGroup>
-                  <Label>Subtitle</Label>
-                  <Input
-                    type="text"
-                    placeholder="Subtitle"
-                    value={subtitle.title}
-                    onChange={e => handleSubtitleChange(index, 'title', e.target.value)}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label>Subtitle Image</Label>
-                  <Input
-                    type="file"
-                    onChange={e => handleImageUpload(e, image => handleSubtitleChange(index, 'image', image))}
-                  />
-                  {subtitle.image && <img src={subtitle.image} alt="Subtitle" style={{ width: '100%', borderRadius: '10px', marginTop: '10px' }} />}
-                </FormGroup>
-                {subtitle.bulletPoints.map((point, pointIndex) => (
-                  <FormGroup key={pointIndex}>
-                    <Label>Bullet Point {pointIndex + 1}</Label>
-                    <Input
-                      type="text"
-                      placeholder="Bullet Point Text"
-                      value={point.text}
-                      onChange={e => handleBulletPointChange(index, pointIndex, 'text', e.target.value)}
-                    />
-                    <Input
-                      type="file"
-                      onChange={e => handleImageUpload(e, image => handleBulletPointChange(index, pointIndex, 'image', image))}
-                    />
-                    {point.image && <img src={point.image} alt={`Bullet Point ${pointIndex + 1}`} style={{ width: '100%', borderRadius: '10px', marginTop: '10px' }} />}
-                    <TextArea
-                      rows="3"
-                      placeholder="Code Snippet"
-                      value={point.codeSnippet}
-                      onChange={e => handleBulletPointChange(index, pointIndex, 'codeSnippet', e.target.value)}
-                    />
-                  </FormGroup>
-                ))}
-                <Button type="button" onClick={() => addBulletPoint(index)}>Add Bullet Point</Button>
-              </Card>
-            ))}
-            <Button type="button" onClick={addSubtitle}>Add Subtitle</Button>
-          </Card>
-          <Card
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <CardTitle>Summary & Video</CardTitle>
-            <FormGroup>
-              <Label>Summary</Label>
-              <TextArea
-                rows="4"
-                placeholder="Summary"
-                value={summary}
-                onChange={e => setSummary(e.target.value)}
-                required
-              />
+              {titleImage &&               <img src={titleImage} alt="Title" width="100" style={{ marginTop: '10px' }} />}
             </FormGroup>
             <FormGroup>
               <Label>Video</Label>
@@ -372,99 +246,240 @@ const AddPostForm = () => {
                 type="file"
                 onChange={handleVideoUpload}
               />
-              {video && <video controls src={video} style={{ width: '100%', borderRadius: '10px', marginTop: '10px' }} />}
+              {video && <video controls src={video} width="300" style={{ marginTop: '10px' }} />}
             </FormGroup>
           </Card>
+
           <Card
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <CardTitle>Content</CardTitle>
+            <FormGroup>
+              <Label>Content</Label>
+              <TextArea
+                placeholder="Content"
+                value={content}
+                onChange={e => setContent(e.target.value)}
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label>Category</Label>
+              <select
+                value={category}
+                onChange={e => setCategory(e.target.value)}
+              >
+                {categories.map(cat => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+            </FormGroup>
+            <FormGroup>
+              <Label>Summary</Label>
+              <TextArea
+                placeholder="Summary"
+                value={summary}
+                onChange={e => setSummary(e.target.value)}
+                required
+              />
+            </FormGroup>
+          </Card>
+
+          <Card
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <CardTitle>Subtitles</CardTitle>
+            {subtitles.map((subtitle, index) => (
+              <div key={index}>
+                <FormGroup>
+                  <Label>Subtitle</Label>
+                  <Input
+                    type="text"
+                    placeholder="Subtitle"
+                    value={subtitle.title}
+                    onChange={e => handleSubtitleChange(index, 'title', e.target.value)}
+                    required
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Subtitle Image</Label>
+                  <Input
+                    type="file"
+                    onChange={e => handleImageUpload(e, (image) => handleSubtitleChange(index, 'image', image))}
+                  />
+                  {subtitle.image && <img src={subtitle.image} alt="Subtitle" width="100" style={{ marginTop: '10px' }} />}
+                </FormGroup>
+                {subtitle.bulletPoints.map((point, pointIndex) => (
+                  <div key={pointIndex}>
+                    <FormGroup>
+                      <Label>Bullet Point</Label>
+                      <Input
+                        type="text"
+                        placeholder="Bullet Point"
+                        value={point.text}
+                        onChange={e => handleBulletPointChange(index, pointIndex, 'text', e.target.value)}
+                        required
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <Label>Bullet Point Image</Label>
+                      <Input
+                        type="file"
+                        onChange={e => handleImageUpload(e, (image) => handleBulletPointChange(index, pointIndex, 'image', image))}
+                      />
+                      {point.image && <img src={point.image} alt="Bullet Point" width="100" style={{ marginTop: '10px' }} />}
+                    </FormGroup>
+                    <FormGroup>
+                      <Label>Code Snippet</Label>
+                      <TextArea
+                        placeholder="Code Snippet"
+                        value={point.codeSnippet}
+                        onChange={e => handleBulletPointChange(index, pointIndex, 'codeSnippet', e.target.value)}
+                        required
+                      />
+                    </FormGroup>
+                  </div>
+                ))}
+                <FormGroup>
+                  <AddButton
+                    type="button"
+                    onClick={() => addBulletPoint(index)}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    Add Bullet Point
+                  </AddButton>
+                </FormGroup>
+              </div>
+            ))}
+            <FormGroup>
+              <AddButton
+                type="button"
+                onClick={addSubtitle}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                Add Subtitle
+              </AddButton>
+            </FormGroup>
+          </Card>
+
+          <Card
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
           >
             <CardTitle>Super Titles</CardTitle>
-            {superTitles.map((superTitle, superIndex) => (
-              <Card
-                key={superIndex}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
+            {superTitles.map((superTitle, superTitleIndex) => (
+              <div key={superTitleIndex}>
                 <FormGroup>
                   <Label>Super Title</Label>
                   <Input
                     type="text"
                     placeholder="Super Title"
                     value={superTitle.superTitle}
-                    onChange={e => handleSuperTitleChange(superIndex, 'superTitle', e.target.value)}
+                    onChange={e => handleSuperTitleChange(superTitleIndex, 'superTitle', e.target.value)}
+                    required
                   />
                 </FormGroup>
-                {superTitle.attributes.map((attribute, attrIndex) => (
-                  <Card
-                    key={attrIndex}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                  >
+                {superTitle.attributes.map((attribute, attributeIndex) => (
+                  <div key={attributeIndex}>
                     <FormGroup>
                       <Label>Attribute</Label>
                       <Input
                         type="text"
                         placeholder="Attribute"
                         value={attribute.attribute}
-                        onChange={e => handleAttributeChange(superIndex, attrIndex, 'attribute', e.target.value)}
+                        onChange={e => handleAttributeChange(superTitleIndex, attributeIndex, 'attribute', e.target.value)}
+                        required
                       />
                     </FormGroup>
                     {attribute.items.map((item, itemIndex) => (
-                      <Card
-                        key={itemIndex}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                      >
+                      <div key={itemIndex}>
                         <FormGroup>
-                          <Label>Item Title</Label>
+                          <Label>Title</Label>
                           <Input
                             type="text"
-                            placeholder="Item Title"
+                            placeholder="Title"
                             value={item.title}
-                            onChange={e => handleItemChange(superIndex, attrIndex, itemIndex, 'title', e.target.value)}
+                            onChange={e => handleItemChange(superTitleIndex, attributeIndex, itemIndex, 'title', e.target.value)}
+                            required
                           />
                         </FormGroup>
-                        {item.bulletPoints.map((bp, bpIndex) => (
-                          <FormGroup key={bpIndex}>
-                            <Label>Bullet Point {bpIndex + 1}</Label>
-                            <Input
-                              type="text"
-                              placeholder="Bullet Point"
-                              value={bp}
-                              onChange={e => {
-                                const newSuperTitles = [...superTitles];
-                                newSuperTitles[superIndex].attributes[attrIndex].items[itemIndex].bulletPoints[bpIndex] = e.target.value;
-                                setSuperTitles(newSuperTitles);
-                              }}
-                            />
-                          </FormGroup>
+                        {item.bulletPoints.map((bulletPoint, bulletPointIndex) => (
+                          <div key={bulletPointIndex}>
+                            <FormGroup>
+                              <Label>Bullet Point</Label>
+                              <Input
+                                type="text"
+                                placeholder="Bullet Point"
+                                value={bulletPoint}
+                                onChange={e => {
+                                  const newBulletPoints = [...superTitles[superTitleIndex].attributes[attributeIndex].items[itemIndex].bulletPoints];
+                                  newBulletPoints[bulletPointIndex] = e.target.value;
+                                  handleItemChange(superTitleIndex, attributeIndex, itemIndex, 'bulletPoints', newBulletPoints);
+                                }}
+                                required
+                              />
+                            </FormGroup>
+                          </div>
                         ))}
-                        <Button type="button" onClick={() => addItem(superIndex, attrIndex)}>Add Item</Button>
-                      </Card>
+                        <FormGroup>
+                          <AddButton
+                            type="button"
+                            onClick={() => addItem(superTitleIndex, attributeIndex)}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                          >
+                            Add Bullet Point
+                          </AddButton>
+                        </FormGroup>
+                      </div>
                     ))}
-                    <Button type="button" onClick={() => addAttribute(superIndex)}>Add Attribute</Button>
-                  </Card>
+                    <FormGroup>
+                      <AddButton
+                        type="button"
+                        onClick={() => addAttribute(superTitleIndex)}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        Add Attribute
+                      </AddButton>
+                    </FormGroup>
+                  </div>
                 ))}
-                <Button type="button" onClick={addSuperTitle}>Add Super Title</Button>
-              </Card>
+              </div>
             ))}
+            <FormGroup>
+              <AddButton
+                type="button"
+                onClick={addSuperTitle}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                Add Super Title
+              </AddButton>
+            </FormGroup>
           </Card>
         </GridContainer>
-        <AddButton
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          type="submit"
-        >
-          Add Post
-        </AddButton>
+
+        <FormGroup>
+          <AddButton
+            type="submit"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            Submit
+          </AddButton>
+        </FormGroup>
       </form>
     </FormContainer>
   );
 };
 
 export default AddPostForm;
+
