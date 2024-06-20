@@ -9,8 +9,8 @@ import { Tooltip } from '@material-ui/core';
 
 // Styled Components
 const FormContainer = styled.div`
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: 900px;
+    margin: 20px auto;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
@@ -75,17 +75,18 @@ const Button = styled.button`
 
 const IconButton = styled(Button)`
     background: none;
-    color: inherit;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    font: inherit;
-    outline: inherit;
-    display: block;
-    margin: 10px 0;
+    color: #007bff;
+    border: 1px solid #007bff;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    margin: 5px 0;
+
+    &:hover {
+        background-color: #e6f7ff;
+        border-color: #0056b3;
+    }
 `;
 
-// Main Component
 const AddPostForm = () => {
     const dispatch = useDispatch();
     const [title, setTitle] = useState('');
