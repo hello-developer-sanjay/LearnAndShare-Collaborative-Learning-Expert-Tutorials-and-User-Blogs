@@ -52,6 +52,23 @@ const Button = styled.button`
     }
 `;
 
+const AddButton = styled(Button)`
+    background-color: #28a745;
+
+    &:hover {
+        background-color: #218838;
+    }
+`;
+
+const Card = styled.div`
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+`;
+
 const AddPostForm = () => {
     const dispatch = useDispatch();
     const [title, setTitle] = useState('');
@@ -67,49 +84,47 @@ const AddPostForm = () => {
         'Gatsby', 'Svelte', 'TypeScript', 'GraphQL', 'PHP', 'Python', 'Ruby', 'Java', 'C#', 'C++', 'Swift', 
         'Kotlin', 'Dart', 'Flutter', 'React Native'
     ];
-    const [attributes, setAttributes] = useState([{ superTitle: '', attributes: [{ attributeName: '', titleItems: [{ title: '' }] }] }]);
     const [superTitles, setSuperTitles] = useState([{ superTitle: '', attributes: [{ attribute: '', items: [{ title: '', bulletPoints: [''] }] }] }]);
 
-   
- // Handle changes in super titles
-const handleSuperTitleChange = (index, field, value) => {
-    const newSuperTitles = [...superTitles];
-    newSuperTitles[index][field] = value;
-    setSuperTitles(newSuperTitles);
-};
+    // Handle changes in super titles
+    const handleSuperTitleChange = (index, field, value) => {
+        const newSuperTitles = [...superTitles];
+        newSuperTitles[index][field] = value;
+        setSuperTitles(newSuperTitles);
+    };
 
-// Handle changes in attributes
-const handleAttributeChange = (superTitleIndex, attributeIndex, field, value) => {
-    const newSuperTitles = [...superTitles];
-    newSuperTitles[superTitleIndex].attributes[attributeIndex][field] = value;
-    setSuperTitles(newSuperTitles);
-};
+    // Handle changes in attributes
+    const handleAttributeChange = (superTitleIndex, attributeIndex, field, value) => {
+        const newSuperTitles = [...superTitles];
+        newSuperTitles[superTitleIndex].attributes[attributeIndex][field] = value;
+        setSuperTitles(newSuperTitles);
+    };
 
-// Handle changes in items
-const handleItemChange = (superTitleIndex, attributeIndex, itemIndex, field, value) => {
-    const newSuperTitles = [...superTitles];
-    newSuperTitles[superTitleIndex].attributes[attributeIndex].items[itemIndex][field] = value;
-    setSuperTitles(newSuperTitles);
-};
+    // Handle changes in items
+    const handleItemChange = (superTitleIndex, attributeIndex, itemIndex, field, value) => {
+        const newSuperTitles = [...superTitles];
+        newSuperTitles[superTitleIndex].attributes[attributeIndex].items[itemIndex][field] = value;
+        setSuperTitles(newSuperTitles);
+    };
 
-// Add a new super title
-const addSuperTitle = () => {
-    setSuperTitles([...superTitles, { superTitle: '', attributes: [{ attribute: '', items: [{ title: '', bulletPoints: [''] }] }] }]);
-};
+    // Add a new super title
+    const addSuperTitle = () => {
+        setSuperTitles([...superTitles, { superTitle: '', attributes: [{ attribute: '', items: [{ title: '', bulletPoints: [''] }] }] }]);
+    };
 
-// Add a new attribute under a super title
-const addAttribute = (superTitleIndex) => {
-    const newSuperTitles = [...superTitles];
-    newSuperTitles[superTitleIndex].attributes.push({ attribute: '', items: [{ title: '', bulletPoints: [''] }] });
-    setSuperTitles(newSuperTitles);
-};
+    // Add a new attribute under a super title
+    const addAttribute = (superTitleIndex) => {
+        const newSuperTitles = [...superTitles];
+        newSuperTitles[superTitleIndex].attributes.push({ attribute: '', items: [{ title: '', bulletPoints: [''] }] });
+        setSuperTitles(newSuperTitles);
+    };
 
-// Add a new item under an attribute
-const addItem = (superTitleIndex, attributeIndex) => {
-    const newSuperTitles = [...superTitles];
-    newSuperTitles[superTitleIndex].attributes[attributeIndex].items.push({ title: '', bulletPoints: [''] });
-    setSuperTitles(newSuperTitles);
-};
+    // Add a new item under an attribute
+    const addItem = (superTitleIndex, attributeIndex) => {
+        const newSuperTitles = [...superTitles];
+        newSuperTitles[superTitleIndex].attributes[attributeIndex].items.push({ title: '', bulletPoints: [''] });
+        setSuperTitles(newSuperTitles);
+    };
 
     useEffect(() => {
         if (!user) {
@@ -188,7 +203,7 @@ const addItem = (superTitleIndex, attributeIndex) => {
                     codeSnippet: DOMPurify.sanitize(point.codeSnippet)
                 }))
             }));
-            dispatch(addPost(title, content, category, sanitizedSubtitles, summary, titleImage,superTitles, video));
+            dispatch(addPost(title, content, category, sanitizedSubtitles, summary, titleImage, superTitles, video));
             setTitle('');
             setTitleImage(null);
             setContent('');
@@ -226,14 +241,6 @@ const addItem = (superTitleIndex, attributeIndex) => {
                     {titleImage && <img src={titleImage} alt="Title" width="100" />}
                 </FormGroup>
                 <FormGroup>
-                    <Label>Video</Label>
-                    <Input 
-                        type="file" 
-                        onChange={handleVideoUpload} 
-                    />
-                    {video && <video controls src={video} width="300" />}
-                </FormGroup>
-                <FormGroup>
                     <Label>Content</Label>
                     <TextArea 
                         placeholder="Content" 
@@ -243,147 +250,153 @@ const addItem = (superTitleIndex, attributeIndex) => {
                     />
                 </FormGroup>
                 <FormGroup>
+                    <Label>Video</Label>
+                    <Input 
+                        type="file" 
+                        onChange={handleVideoUpload} 
+                    />
+                    {video && <video controls src={video} width="200" />}
+                </FormGroup>
+                <FormGroup>
                     <Label>Category</Label>
                     <select value={category} onChange={e => setCategory(e.target.value)}>
-                        {categories.map(cat => (
-                            <option key={cat} value={cat}>{cat}</option>
+                        {categories.map((cat, index) => (
+                            <option key={index} value={cat}>{cat}</option>
                         ))}
                     </select>
                 </FormGroup>
-                {subtitles.map((subtitle, index) => (
-                    <div key={index}>
-                        <FormGroup>
-                            <Label>Subtitle</Label>
-                            <Input 
-                                type="text" 
-                                placeholder="Subtitle" 
-                                value={subtitle.title} 
-                                onChange={e => handleSubtitleChange(index, 'title', e.target.value)} 
-                            />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label>Subtitle Image</Label>
-                            <Input 
-                                type="file" 
-                                onChange={e => handleImageUpload(e, (image) => handleSubtitleChange(index, 'image', image))} 
-                            />
-                            {subtitle.image && <img src={subtitle.image} alt="Subtitle" width="100" />}
-                        </FormGroup>
-                        {subtitle.bulletPoints.map((point, pointIndex) => (
-                            <div key={pointIndex}>
-                                <FormGroup>
-                                    <Label>Bullet Point</Label>
-                                    <Input 
-                                        type="text" 
-                                        placeholder="Bullet Point" 
-                                        value={point.text} 
-                                        onChange={e => handleBulletPointChange(index, pointIndex, 'text', e.target.value)} 
-                                    />
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label>Bullet Point Image</Label>
-                                    <Input 
-                                        type="file" 
-                                        onChange={e => handleImageUpload(e, (image) => handleBulletPointChange(index, pointIndex, 'image', image))} 
-                                    />
-                                    {point.image && <img src={point.image} alt="Bullet Point" width="100" />}
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label>Code Snippet</Label>
-                                    <TextArea 
-                                        placeholder="Code Snippet" 
-                                        value={point.codeSnippet} 
-                                        onChange={e => handleBulletPointChange(index, pointIndex, 'codeSnippet', e.target.value)} 
-                                    />
-                                </FormGroup>
-                            </div>
-                        ))}
-                        <FormGroup>
-                            <Button type="button" onClick={() => addBulletPoint(index)}>Add Bullet Point</Button>
-                        </FormGroup>
-                    </div>
-                ))} 
-
-
                 <FormGroup>
-                    <Button type="button" onClick={addSubtitle}>Add Subtitle</Button>
-                </FormGroup>
-
-
-{superTitles.map((superTitle, superTitleIndex) => (
-    <div key={superTitleIndex}>
-        <FormGroup>
-            <Label>Super Title</Label>
-            <Input
-                type="text"
-                placeholder="Super Title"
-                value={superTitle.superTitle}
-                onChange={(e) => handleSuperTitleChange(superTitleIndex, 'superTitle', e.target.value)}
-            />
-        </FormGroup>
-        {superTitle.attributes.map((attribute, attributeIndex) => (
-            <div key={attributeIndex}>
-                <FormGroup>
-                    <Label>Attribute</Label>
-                    <Input
-                        type="text"
-                        placeholder="Attribute"
-                        value={attribute.attribute}
-                        onChange={(e) => handleAttributeChange(superTitleIndex, attributeIndex, 'attribute', e.target.value)}
-                    />
-                </FormGroup>
-                {attribute.items.map((item, itemIndex) => (
-                    <div key={itemIndex}>
-                        <FormGroup>
-                            <Label>Title</Label>
-                            <Input
-                                type="text"
-                                placeholder="Title"
-                                value={item.title}
-                                onChange={(e) => handleItemChange(superTitleIndex, attributeIndex, itemIndex, 'title', e.target.value)}
-                            />
-                        </FormGroup>
-                        {item.bulletPoints.map((bulletPoint, bulletPointIndex) => (
-                            <FormGroup key={bulletPointIndex}>
-                                <Label>Bullet Point</Label>
-                                <Input
-                                    type="text"
-                                    placeholder="Bullet Point"
-                                    value={bulletPoint}
-                                    onChange={(e) => {
-                                        const newBulletPoints = [...superTitles[superTitleIndex].attributes[attributeIndex].items[itemIndex].bulletPoints];
-                                        newBulletPoints[bulletPointIndex] = e.target.value;
-                                        handleItemChange(superTitleIndex, attributeIndex, itemIndex, 'bulletPoints', newBulletPoints);
-                                    }}
+                    <Label>Subtitles</Label>
+                    {subtitles.map((subtitle, index) => (
+                        <Card key={index}>
+                            <FormGroup>
+                                <Label>Subtitle Title</Label>
+                                <Input 
+                                    type="text" 
+                                    value={subtitle.title} 
+                                    onChange={e => handleSubtitleChange(index, 'title', e.target.value)} 
                                 />
                             </FormGroup>
-                        ))}
-                        <FormGroup>
-                            <Button type="button" onClick={() => addItem(superTitleIndex, attributeIndex)}>Add Bullet Point</Button>
-                        </FormGroup>
-                    </div>
-                ))}
-                <FormGroup>
-                    <Button type="button" onClick={() => addAttribute(superTitleIndex)}>Add Attribute</Button>
+                            <FormGroup>
+                                <Label>Subtitle Image</Label>
+                                <Input 
+                                    type="file" 
+                                    onChange={e => handleImageUpload(e, (image) => {
+                                        const newSubtitles = [...subtitles];
+                                        newSubtitles[index].image = image;
+                                        setSubtitles(newSubtitles);
+                                    })} 
+                                />
+                                {subtitle.image && <img src={subtitle.image} alt="Subtitle" width="100" />}
+                            </FormGroup>
+                            {subtitle.bulletPoints.map((point, pointIndex) => (
+                                <Card key={pointIndex}>
+                                    <FormGroup>
+                                        <Label>Bullet Point Text</Label>
+                                        <TextArea 
+                                            value={point.text} 
+                                            onChange={e => handleBulletPointChange(index, pointIndex, 'text', e.target.value)} 
+                                        />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label>Bullet Point Image</Label>
+                                        <Input 
+                                            type="file" 
+                                            onChange={e => handleImageUpload(e, (image) => {
+                                                const newSubtitles = [...subtitles];
+                                                newSubtitles[index].bulletPoints[pointIndex].image = image;
+                                                setSubtitles(newSubtitles);
+                                            })} 
+                                        />
+                                        {point.image && <img src={point.image} alt="Bullet Point" width="100" />}
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label>Code Snippet</Label>
+                                        <TextArea 
+                                            value={point.codeSnippet} 
+                                            onChange={e => handleBulletPointChange(index, pointIndex, 'codeSnippet', e.target.value)} 
+                                        />
+                                    </FormGroup>
+                                </Card>
+                            ))}
+                            <Button type="button" onClick={() => addBulletPoint(index)}>Add Bullet Point</Button>
+                        </Card>
+                    ))}
+                    <Button type="button" onClick={addSubtitle}>Add Subtitle</Button>
                 </FormGroup>
-            </div>
-        ))}
-        <FormGroup>
-            <Button type="button" onClick={addSuperTitle}>Add Super Title</Button>
-        </FormGroup>
-    </div>
-))}
                 <FormGroup>
                     <Label>Summary</Label>
                     <TextArea 
                         placeholder="Summary" 
                         value={summary} 
                         onChange={e => setSummary(e.target.value)} 
+                        required 
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Button type="submit">Submit</Button>
+                    <Label>Super Titles</Label>
+                    {superTitles.map((superTitle, superIndex) => (
+                        <Card key={superIndex}>
+                            <FormGroup>
+                                <Label>Super Title</Label>
+                                <Input 
+                                    type="text" 
+                                    value={superTitle.superTitle} 
+                                    onChange={e => handleSuperTitleChange(superIndex, 'superTitle', e.target.value)} 
+                                />
+                            </FormGroup>
+                            {superTitle.attributes.map((attribute, attrIndex) => (
+                                <Card key={attrIndex}>
+                                    <FormGroup>
+                                        <Label>Attribute</Label>
+                                        <Input 
+                                            type="text" 
+                                            value={attribute.attribute} 
+                                            onChange={e => handleAttributeChange(superIndex, attrIndex, 'attribute', e.target.value)} 
+                                        />
+                                    </FormGroup>
+                                    {attribute.items.map((item, itemIndex) => (
+                                        <Card key={itemIndex}>
+                                            <FormGroup>
+                                                <Label>Item Title</Label>
+                                                <Input 
+                                                    type="text" 
+                                                    value={item.title} 
+                                                    onChange={e => handleItemChange(superIndex, attrIndex, itemIndex, 'title', e.target.value)} 
+                                                />
+                                            </FormGroup>
+                                            {item.bulletPoints.map((bullet, bulletIndex) => (
+                                                <Card key={bulletIndex}>
+                                                    <FormGroup>
+                                                        <Label>Bullet Point</Label>
+                                                        <Input 
+                                                            type="text" 
+                                                            value={bullet} 
+                                                            onChange={e => {
+                                                                const newSuperTitles = [...superTitles];
+                                                                newSuperTitles[superIndex].attributes[attrIndex].items[itemIndex].bulletPoints[bulletIndex] = e.target.value;
+                                                                setSuperTitles(newSuperTitles);
+                                                            }} 
+                                                        />
+                                                    </FormGroup>
+                                                </Card>
+                                            ))}
+                                            <Button type="button" onClick={() => {
+                                                const newSuperTitles = [...superTitles];
+                                                newSuperTitles[superIndex].attributes[attrIndex].items[itemIndex].bulletPoints.push('');
+                                                setSuperTitles(newSuperTitles);
+                                            }}>Add Bullet Point</Button>
+                                        </Card>
+                                    ))}
+                                    <Button type="button" onClick={() => addItem(superIndex, attrIndex)}>Add Item</Button>
+                                </Card>
+                            ))}
+                            <Button type="button" onClick={() => addAttribute(superIndex)}>Add Attribute</Button>
+                        </Card>
+                    ))}
+                    <Button type="button" onClick={addSuperTitle}>Add Super Title</Button>
                 </FormGroup>
+                <AddButton type="submit">Add Post</AddButton>
             </form>
         </FormContainer>
     );
