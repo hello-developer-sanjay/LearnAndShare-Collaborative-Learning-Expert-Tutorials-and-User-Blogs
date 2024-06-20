@@ -16,12 +16,21 @@ const FormContainer = styled.div`
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: grid;
-    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
 `;
 
 const Section = styled.div`
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     display: grid;
     gap: 20px;
+`;
+
+const FullWidthSection = styled(Section)`
+    grid-column: span 2;
 `;
 
 const SectionTitle = styled.h3`
@@ -107,40 +116,34 @@ const AddPostForm = () => {
     ];
     const [superTitles, setSuperTitles] = useState([{ superTitle: '', attributes: [{ attribute: '', items: [{ title: '', bulletPoints: [''] }] }] }]);
 
-    // Handle changes in super titles
     const handleSuperTitleChange = (index, field, value) => {
         const newSuperTitles = [...superTitles];
         newSuperTitles[index][field] = value;
         setSuperTitles(newSuperTitles);
     };
 
-    // Handle changes in attributes
     const handleAttributeChange = (superTitleIndex, attributeIndex, field, value) => {
         const newSuperTitles = [...superTitles];
         newSuperTitles[superTitleIndex].attributes[attributeIndex][field] = value;
         setSuperTitles(newSuperTitles);
     };
 
-    // Handle changes in items
     const handleItemChange = (superTitleIndex, attributeIndex, itemIndex, field, value) => {
         const newSuperTitles = [...superTitles];
         newSuperTitles[superTitleIndex].attributes[attributeIndex].items[itemIndex][field] = value;
         setSuperTitles(newSuperTitles);
     };
 
-    // Add a new super title
     const addSuperTitle = () => {
         setSuperTitles([...superTitles, { superTitle: '', attributes: [{ attribute: '', items: [{ title: '', bulletPoints: [''] }] }] }]);
     };
 
-    // Add a new attribute under a super title
     const addAttribute = (superTitleIndex) => {
         const newSuperTitles = [...superTitles];
         newSuperTitles[superTitleIndex].attributes.push({ attribute: '', items: [{ title: '', bulletPoints: [''] }] });
         setSuperTitles(newSuperTitles);
     };
 
-    // Add a new item under an attribute
     const addItem = (superTitleIndex, attributeIndex) => {
         const newSuperTitles = [...superTitles];
         newSuperTitles[superTitleIndex].attributes[attributeIndex].items.push({ title: '', bulletPoints: [''] });
@@ -241,176 +244,178 @@ const AddPostForm = () => {
 
     return (
         <FormContainer>
-            <h2>Add New Post</h2>
-            <form onSubmit={handleSubmit}>
-                <Section>
-                    <SectionTitle>Post Details</SectionTitle>
-                    <FormGroup>
-                        <Tooltip title="Enter the title of your post">
-                            <Label>Title</Label>
-                        </Tooltip>
-                        <Input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label>Title Image</Label>
-                        <Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, setTitleImage)} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Tooltip title="Enter the main content of your post">
-                            <Label>Content</Label>
-                        </Tooltip>
-                        <TextArea rows="10" value={content} onChange={(e) => setContent(e.target.value)} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Tooltip title="Select the category for your post">
-                            <Label>Category</Label>
-                        </Tooltip>
-                        <Select value={category} onChange={(e) => setCategory(e.target.value)}>
-                            {categories.map((cat) => (
-                                <option key={cat} value={cat}>{cat}</option>
-                            ))}
-                        </Select>
-                    </FormGroup>
-                </Section>
+            <FullWidthSection>
+                <h2>Add New Post</h2>
+                <form onSubmit={handleSubmit}>
+                    <Section>
+                        <SectionTitle>Post Details</SectionTitle>
+                        <FormGroup>
+                            <Tooltip title="Enter the title of your post">
+                                <Label>Title</Label>
+                            </Tooltip>
+                            <Input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label>Title Image</Label>
+                            <Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, setTitleImage)} />
+                        </FormGroup>
+                        <FormGroup>
+                            <Tooltip title="Enter the main content of your post">
+                                <Label>Content</Label>
+                            </Tooltip>
+                            <TextArea rows="10" value={content} onChange={(e) => setContent(e.target.value)} />
+                        </FormGroup>
+                        <FormGroup>
+                            <Tooltip title="Select the category for your post">
+                                <Label>Category</Label>
+                            </Tooltip>
+                            <Select value={category} onChange={(e) => setCategory(e.target.value)}>
+                                {categories.map((cat) => (
+                                    <option key={cat} value={cat}>{cat}</option>
+                                ))}
+                            </Select>
+                        </FormGroup>
+                    </Section>
 
-                <Section>
-                    <SectionTitle>Comparison Section</SectionTitle>
-                    {superTitles.map((superTitle, superTitleIndex) => (
-                        <div key={superTitleIndex}>
-                            <FormGroup>
-                                <Label>Super Title</Label>
-                                <Input
-                                    type="text"
-                                    value={superTitle.superTitle}
-                                    onChange={(e) => handleSuperTitleChange(superTitleIndex, 'superTitle', e.target.value)}
-                                />
-                            </FormGroup>
-                            {superTitle.attributes.map((attribute, attributeIndex) => (
-                                <div key={attributeIndex}>
-                                    <FormGroup>
-                                        <Label>Attribute</Label>
-                                        <Input
-                                            type="text"
-                                            value={attribute.attribute}
-                                            onChange={(e) => handleAttributeChange(superTitleIndex, attributeIndex, 'attribute', e.target.value)}
-                                        />
-                                    </FormGroup>
-                                    {attribute.items.map((item, itemIndex) => (
-                                        <div key={itemIndex}>
-                                            <FormGroup>
-                                                <Label>Item Title</Label>
-                                                <Input
-                                                    type="text"
-                                                    value={item.title}
-                                                    onChange={(e) => handleItemChange(superTitleIndex, attributeIndex, itemIndex, 'title', e.target.value)}
-                                                />
-                                            </FormGroup>
-                                            {item.bulletPoints.map((bulletPoint, bpIndex) => (
-                                                <FormGroup key={bpIndex}>
-                                                    <Label>Bullet Point</Label>
+                    <Section>
+                        <SectionTitle>Comparison Section</SectionTitle>
+                        {superTitles.map((superTitle, superTitleIndex) => (
+                            <div key={superTitleIndex}>
+                                <FormGroup>
+                                    <Label>Super Title</Label>
+                                    <Input
+                                        type="text"
+                                        value={superTitle.superTitle}
+                                        onChange={(e) => handleSuperTitleChange(superTitleIndex, 'superTitle', e.target.value)}
+                                    />
+                                </FormGroup>
+                                {superTitle.attributes.map((attribute, attributeIndex) => (
+                                    <div key={attributeIndex}>
+                                        <FormGroup>
+                                            <Label>Attribute</Label>
+                                            <Input
+                                                type="text"
+                                                value={attribute.attribute}
+                                                onChange={(e) => handleAttributeChange(superTitleIndex, attributeIndex, 'attribute', e.target.value)}
+                                            />
+                                        </FormGroup>
+                                        {attribute.items.map((item, itemIndex) => (
+                                            <div key={itemIndex}>
+                                                <FormGroup>
+                                                    <Label>Item Title</Label>
                                                     <Input
                                                         type="text"
-                                                        value={bulletPoint}
-                                                        onChange={(e) => {
-                                                            const newSuperTitles = [...superTitles];
-                                                            newSuperTitles[superTitleIndex].attributes[attributeIndex].items[itemIndex].bulletPoints[bpIndex] = e.target.value;
-                                                            setSuperTitles(newSuperTitles);
-                                                        }}
+                                                        value={item.title}
+                                                        onChange={(e) => handleItemChange(superTitleIndex, attributeIndex, itemIndex, 'title', e.target.value)}
                                                     />
                                                 </FormGroup>
-                                            ))}
-                                            <IconButton type="button" onClick={() => {
-                                                const newSuperTitles = [...superTitles];
-                                                newSuperTitles[superTitleIndex].attributes[attributeIndex].items[itemIndex].bulletPoints.push('');
-                                                setSuperTitles(newSuperTitles);
-                                            }}>
-                                                Add Bullet Point
-                                            </IconButton>
-                                        </div>
-                                    ))}
-                                    <IconButton type="button" onClick={() => addItem(superTitleIndex, attributeIndex)}>Add Item</IconButton>
-                                </div>
-                            ))}
-                            <IconButton type="button" onClick={() => addAttribute(superTitleIndex)}>Add Attribute</IconButton>
-                        </div>
-                    ))}
-                    <IconButton type="button" onClick={addSuperTitle}>Add Super Title</IconButton>
-                </Section>
+                                                {item.bulletPoints.map((bulletPoint, bpIndex) => (
+                                                    <FormGroup key={bpIndex}>
+                                                        <Label>Bullet Point</Label>
+                                                        <Input
+                                                            type="text"
+                                                            value={bulletPoint}
+                                                            onChange={(e) => {
+                                                                const newSuperTitles = [...superTitles];
+                                                                newSuperTitles[superTitleIndex].attributes[attributeIndex].items[itemIndex].bulletPoints[bpIndex] = e.target.value;
+                                                                setSuperTitles(newSuperTitles);
+                                                            }}
+                                                        />
+                                                    </FormGroup>
+                                                ))}
+                                                <IconButton type="button" onClick={() => {
+                                                    const newSuperTitles = [...superTitles];
+                                                    newSuperTitles[superTitleIndex].attributes[attributeIndex].items[itemIndex].bulletPoints.push('');
+                                                    setSuperTitles(newSuperTitles);
+                                                }}>
+                                                    Add Bullet Point
+                                                </IconButton>
+                                            </div>
+                                        ))}
+                                        <IconButton type="button" onClick={() => addItem(superTitleIndex, attributeIndex)}>Add Item</IconButton>
+                                    </div>
+                                ))}
+                                <IconButton type="button" onClick={() => addAttribute(superTitleIndex)}>Add Attribute</IconButton>
+                            </div>
+                        ))}
+                        <IconButton type="button" onClick={addSuperTitle}>Add Super Title</IconButton>
+                    </Section>
 
-                <Section>
-                    <SectionTitle>Subtitles</SectionTitle>
-                    {subtitles.map((subtitle, index) => (
-                        <div key={index}>
-                            <FormGroup>
-                                <Label>Subtitle</Label>
-                                <Input
-                                    type="text"
-                                    value={subtitle.title}
-                                    onChange={(e) => handleSubtitleChange(index, 'title', e.target.value)}
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label>Subtitle Image</Label>
-                                <Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, (imagePath) => {
-                                    const newSubtitles = [...subtitles];
-                                    newSubtitles[index].image = imagePath;
-                                    setSubtitles(newSubtitles);
-                                })} />
-                            </FormGroup>
-                            {subtitle.bulletPoints.map((point, pointIndex) => (
-                                <div key={pointIndex}>
-                                    <FormGroup>
-                                        <Label>Bullet Point</Label>
-                                        <Input
-                                            type="text"
-                                            value={point.text}
-                                            onChange={(e) => handleBulletPointChange(index, pointIndex, 'text', e.target.value)}
-                                        />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label>Bullet Point Image</Label>
-                                        <Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, (imagePath) => {
-                                            const newSubtitles = [...subtitles];
-                                            newSubtitles[index].bulletPoints[pointIndex].image = imagePath;
-                                            setSubtitles(newSubtitles);
-                                        })} />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label>Code Snippet</Label>
-                                        <TextArea
-                                            rows="4"
-                                            value={point.codeSnippet}
-                                            onChange={(e) => handleBulletPointChange(index, pointIndex, 'codeSnippet', e.target.value)}
-                                        />
-                                    </FormGroup>
-                                </div>
-                            ))}
-                            <IconButton type="button" onClick={() => addBulletPoint(index)}>Add Bullet Point</IconButton>
-                        </div>
-                    ))}
-                    <IconButton type="button" onClick={addSubtitle}>Add Subtitle</IconButton>
-                </Section>
+                    <Section>
+                        <SectionTitle>Subtitles</SectionTitle>
+                        {subtitles.map((subtitle, index) => (
+                            <div key={index}>
+                                <FormGroup>
+                                    <Label>Subtitle</Label>
+                                    <Input
+                                        type="text"
+                                        value={subtitle.title}
+                                        onChange={(e) => handleSubtitleChange(index, 'title', e.target.value)}
+                                    />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label>Subtitle Image</Label>
+                                    <Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, (imagePath) => {
+                                        const newSubtitles = [...subtitles];
+                                        newSubtitles[index].image = imagePath;
+                                        setSubtitles(newSubtitles);
+                                    })} />
+                                </FormGroup>
+                                {subtitle.bulletPoints.map((point, pointIndex) => (
+                                    <div key={pointIndex}>
+                                        <FormGroup>
+                                            <Label>Bullet Point</Label>
+                                            <Input
+                                                type="text"
+                                                value={point.text}
+                                                onChange={(e) => handleBulletPointChange(index, pointIndex, 'text', e.target.value)}
+                                            />
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <Label>Bullet Point Image</Label>
+                                            <Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, (imagePath) => {
+                                                const newSubtitles = [...subtitles];
+                                                newSubtitles[index].bulletPoints[pointIndex].image = imagePath;
+                                                setSubtitles(newSubtitles);
+                                            })} />
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <Label>Code Snippet</Label>
+                                            <TextArea
+                                                rows="4"
+                                                value={point.codeSnippet}
+                                                onChange={(e) => handleBulletPointChange(index, pointIndex, 'codeSnippet', e.target.value)}
+                                            />
+                                        </FormGroup>
+                                    </div>
+                                ))}
+                                <IconButton type="button" onClick={() => addBulletPoint(index)}>Add Bullet Point</IconButton>
+                            </div>
+                        ))}
+                        <IconButton type="button" onClick={addSubtitle}>Add Subtitle</IconButton>
+                    </Section>
 
-                <Section>
-                    <SectionTitle>Summary</SectionTitle>
-                    <FormGroup>
-                        <Tooltip title="Enter a brief summary of your post">
-                            <Label>Summary</Label>
-                        </Tooltip>
-                        <TextArea rows="5" value={summary} onChange={(e) => setSummary(e.target.value)} />
-                    </FormGroup>
-                </Section>
+                    <Section>
+                        <SectionTitle>Summary</SectionTitle>
+                        <FormGroup>
+                            <Tooltip title="Enter a brief summary of your post">
+                                <Label>Summary</Label>
+                            </Tooltip>
+                            <TextArea rows="5" value={summary} onChange={(e) => setSummary(e.target.value)} />
+                        </FormGroup>
+                    </Section>
 
-                <Section>
-                    <SectionTitle>Video</SectionTitle>
-                    <FormGroup>
-                        <Label>Video</Label>
-                        <Input type="file" accept="video/*" onChange={handleVideoUpload} />
-                    </FormGroup>
-                </Section>
+                    <Section>
+                        <SectionTitle>Video</SectionTitle>
+                        <FormGroup>
+                            <Label>Video</Label>
+                            <Input type="file" accept="video/*" onChange={handleVideoUpload} />
+                        </FormGroup>
+                    </Section>
 
-                <Button type="submit">Add Post</Button>
-            </form>
+                    <Button type="submit">Add Post</Button>
+                </form>
+            </FullWidthSection>
         </FormContainer>
     );
 };
