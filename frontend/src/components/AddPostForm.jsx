@@ -5,31 +5,38 @@ import { loadUser } from '../actions/authActions';
 import axios from 'axios';
 import DOMPurify from 'dompurify';
 import styled from 'styled-components';
-import { Tooltip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
+import { Tooltip, Paper } from '@material-ui/core';
+import { Add as AddIcon } from '@material-ui/icons';
 
 // Styled Components
 const FormContainer = styled.div`
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 20px;
     background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 `;
 
 const Section = styled.div`
-    margin-bottom: 40px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
 
 const SectionTitle = styled.h3`
-    margin-bottom: 20px;
-    color: #333;
+    margin-bottom: 15px;
+    color: #007bff;
     border-bottom: 2px solid #007bff;
     padding-bottom: 5px;
+    display: flex;
+    align-items: center;
 `;
 
 const FormGroup = styled.div`
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 `;
 
 const Label = styled.label`
@@ -75,12 +82,22 @@ const Button = styled.button`
 
 const IconButton = styled(Button)`
     background: none;
-    color: inherit;
-    border: none;
-    padding: 0;
+    color: #007bff;
+    border: 1px solid #007bff;
+    padding: 5px;
     cursor: pointer;
     font: inherit;
     outline: inherit;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+        background-color: #e0f7ff;
+    }
+
+    & > *:first-child {
+        margin-right: 5px;
+    }
 `;
 
 const AddPostForm = () => {
@@ -269,7 +286,7 @@ const AddPostForm = () => {
                 <Section>
                     <SectionTitle>Comparison Section</SectionTitle>
                     {superTitles.map((superTitle, superTitleIndex) => (
-                        <div key={superTitleIndex}>
+                        <Section key={superTitleIndex}>
                             <FormGroup>
                                 <Label>Super Title</Label>
                                 <Input
@@ -279,7 +296,7 @@ const AddPostForm = () => {
                                 />
                             </FormGroup>
                             {superTitle.attributes.map((attribute, attributeIndex) => (
-                                <div key={attributeIndex}>
+                                <Section key={attributeIndex}>
                                     <FormGroup>
                                         <Label>Attribute</Label>
                                         <Input
@@ -289,7 +306,7 @@ const AddPostForm = () => {
                                         />
                                     </FormGroup>
                                     {attribute.items.map((item, itemIndex) => (
-                                        <div key={itemIndex}>
+                                        <Section key={itemIndex}>
                                             <FormGroup>
                                                 <Label>Item Title</Label>
                                                 <Input
@@ -317,23 +334,29 @@ const AddPostForm = () => {
                                                 newSuperTitles[superTitleIndex].attributes[attributeIndex].items[itemIndex].bulletPoints.push('');
                                                 setSuperTitles(newSuperTitles);
                                             }}>
-                                                Add Bullet Point
+                                                <AddIcon /> Add Bullet Point
                                             </IconButton>
-                                        </div>
+                                        </Section>
                                     ))}
-                                    <IconButton type="button" onClick={() => addItem(superTitleIndex, attributeIndex)}>Add Item</IconButton>
-                                </div>
+                                    <IconButton type="button" onClick={() => addItem(superTitleIndex, attributeIndex)}>
+                                        <AddIcon /> Add Item
+                                    </IconButton>
+                                </Section>
                             ))}
-                            <IconButton type="button" onClick={() => addAttribute(superTitleIndex)}>Add Attribute</IconButton>
-                        </div>
+                            <IconButton type="button" onClick={() => addAttribute(superTitleIndex)}>
+                                <AddIcon /> Add Attribute
+                            </IconButton>
+                        </Section>
                     ))}
-                    <IconButton type="button" onClick={addSuperTitle}>Add Super Title</IconButton>
+                    <IconButton type="button" onClick={addSuperTitle}>
+                        <AddIcon /> Add Super Title
+                    </IconButton>
                 </Section>
 
                 <Section>
                     <SectionTitle>Subtitles</SectionTitle>
                     {subtitles.map((subtitle, index) => (
-                        <div key={index}>
+                        <Section key={index}>
                             <FormGroup>
                                 <Label>Subtitle</Label>
                                 <Input
@@ -351,7 +374,7 @@ const AddPostForm = () => {
                                 })} />
                             </FormGroup>
                             {subtitle.bulletPoints.map((point, pointIndex) => (
-                                <div key={pointIndex}>
+                                <Section key={pointIndex}>
                                     <FormGroup>
                                         <Label>Bullet Point</Label>
                                         <Input
@@ -376,12 +399,16 @@ const AddPostForm = () => {
                                             onChange={(e) => handleBulletPointChange(index, pointIndex, 'codeSnippet', e.target.value)}
                                         />
                                     </FormGroup>
-                                </div>
+                                </Section>
                             ))}
-                            <IconButton type="button" onClick={() => addBulletPoint(index)}>Add Bullet Point</IconButton>
-                        </div>
+                            <IconButton type="button" onClick={() => addBulletPoint(index)}>
+                                <AddIcon /> Add Bullet Point
+                            </IconButton>
+                        </Section>
                     ))}
-                    <IconButton type="button" onClick={addSubtitle}>Add Subtitle</IconButton>
+                    <IconButton type="button" onClick={addSubtitle}>
+                        <AddIcon /> Add Subtitle
+                    </IconButton>
                 </Section>
 
                 <Section>
