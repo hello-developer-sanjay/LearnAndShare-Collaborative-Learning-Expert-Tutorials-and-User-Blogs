@@ -5,13 +5,13 @@ import { loadUser } from '../actions/authActions';
 import axios from 'axios';
 import DOMPurify from 'dompurify';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 // Styled Components
 const FormContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
   padding: 20px;
-  background-color: #f0f0f0;
+  background-color: #f8f9fa;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
@@ -62,7 +62,7 @@ const TextArea = styled.textarea`
   border-radius: 5px;
 `;
 
-const Button = styled.button`
+const Button = styled(motion.button)`
   padding: 10px 20px;
   background-color: #007bff;
   color: #fff;
@@ -84,7 +84,7 @@ const AddButton = styled(Button)`
   }
 `;
 
-const Card = styled.div`
+const Card = styled(motion.div)`
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -239,14 +239,9 @@ const AddPostForm = () => {
       return;
     }
     try {
-      const sanitizedSubtitles = subtitles.map(sub => ({
-        ...sub,
-        bulletPoints: sub.bulletPoints.map(point => ({
-          ...point,
-          codeSnippet: DOMPurify.sanitize(point.codeSnippet)
-        }))
-      }));
-      dispatch(addPost(title, content, category, sanitizedSubtitles, summary, titleImage, video, user._id, superTitles));
+      const sanitizedContent = DOMPurify.sanitize(content);
+      const sanitizedSummary = DOMPurify.sanitize(summary);
+      dispatch(addPost(title, titleImage, sanitizedContent, category, subtitles, sanitizedSummary, video, user._id, superTitles));
       setTitle('');
       setContent('');
       setCategory('VS Code');
@@ -265,7 +260,11 @@ const AddPostForm = () => {
       <Title>Add Post</Title>
       <form onSubmit={handleSubmit}>
         <GridContainer>
-          <Card>
+          <Card
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             <CardTitle>Title & Media</CardTitle>
             <FormGroup>
               <Label>Title</Label>
@@ -287,7 +286,11 @@ const AddPostForm = () => {
             </FormGroup>
           </Card>
 
-          <Card>
+          <Card
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
             <CardTitle>Content & Category</CardTitle>
             <FormGroup>
               <Label>Content</Label>
@@ -308,7 +311,11 @@ const AddPostForm = () => {
             </FormGroup>
           </Card>
 
-          <Card>
+          <Card
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             <CardTitle>Video</CardTitle>
             <FormGroup>
               <Label>Video</Label>
@@ -320,10 +327,18 @@ const AddPostForm = () => {
             </FormGroup>
           </Card>
 
-          <Card>
+          <Card
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
             <CardTitle>Subtitles</CardTitle>
             {subtitles.map((subtitle, index) => (
-              <Card key={index}>
+              <Card key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
+              >
                 <FormGroup>
                   <Label>Subtitle Title</Label>
                   <Input
@@ -345,7 +360,11 @@ const AddPostForm = () => {
                   {subtitle.image && <img src={subtitle.image} alt="Subtitle" width="100" />}
                 </FormGroup>
                 {subtitle.bulletPoints.map((point, pointIndex) => (
-                  <Card key={pointIndex}>
+                  <Card key={pointIndex}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 * (pointIndex + 1) }}
+                  >
                     <FormGroup>
                       <Label>Bullet Point Text</Label>
                       <TextArea
@@ -380,7 +399,11 @@ const AddPostForm = () => {
             <Button type="button" onClick={addSubtitle}>Add Subtitle</Button>
           </Card>
 
-          <Card>
+          <Card
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
             <CardTitle>Summary</CardTitle>
             <FormGroup>
               <Label>Summary</Label>
@@ -393,10 +416,18 @@ const AddPostForm = () => {
             </FormGroup>
           </Card>
 
-          <Card>
+          <Card
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+          >
             <CardTitle>Super Titles</CardTitle>
             {superTitles.map((superTitle, superIndex) => (
-              <Card key={superIndex}>
+              <Card key={superIndex}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 * (superIndex + 1) }}
+              >
                 <FormGroup>
                   <Label>Super Title</Label>
                   <Input
@@ -406,7 +437,11 @@ const AddPostForm = () => {
                   />
                 </FormGroup>
                 {superTitle.attributes.map((attribute, attrIndex) => (
-                  <Card key={attrIndex}>
+                  <Card key={attrIndex}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 * (attrIndex + 1) }}
+                  >
                     <FormGroup>
                       <Label>Attribute</Label>
                       <Input
@@ -416,7 +451,11 @@ const AddPostForm = () => {
                       />
                     </FormGroup>
                     {attribute.items.map((item, itemIndex) => (
-                      <Card key={itemIndex}>
+                      <Card key={itemIndex}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.1 * (itemIndex + 1) }}
+                      >
                         <FormGroup>
                           <Label>Item Title</Label>
                           <Input
@@ -426,7 +465,11 @@ const AddPostForm = () => {
                           />
                         </FormGroup>
                         {item.bulletPoints.map((bullet, bulletIndex) => (
-                          <Card key={bulletIndex}>
+                          <Card key={bulletIndex}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.1 * (bulletIndex + 1) }}
+                          >
                             <FormGroup>
                               <Label>Bullet Point</Label>
                               <Input
@@ -441,23 +484,24 @@ const AddPostForm = () => {
                             </FormGroup>
                           </Card>
                         ))}
-                        <Button type="button" onClick={() => {
-                          const newSuperTitles = [...superTitles];
-                          newSuperTitles[superIndex].attributes[attrIndex].items[itemIndex].bulletPoints.push('');
-                          setSuperTitles(newSuperTitles);
-                        }}>Add Bullet Point</Button>
+                        <Button type="button" onClick={() => addItem(superIndex, attrIndex)}>Add Item</Button>
                       </Card>
                     ))}
-                    <Button type="button" onClick={() => addItem(superIndex, attrIndex)}>Add Item</Button>
+                    <Button type="button" onClick={() => addAttribute(superIndex)}>Add Attribute</Button>
                   </Card>
                 ))}
-                <Button type="button" onClick={() => addAttribute(superIndex)}>Add Attribute</Button>
+                <Button type="button" onClick={addSuperTitle}>Add Super Title</Button>
               </Card>
             ))}
-            <Button type="button" onClick={addSuperTitle}>Add Super Title</Button>
           </Card>
         </GridContainer>
-        <AddButton type="submit">Add Post</AddButton>
+        <AddButton
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          type="submit"
+        >
+          Add Post
+        </AddButton>
       </form>
     </FormContainer>
   );
