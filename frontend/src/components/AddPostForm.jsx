@@ -15,6 +15,9 @@ const FormContainer = styled.div`
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+`;
+
+const FormGrid = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
@@ -25,8 +28,7 @@ const Section = styled.div`
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    display: grid;
-    gap: 20px;
+    margin-bottom: 20px;
 `;
 
 const FullWidthSection = styled(Section)`
@@ -110,8 +112,8 @@ const AddPostForm = () => {
     const { user } = useSelector(state => state.auth);
     const [video, setVideo] = useState(null);
     const categories = [
-        'VS Code', 'HTML', 'CSS', 'JavaScript', 'Node.js', 'React', 'Angular', 'Vue.js', 'Next.js', 'Nuxt.js', 
-        'Gatsby', 'Svelte', 'TypeScript', 'GraphQL', 'PHP', 'Python', 'Ruby', 'Java', 'C#', 'C++', 'Swift', 
+        'VS Code', 'HTML', 'CSS', 'JavaScript', 'Node.js', 'React', 'Angular', 'Vue.js', 'Next.js', 'Nuxt.js',
+        'Gatsby', 'Svelte', 'TypeScript', 'GraphQL', 'PHP', 'Python', 'Ruby', 'Java', 'C#', 'C++', 'Swift',
         'Kotlin', 'Dart', 'Flutter', 'React Native'
     ];
     const [superTitles, setSuperTitles] = useState([{ superTitle: '', attributes: [{ attribute: '', items: [{ title: '', bulletPoints: [''] }] }] }]);
@@ -236,9 +238,8 @@ const AddPostForm = () => {
             setSubtitles([{ title: '', image: null, bulletPoints: [{ text: '', image: null, codeSnippet: '' }] }]);
             setSummary('');
             setSuperTitles([{ superTitle: '', attributes: [{ attribute: '', items: [{ title: '', bulletPoints: [''] }] }] }]);
-
         } catch (error) {
-            console.error('Error submitting post:', error);
+            console.error('Error adding post:', error);
         }
     };
 
@@ -255,10 +256,16 @@ const AddPostForm = () => {
                             </Tooltip>
                             <Input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
                         </FormGroup>
-                        <FormGroup>
-                            <Label>Title Image</Label>
-                            <Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, setTitleImage)} />
-                        </FormGroup>
+                        <FormGrid>
+                            <FormGroup>
+                                <Label>Title Image</Label>
+                                <Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, setTitleImage)} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>Video</Label>
+                                <Input type="file" accept="video/*" onChange={handleVideoUpload} />
+                            </FormGroup>
+                        </FormGrid>
                         <FormGroup>
                             <Tooltip title="Enter the main content of your post">
                                 <Label>Content</Label>
@@ -402,14 +409,6 @@ const AddPostForm = () => {
                                 <Label>Summary</Label>
                             </Tooltip>
                             <TextArea rows="5" value={summary} onChange={(e) => setSummary(e.target.value)} />
-                        </FormGroup>
-                    </Section>
-
-                    <Section>
-                        <SectionTitle>Video</SectionTitle>
-                        <FormGroup>
-                            <Label>Video</Label>
-                            <Input type="file" accept="video/*" onChange={handleVideoUpload} />
                         </FormGroup>
                     </Section>
 
