@@ -1,30 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addPost } from '../actions/postActions';
-import { loadUser } from '../actions/authActions';
-import axios from 'axios';
-import DOMPurify from 'dompurify';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Tooltip } from '@material-ui/core';
+import { Tooltip, IconButton } from '@material-ui/core';
 
 const FormContainer = styled.div`
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-`;
-
-const Section = styled.div`
-    margin-bottom: 40px;
-`;
-
-const SectionTitle = styled.h3`
-    margin-bottom: 20px;
-    color: #333;
-    border-bottom: 2px solid #007bff;
-    padding-bottom: 5px;
 `;
 
 const FormGroup = styled.div`
@@ -32,124 +16,84 @@ const FormGroup = styled.div`
 `;
 
 const Label = styled.label`
-    font-weight: bold;
-    margin-bottom: 5px;
     display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
 `;
 
 const Input = styled.input`
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 8px;
+    box-sizing: border-box;
 `;
 
 const TextArea = styled.textarea`
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 8px;
+    box-sizing: border-box;
+    min-height: 100px;
 `;
 
 const Select = styled.select`
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 8px;
+    box-sizing: border-box;
 `;
 
 const Button = styled.button`
     padding: 10px 20px;
     background-color: #007bff;
-    color: #fff;
+    color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
-    margin-top: 10px;
-
-    &:hover {
-        background-color: #0056b3;
-    }
 `;
 
-const IconButton = styled(Button)`
-    background: none;
-    color: inherit;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    font: inherit;
-    outline: inherit;
+const Section = styled.div`
+    margin-bottom: 30px;
+`;
+
+const SectionTitle = styled.h2`
+    margin-bottom: 20px;
+    font-size: 24px;
 `;
 
 const AddPostForm = () => {
-    const dispatch = useDispatch();
     const [title, setTitle] = useState('');
     const [titleImage, setTitleImage] = useState(null);
     const [content, setContent] = useState('');
-    const [category, setCategory] = useState('VS Code');
-    const [subtitles, setSubtitles] = useState([{ title: '', image: null, bulletPoints: [{ text: '', image: null, codeSnippet: '' }] }]);
+    const [category, setCategory] = useState('');
+    const [superTitles, setSuperTitles] = useState([]);
+    const [subtitles, setSubtitles] = useState([]);
     const [summary, setSummary] = useState('');
-    const { user } = useSelector(state => state.auth);
     const [video, setVideo] = useState(null);
-    const categories = [
-        'VS Code', 'HTML', 'CSS', 'JavaScript', 'Node.js', 'React', 'Angular', 'Vue.js', 'Next.js', 'Nuxt.js', 
-        'Gatsby', 'Svelte', 'TypeScript', 'GraphQL', 'PHP', 'Python', 'Ruby', 'Java', 'C#', 'C++', 'Swift', 
-        'Kotlin', 'Dart', 'Flutter', 'React Native'
-    ];
-    const [attributes, setAttributes] = useState([{ superTitle: '', attributes: [{ attributeName: '', titleItems: [{ title: '' }] }] }]);
-    const [superTitles, setSuperTitles] = useState([{ superTitle: '', attributes: [{ attribute: '', items: [{ title: '', bulletPoints: [''] }] }] }]);
 
- // Handle changes in super titles
-const handleSuperTitleChange = (index, field, value) => {
-    const newSuperTitles = [...superTitles];
-    newSuperTitles[index][field] = value;
-    setSuperTitles(newSuperTitles);
-};
+    const categories = ['Category 1', 'Category 2', 'Category 3']; // example categories
 
-// Handle changes in attributes
-const handleAttributeChange = (superTitleIndex, attributeIndex, field, value) => {
-    const newSuperTitles = [...superTitles];
-    newSuperTitles[superTitleIndex].attributes[attributeIndex][field] = value;
-    setSuperTitles(newSuperTitles);
-};
-
-// Handle changes in items
-const handleItemChange = (superTitleIndex, attributeIndex, itemIndex, field, value) => {
-    const newSuperTitles = [...superTitles];
-    newSuperTitles[superTitleIndex].attributes[attributeIndex].items[itemIndex][field] = value;
-    setSuperTitles(newSuperTitles);
-};
-
-// Add a new super title
-const addSuperTitle = () => {
-    setSuperTitles([...superTitles, { superTitle: '', attributes: [{ attribute: '', items: [{ title: '', bulletPoints: [''] }] }] }]);
-};
-
-// Add a new attribute under a super title
-const addAttribute = (superTitleIndex) => {
-    const newSuperTitles = [...superTitles];
-    newSuperTitles[superTitleIndex].attributes.push({ attribute: '', items: [{ title: '', bulletPoints: [''] }] });
-    setSuperTitles(newSuperTitles);
-};
-
-// Add a new item under an attribute
-const addItem = (superTitleIndex, attributeIndex) => {
-    const newSuperTitles = [...superTitles];
-    newSuperTitles[superTitleIndex].attributes[attributeIndex].items.push({ title: '', bulletPoints: [''] });
-    setSuperTitles(newSuperTitles);
-};
-
-    useEffect(() => {
-        if (!user) {
-            const storedUser = JSON.parse(localStorage.getItem('user'));
-            if (storedUser) {
-                dispatch({ type: 'FETCH_USER_SUCCESS', payload: { user: storedUser, token: localStorage.getItem('token') } });
-            } else {
-                dispatch(loadUser());
-            }
+    const handleImageUpload = (e, setImage) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImage(URL.createObjectURL(file));
         }
-    }, [dispatch, user]);
+    };
+
+    const handleSuperTitleChange = (index, field, value) => {
+        const newSuperTitles = [...superTitles];
+        newSuperTitles[index][field] = value;
+        setSuperTitles(newSuperTitles);
+    };
+
+    const handleAttributeChange = (superTitleIndex, attributeIndex, field, value) => {
+        const newSuperTitles = [...superTitles];
+        newSuperTitles[superTitleIndex].attributes[attributeIndex][field] = value;
+        setSuperTitles(newSuperTitles);
+    };
+
+    const handleItemChange = (superTitleIndex, attributeIndex, itemIndex, field, value) => {
+        const newSuperTitles = [...superTitles];
+        newSuperTitles[superTitleIndex].attributes[attributeIndex].items[itemIndex][field] = value;
+        setSuperTitles(newSuperTitles);
+    };
 
     const handleSubtitleChange = (index, field, value) => {
         const newSubtitles = [...subtitles];
@@ -163,38 +107,20 @@ const addItem = (superTitleIndex, attributeIndex) => {
         setSubtitles(newSubtitles);
     };
 
-    const handleImageUpload = async (e, setImage) => {
-        const file = e.target.files[0];
-        const formData = new FormData();
-        formData.append('image', file);
-
-        try {
-            const res = await axios.post('https://hogwartsedx-api-15jun.onrender.com/upload/image', formData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
-            setImage(res.data.filePath);
-        } catch (error) {
-            console.error('Error uploading image:', error);
-        }
+    const addSuperTitle = () => {
+        setSuperTitles([...superTitles, { superTitle: '', attributes: [] }]);
     };
 
-    const handleVideoUpload = async (e) => {
-        const file = e.target.files[0];
-        const formData = new FormData();
-        formData.append('video', file);
-
-        try {
-            const res = await axios.post('https://hogwartsedx-api-15jun.onrender.com/upload/video', formData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
-            setVideo(res.data.filePath);
-        } catch (error) {
-            console.error('Error uploading video:', error);
-        }
+    const addAttribute = (superTitleIndex) => {
+        const newSuperTitles = [...superTitles];
+        newSuperTitles[superTitleIndex].attributes.push({ attribute: '', items: [] });
+        setSuperTitles(newSuperTitles);
     };
 
-    const addSubtitle = () => {
-        setSubtitles([...subtitles, { title: '', image: null, bulletPoints: [{ text: '', image: null, codeSnippet: '' }] }]);
+    const addItem = (superTitleIndex, attributeIndex) => {
+        const newSuperTitles = [...superTitles];
+        newSuperTitles[superTitleIndex].attributes[attributeIndex].items.push({ title: '', bulletPoints: [] });
+        setSuperTitles(newSuperTitles);
     };
 
     const addBulletPoint = (subtitleIndex) => {
@@ -203,41 +129,19 @@ const addItem = (superTitleIndex, attributeIndex) => {
         setSubtitles(newSubtitles);
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!user) {
-            console.error('User not found');
-            return;
-        }
-        try {
-            const sanitizedSubtitles = subtitles.map(sub => ({
-                ...sub,
-                bulletPoints: sub.bulletPoints.map(point => ({
-                    ...point,
-                    codeSnippet: DOMPurify.sanitize(point.codeSnippet)
-                }))
-            }));
-            dispatch(addPost(title, content, category, sanitizedSubtitles, summary, titleImage,superTitles, video));
-            setTitle('');
-            setTitleImage(null);
-            setContent('');
-            setVideo(null);
-            setCategory('VS Code');
-            setSubtitles([{ title: '', image: null, bulletPoints: [{ text: '', image: null, codeSnippet: '' }] }]);
-            setSummary('');
-            setSuperTitles([{ superTitle: '', attributes: [{ attribute: '', items: [{ title: '', bulletPoints: [''] }] }] }]);
+    const addSubtitle = () => {
+        setSubtitles([...subtitles, { title: '', bulletPoints: [], image: null }]);
+    };
 
-        } catch (error) {
-            console.error('Error submitting post:', error);
-        }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Handle form submission
     };
 
     return (
         <FormContainer>
-            <h2>Add New Post</h2>
             <form onSubmit={handleSubmit}>
                 <Section>
-                    <SectionTitle>Post Details</SectionTitle>
                     <FormGroup>
                         <Tooltip title="Enter the title of your post">
                             <Label>Title</Label>
@@ -269,7 +173,7 @@ const addItem = (superTitleIndex, attributeIndex) => {
                 </Section>
 
                 <Section>
-                    <SectionTitle>Super Titles</SectionTitle>
+                    <SectionTitle>Comparison Table</SectionTitle>
                     {superTitles.map((superTitle, index) => (
                         <div key={index}>
                             <FormGroup>
@@ -351,7 +255,7 @@ const addItem = (superTitleIndex, attributeIndex) => {
                     {subtitles.map((subtitle, index) => (
                         <div key={index}>
                             <FormGroup>
-                                <Tooltip title="Enter the subtitle title">
+                                <Tooltip title="Enter the subtitle">
                                     <Label>Title</Label>
                                 </Tooltip>
                                 <Input
@@ -362,34 +266,38 @@ const addItem = (superTitleIndex, attributeIndex) => {
                             </FormGroup>
                             <FormGroup>
                                 <Tooltip title="Upload an image for the subtitle">
-                                    <Label>Image</Label>
+                                    <Label>Subtitle Image</Label>
                                 </Tooltip>
-                                <Input type="file" accept="image/*" onChange={e => handleImageUpload(e, image => handleSubtitleChange(index, 'image', image))} />
+                                <Input type="file" accept="image/*" onChange={e => handleImageUpload(e, setSubtitles[index].image)} />
                             </FormGroup>
-                            {subtitle.bulletPoints.map((point, pointIndex) => (
+                            {subtitle.bulletPoints.map((bulletPoint, pointIndex) => (
                                 <div key={pointIndex}>
                                     <FormGroup>
-                                        <Tooltip title="Enter the bullet point text">
-                                            <Label>Bullet Point Text</Label>
+                                        <Tooltip title="Enter a bullet point">
+                                            <Label>Bullet Point</Label>
                                         </Tooltip>
                                         <Input
                                             type="text"
-                                            value={point.text}
+                                            value={bulletPoint.text}
                                             onChange={e => handleBulletPointChange(index, pointIndex, 'text', e.target.value)}
                                         />
                                     </FormGroup>
                                     <FormGroup>
                                         <Tooltip title="Upload an image for the bullet point">
-                                            <Label>Image</Label>
+                                            <Label>Bullet Point Image</Label>
                                         </Tooltip>
-                                        <Input type="file" accept="image/*" onChange={e => handleImageUpload(e, image => handleBulletPointChange(index, pointIndex, 'image', image))} />
+                                        <Input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={e => handleImageUpload(e, setSubtitles[index].bulletPoints[pointIndex].image)}
+                                        />
                                     </FormGroup>
                                     <FormGroup>
-                                        <Tooltip title="Enter the code snippet for the bullet point">
+                                        <Tooltip title="Enter a code snippet for the bullet point">
                                             <Label>Code Snippet</Label>
                                         </Tooltip>
                                         <TextArea
-                                            value={point.codeSnippet}
+                                            value={bulletPoint.codeSnippet}
                                             onChange={e => handleBulletPointChange(index, pointIndex, 'codeSnippet', e.target.value)}
                                         />
                                     </FormGroup>
@@ -406,22 +314,17 @@ const addItem = (superTitleIndex, attributeIndex) => {
                 </Section>
 
                 <Section>
-                    <SectionTitle>Summary</SectionTitle>
                     <FormGroup>
-                        <Tooltip title="Enter the summary of your post">
+                        <Tooltip title="Enter a summary for your post">
                             <Label>Summary</Label>
                         </Tooltip>
-                        <TextArea value={summary} onChange={e => setSummary(e.target.value)} required />
+                        <TextArea value={summary} onChange={e => setSummary(e.target.value)} />
                     </FormGroup>
-                </Section>
-
-                <Section>
-                    <SectionTitle>Video</SectionTitle>
                     <FormGroup>
                         <Tooltip title="Upload a video for your post">
                             <Label>Video</Label>
                         </Tooltip>
-                        <Input type="file" accept="video/*" onChange={handleVideoUpload} />
+                        <Input type="file" accept="video/*" onChange={e => handleImageUpload(e, setVideo)} />
                     </FormGroup>
                 </Section>
 
