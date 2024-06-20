@@ -9,16 +9,19 @@ import { Tooltip } from '@material-ui/core';
 
 // Styled Components
 const FormContainer = styled.div`
-    max-width: 900px;
+    max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: grid;
+    gap: 20px;
 `;
 
 const Section = styled.div`
-    margin-bottom: 40px;
+    display: grid;
+    gap: 20px;
 `;
 
 const SectionTitle = styled.h3`
@@ -29,13 +32,13 @@ const SectionTitle = styled.h3`
 `;
 
 const FormGroup = styled.div`
-    margin-bottom: 20px;
+    display: grid;
+    gap: 10px;
 `;
 
 const Label = styled.label`
     font-weight: bold;
     margin-bottom: 5px;
-    display: block;
 `;
 
 const Input = styled.input`
