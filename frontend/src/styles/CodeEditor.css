@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
+
+
+.containereditor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px;
+  overflow: scroll;
+  width: 100%; /* Adjust width to fit the content */
+}
+.status-bar {
+  color: white;
+  word-wrap: break-word;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  justify-content: center;
+}
+
+.buttonz-container {
+  display: flex;
+  flex-wrap: wrap;
+  color: #fff;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+select, label, input[type="text"], input[type="number"], textarea {
+  padding: 8px;
+  font-size: 16px;
+  border: 2px solid #333;
+  border-radius: 8px;
+  background-color: #292929;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+select:focus, label:focus, input[type="text"]:focus, input[type="number"]:focus, textarea:focus {
+  outline: none;
+  border-color: #007acc;
+  box-shadow: 0 0 10px rgba(0, 122, 204, 0.6);
+}
+
+buttonz {
+  padding: 6px 14px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 25px;
+  position: relative;
+  overflow: hidden;
+  border-color: #cd6a6a;
+  transition: all 0.3s ease;
+  z-index: 0;
+}
+
+buttonz::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  border-radius: 50%;
+  z-index: -1;
+  transform: translate(-50%, -50%);
+}
+
+buttonz:hover::before {
+  width: 0;
+  height: 0;
+}
+
+buttonz:hover {
+  border-color: #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+.code-windows {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 10px;
+  width: 100%;
+  margin-left: 0; /* Default margin-left value */
+
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .code-windows {
+    margin-left: 150px; /* Adjusted margin-left for mobile devices */
+  }
+}
+
+.code-container {
+  position: relative;
+  border: 2px solid #333;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 800px;
+  background-color: #1e1e1e;
+  transition: transform 0.3s ease-in-out;
+}
+
+.code-container:hover {
+  transform: scale(1.02);
+}
+
+.code-editor {
+  font-family: 'Fira Code', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 20px;
+  color: #fff;
+}
