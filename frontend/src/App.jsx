@@ -20,6 +20,7 @@ import Footer from './components/Footer';
 import Notification from './components/Notification';
 import Policy from './components/Policy';
 import { loadUser } from './actions/authActions'; 
+import CodeEditor from './components/CodeEditor';
 
 const ScrollToTop = () => {
     const { pathname } = useLocation();
@@ -74,6 +75,8 @@ const App = () => {
                         <Route exact path="/posts-notification" element={<Notification />} />
                         <Route exact path="/explore" element={<PostList />} />
                         <Route exact path="/certificate-verification" element={<VerifyCertificate />} />
+                                                <Route exact path="/editor" element={<CodeEditor />} />
+
                     </Routes>
                     <Footer />
                 </Layout>
