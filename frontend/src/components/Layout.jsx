@@ -6,6 +6,7 @@ import CategoryCarousel from '../components/CategoryCarousel';
 import SettingComponent from './SettingComponent.jsx';
 import { useSelector } from 'react-redux';
 import Notification from '../components/Notification';
+import { FaFileCode } from 'react-icons/fa';
 
 // Sidebar styles
 const Sidebar = styled.div`
@@ -124,6 +125,11 @@ const Layout = ({ children }) => {
               <FaCertificate />
             </Icon>
           </SidebarItem>
+                <SidebarItem to="/editor" data-toast="Code Editor">
+  <Icon>
+    <FaFileCode />
+  </Icon>
+</SidebarItem>
           <CategoryCarousel />
           <SidebarItem onClick={toggleSettingPanel} data-toast="Settings">
             <Icon>
