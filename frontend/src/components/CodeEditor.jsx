@@ -16,6 +16,7 @@ import { darcula } from '@uiw/codemirror-theme-darcula';
 import { okaidia } from '@uiw/codemirror-theme-okaidia';
 import { motion } from 'framer-motion';
 import '../styles/CodeEditor.css';
+import { Helmet } from 'react-helmet';
 
 const themes = {
   oneDark: {
@@ -142,6 +143,24 @@ const CodeEditor = () => {
   };
 
   return (
+    <><Helmet>
+    <title>Code Editor - Customize and Download Your Code</title>
+    <meta name="description" content="Experience a powerful code editor with syntax highlighting, multiple themes, and download options. Perfect for developers and coding enthusiasts." />
+    <meta name="keywords" content="code editor, syntax highlighting, code download, code themes, JavaScript, Python, CSS, HTML, Markdown" />
+    
+    <meta property="og:title" content="Code Editor - Customize and Download Your Code" />
+    <meta property="og:description" content="Experience a powerful code editor with syntax highlighting, multiple themes, and download options. Perfect for developers and coding enthusiasts." />
+    <meta property="og:image" content="https://sanjaybasket.s3.ap-south-1.amazonaws.com/HogwartsEdX/code-image.webp" />
+    <meta property="og:url" content="https://hogwartsedx.vercel.app/editor" />
+    <meta property="og:type" content="website" />
+  
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Code Editor - Customize and Download Your Code" />
+    <meta name="twitter:description" content="Experience a powerful code editor with syntax highlighting, multiple themes, and download options. Perfect for developers and coding enthusiasts." />
+    <meta name="twitter:image" content="https://sanjaybasket.s3.ap-south-1.amazonaws.com/HogwartsEdX/code-image.webp" />
+  </Helmet>
+  
+  
     <motion.div
       className={`containereditor ${theme}`}
       initial={{ opacity: 0 }}
@@ -250,6 +269,7 @@ const CodeEditor = () => {
         ))}
       </div>
     </motion.div>
+    </>
   );
 };
 
