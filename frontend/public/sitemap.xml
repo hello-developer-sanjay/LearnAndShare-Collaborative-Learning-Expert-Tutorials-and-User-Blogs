@@ -31,7 +31,11 @@
     <loc>https://hogwartsedx.vercel.app/certificate-verification</loc>
   <lastmod>2024-05-25</lastmod>  </url>
 
-  
+   <url>
+    <loc>https://hogwartsedx.vercel.app/editor/</loc>
+  <lastmod>2024-06-25</lastmod>  </url>
+
+
 
   <!-- VS Code Posts on  HogwartsEdx -->
 
