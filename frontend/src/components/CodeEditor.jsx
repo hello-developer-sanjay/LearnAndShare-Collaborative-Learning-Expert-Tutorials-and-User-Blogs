@@ -143,7 +143,8 @@ const CodeEditor = () => {
   };
 
   return (
-    <><Helmet>
+<div class="editor-container">
+<Helmet>
     <title>Code Editor - Customize and Download Your Code</title>
     <meta name="description" content="Experience a powerful code editor with syntax highlighting, multiple themes, and download options. Perfect for developers and coding enthusiasts." />
     <meta name="keywords" content="code editor, syntax highlighting, code download, code themes, JavaScript, Python, CSS, HTML, Markdown" />
@@ -170,7 +171,7 @@ const CodeEditor = () => {
     >
       <motion.div
         className="toolbar"
-        initial={{ y: -50 }}
+        initial={{ y: -50 }}  
         animate={{ y: 0 }}
         transition={{ type: 'spring', stiffness: 120 }}
       >
@@ -211,7 +212,7 @@ const CodeEditor = () => {
           Auto Save
         </label>
       </motion.div>
-     <div className="buttonz-container">
+      <div className="buttonz-container">
           <button className="buttonz" onClick={() => handleDownload('png')}>Download as PNG</button>
           <button className="buttonz" onClick={() => handleDownload('jpeg')}>Download as JPEG</button>
           <button className="buttonz" onClick={handleDownloadTextFile}>Download as Text</button>
@@ -269,7 +270,7 @@ const CodeEditor = () => {
         ))}
       </div>
     </motion.div>
-    </>
+    </div>
   );
 };
 
