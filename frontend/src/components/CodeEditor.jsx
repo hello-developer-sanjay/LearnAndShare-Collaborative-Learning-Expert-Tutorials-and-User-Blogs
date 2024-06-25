@@ -211,12 +211,12 @@ const CodeEditor = () => {
           Auto Save
         </label>
       </motion.div>
-      <div className="buttonz-container">
-        <buttonz onClick={() => handleDownload('png')}>Download as PNG</buttonz>
-        <buttonz onClick={() => handleDownload('jpeg')}>Download as JPEG</buttonz>
-        <buttonz onClick={handleDownloadTextFile}>Download as Text</buttonz>
-        <buttonz onClick={addNewWindow}>New Window</buttonz>
-      </div>
+     <div className="buttonz-container">
+          <button className="buttonz" onClick={() => handleDownload('png')}>Download as PNG</button>
+          <button className="buttonz" onClick={() => handleDownload('jpeg')}>Download as JPEG</button>
+          <button className="buttonz" onClick={handleDownloadTextFile}>Download as Text</button>
+          <button className="buttonz" onClick={addNewWindow}>New Window</button>
+        </div>
       <div className="code-windows">
         {windows.map((window) => (
           <motion.div
