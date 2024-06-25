@@ -38,12 +38,14 @@ const themes = {
 };
 
 const CodeEditor = () => {
-  const [code, setCode] = useState('');
   const [language, setLanguage] = useState('javascript');
   const [theme, setTheme] = useState('oneDark');
   const [fontSize, setFontSize] = useState(14);
   const [showLineNumbers, setShowLineNumbers] = useState(true);
-  const [windows, setWindows] = useState([{ id: 1, code: '' }]);
+  const [windows, setWindows] = useState(() => {
+    const savedWindows = JSON.parse(localStorage.getItem('windows')) || [];
+    return savedWindows.length > 0 ? savedWindows : [{ id: 1, name: '', code: '', wordCount: 0, characterCount: 0 }];
+  });
   const [syntaxHighlighting, setSyntaxHighlighting] = useState(true);
   const [autoSave, setAutoSave] = useState(true);
   const [lineWrapping, setLineWrapping] = useState(true);
@@ -53,12 +55,12 @@ const CodeEditor = () => {
   useEffect(() => {
     if (autoSave) {
       const timeoutId = setTimeout(() => {
-        localStorage.setItem('savedCode', code);
+        localStorage.setItem('windows', JSON.stringify(windows));
       }, 1000);
 
       return () => clearTimeout(timeoutId);
     }
-  }, [code, autoSave]);
+  }, [windows, autoSave]);
 
   const updateCounts = (text) => {
     const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
@@ -110,12 +112,12 @@ const CodeEditor = () => {
   };
 
   const handleDownloadTextFile = () => {
-    const blob = new Blob([code], { type: 'text/plain' });
+    const blob = new Blob([windows.map(win => win.code).join('\n')], { type: 'text/plain' });
     download(blob, 'code.txt');
   };
 
   const addNewWindow = () => {
-    setWindows([...windows, { id: windows.length + 1, code: '', wordCount: 0, characterCount: 0 }]);
+    setWindows([...windows, { id: windows.length + 1, name: '', code: '', wordCount: 0, characterCount: 0 }]);
   };
 
   const closeWindow = (id) => {
@@ -131,7 +133,16 @@ const CodeEditor = () => {
       return win;
     });
     setWindows(updatedWindows);
-    setCode(newCode);
+  };
+
+  const updateWindowName = (id, newName) => {
+    const updatedWindows = windows.map((win) => {
+      if (win.id === id) {
+        return { ...win, name: newName };
+      }
+      return win;
+    });
+    setWindows(updatedWindows);
   };
 
   const toggleSyntaxHighlighting = () => {
@@ -143,133 +154,139 @@ const CodeEditor = () => {
   };
 
   return (
-<div class="editor-container">
-<Helmet>
-    <title>Code Editor - Customize and Download Your Code</title>
-    <meta name="description" content="Experience a powerful code editor with syntax highlighting, multiple themes, and download options. Perfect for developers and coding enthusiasts." />
-    <meta name="keywords" content="code editor, syntax highlighting, code download, code themes, JavaScript, Python, CSS, HTML, Markdown" />
-    
-    <meta property="og:title" content="Code Editor - Customize and Download Your Code" />
-    <meta property="og:description" content="Experience a powerful code editor with syntax highlighting, multiple themes, and download options. Perfect for developers and coding enthusiasts." />
-    <meta property="og:image" content="https://sanjaybasket.s3.ap-south-1.amazonaws.com/HogwartsEdX/code-image.webp" />
-    <meta property="og:url" content="https://hogwartsedx.vercel.app/editor" />
-    <meta property="og:type" content="website" />
-  
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Code Editor - Customize and Download Your Code" />
-    <meta name="twitter:description" content="Experience a powerful code editor with syntax highlighting, multiple themes, and download options. Perfect for developers and coding enthusiasts." />
-    <meta name="twitter:image" content="https://sanjaybasket.s3.ap-south-1.amazonaws.com/HogwartsEdX/code-image.webp" />
-  </Helmet>
-  
-  
-    <motion.div
-      className={`containereditor ${theme}`}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      style={{ backgroundColor: themes[theme].backgroundColor }}
-    >
+    <div className="editor-container">
+      <Helmet>
+        <title>Code Editor - Customize and Download Your Code</title>
+        <meta name="description" content="Experience a powerful code editor with syntax highlighting, multiple themes, and download options. Perfect for developers and coding enthusiasts." />
+        <meta name="keywords" content="code editor, syntax highlighting, code download, code themes, JavaScript, Python, CSS, HTML, Markdown" />
+        
+        <meta property="og:title" content="Code Editor - Customize and Download Your Code" />
+        <meta property="og:description" content="Experience a powerful code editor with syntax highlighting, multiple themes, and download options. Perfect for developers and coding enthusiasts." />
+        <meta property="og:image" content="https://sanjaybasket.s3.ap-south-1.amazonaws.com/HogwartsEdX/code-image.webp" />
+        <meta property="og:url" content="https://hogwartsedx.vercel.app/editor" />
+        <meta property="og:type" content="website" />
+      
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Code Editor - Customize and Download Your Code" />
+        <meta name="twitter:description" content="Experience a powerful code editor with syntax highlighting, multiple themes, and download options. Perfect for developers and coding enthusiasts." />
+        <meta name="twitter:image" content="https://sanjaybasket.s3.ap-south-1.amazonaws.com/HogwartsEdX/code-image.webp" />
+      </Helmet>
+      
       <motion.div
-        className="toolbar"
-        initial={{ y: -50 }}  
-        animate={{ y: 0 }}
-        transition={{ type: 'spring', stiffness: 120 }}
+        className={`containereditor ${theme}`}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        style={{ backgroundColor: themes[theme].backgroundColor }}
       >
-        <select value={language} onChange={(e) => setLanguage(e.target.value)}>
-          <option value="javascript">JavaScript</option>
-          <option value="python">Python</option>
-          <option value="css">CSS</option>
-          <option value="html">HTML</option>
-          <option value="markdown">Markdown</option>
-        </select>
-        <select value={theme} onChange={(e) => setTheme(e.target.value)}>
-          <option value="oneDark">One Dark</option>
-          <option value="dracula">Dracula</option>
-          <option value="darcula">Darcula</option>
-          <option value="okaidia">Okaidia</option>
-        </select>
-        <select value={fontSize} onChange={(e) => setFontSize(Number(e.target.value))}>
-          <option value={12}>12px</option>
-          <option value={14}>14px</option>
-          <option value={16}>16px</option>
-          <option value={18}>18px</option>
-          <option value={20}>20px</option>
-        </select>
-        <label>
-          <input type="checkbox" checked={showLineNumbers} onChange={(e) => setShowLineNumbers(e.target.checked)} />
-          Show Line Numbers
-        </label>
-        <label>
-          <input type="checkbox" checked={syntaxHighlighting} onChange={toggleSyntaxHighlighting} />
-          Syntax Highlighting
-        </label>
-        <label>
-          <input type="checkbox" checked={lineWrapping} onChange={toggleLineWrapping} />
-          Line Wrapping
-        </label>
-        <label>
-          <input type="checkbox" checked={autoSave} onChange={(e) => setAutoSave(e.target.checked)} />
-          Auto Save
-        </label>
-      </motion.div>
-      <div className="buttonz-container">
+        <motion.div
+          className="toolbar"
+          initial={{ y: -50 }}  
+          animate={{ y: 0 }}
+          transition={{ type: 'spring', stiffness: 120 }}
+        >
+          <select value={language} onChange={(e) => setLanguage(e.target.value)}>
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+            <option value="css">CSS</option>
+            <option value="html">HTML</option>
+            <option value="markdown">Markdown</option>
+          </select>
+          <select value={theme} onChange={(e) => setTheme(e.target.value)}>
+            <option value="oneDark">One Dark</option>
+            <option value="dracula">Dracula</option>
+            <option value="darcula">Darcula</option>
+            <option value="okaidia">Okaidia</option>
+          </select>
+          <select value={fontSize} onChange={(e) => setFontSize(Number(e.target.value))}>
+            <option value={12}>12px</option>
+            <option value={14}>14px</option>
+            <option value={16}>16px</option>
+            <option value={18}>18px</option>
+            <option value={20}>20px</option>
+          </select>
+          <label>
+            <input type="checkbox" checked={showLineNumbers} onChange={(e) => setShowLineNumbers(e.target.checked)} />
+            Show Line Numbers
+          </label>
+          <label>
+            <input type="checkbox" checked={syntaxHighlighting} onChange={toggleSyntaxHighlighting} />
+            Syntax Highlight
+            </label>
+          <label>
+            <input type="checkbox" checked={lineWrapping} onChange={toggleLineWrapping} />
+            Line Wrapping
+          </label>
+          <label>
+            <input type="checkbox" checked={autoSave} onChange={(e) => setAutoSave(e.target.checked)} />
+            Auto Save
+          </label>
+        </motion.div>
+        <div className="buttonz-container">
           <button className="buttonz" onClick={() => handleDownload('png')}>Download as PNG</button>
           <button className="buttonz" onClick={() => handleDownload('jpeg')}>Download as JPEG</button>
           <button className="buttonz" onClick={handleDownloadTextFile}>Download as Text</button>
           <button className="buttonz" onClick={addNewWindow}>New Window</button>
         </div>
-      <div className="code-windows">
-        {windows.map((window) => (
-          <motion.div
-            key={window.id}
-            ref={codeRef}
-            className="code-container"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="status-bar">
-              <span>Words: {window.wordCount}</span> <br />
-              <span>Characters: {window.characterCount}</span>
-            </div>
-            <button className="close-button" onClick={() => closeWindow(window.id)}>Close</button>
-            <CodeMirror
-              value={window.code}
-              height="auto"
-              extensions={[
-                syntaxHighlighting ? getLanguageExtension(language) : [],
-                getTheme(theme),
-                history(),
-                keymap.of([
-                  { key: 'Mod-z', run: undo },
-                  { key: 'Mod-y', run: redo },
-                ]),
-                autocompletion(),
-              ]}
-              onChange={(value) => updateWindowCode(window.id, value)}
-              className={`code-editor ${theme}`}
-              style={{ fontSize: `${fontSize}px` }}
-              basicSetup={{
-                lineNumbers: showLineNumbers,
-                foldGutter: true,
-                highlightActiveLineGutter: true,
-                highlightSpecialChars: true,
-                history: true,
-                drawSelection: true,
-                dropCursor: true,
-                allowMultipleSelections: true,
-                indentOnInput: true,
-                bracketMatching: true,
-                closeBrackets: true,
-                autocompletion: true,
-                syntaxHighlighting: syntaxHighlighting,
-                lineWrapping: lineWrapping,
-              }}
-            />
-          </motion.div>
-        ))}
-      </div>
-    </motion.div>
+        <div className="code-windows">
+          {windows.map((window) => (
+            <motion.div
+              key={window.id}
+              ref={codeRef}
+              className="code-container"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="status-bar">
+                <span>Words: {window.wordCount}</span> <br />
+                <span>Characters: {window.characterCount}</span>
+              </div>
+              <input
+                type="text"
+                className="window-name-input"
+                value={window.name}
+                onChange={(e) => updateWindowName(window.id, e.target.value)}
+                placeholder="File Name"
+              />
+              <button className="close-button" onClick={() => closeWindow(window.id)}>Close</button>
+              <CodeMirror
+                value={window.code}
+                height="auto"
+                extensions={[
+                  syntaxHighlighting ? getLanguageExtension(language) : [],
+                  getTheme(theme),
+                  history(),
+                  keymap.of([
+                    { key: 'Mod-z', run: undo },
+                    { key: 'Mod-y', run: redo },
+                  ]),
+                  autocompletion(),
+                ]}
+                onChange={(value) => updateWindowCode(window.id, value)}
+                className={`code-editor ${theme}`}
+                style={{ fontSize: `${fontSize}px` }}
+                basicSetup={{
+                  lineNumbers: showLineNumbers,
+                  foldGutter: true,
+                  highlightActiveLineGutter: true,
+                  highlightSpecialChars: true,
+                  history: true,
+                  drawSelection: true,
+                  dropCursor: true,
+                  allowMultipleSelections: true,
+                  indentOnInput: true,
+                  bracketMatching: true,
+                  closeBrackets: true,
+                  autocompletion: true,
+                  syntaxHighlighting: syntaxHighlighting,
+                  lineWrapping: lineWrapping,
+                }}
+              />
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
     </div>
   );
 };
