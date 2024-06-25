@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
 
-
-.containereditor {
+.editor-container .containereditor {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,12 +8,13 @@
   overflow: scroll;
   width: 100%; /* Adjust width to fit the content */
 }
-.status-bar {
+
+.editor-container .status-bar {
   color: white;
   word-wrap: break-word;
 }
 
-.toolbar {
+.editor-container .toolbar {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -23,7 +23,7 @@
   justify-content: center;
 }
 
-.buttonz-container {
+.editor-container .buttonz-container {
   display: flex;
   flex-wrap: wrap;
   color: #fff;
@@ -32,7 +32,11 @@
   margin-bottom: 20px;
 }
 
-select, label, input[type="text"], input[type="number"], textarea {
+.editor-container select,
+.editor-container label,
+.editor-container input[type="text"],
+.editor-container input[type="number"],
+.editor-container textarea {
   padding: 8px;
   font-size: 16px;
   border: 2px solid #333;
@@ -42,13 +46,17 @@ select, label, input[type="text"], input[type="number"], textarea {
   transition: all 0.3s ease;
 }
 
-select:focus, label:focus, input[type="text"]:focus, input[type="number"]:focus, textarea:focus {
+.editor-container select:focus,
+.editor-container label:focus,
+.editor-container input[type="text"]:focus,
+.editor-container input[type="number"]:focus,
+.editor-container textarea:focus {
   outline: none;
   border-color: #007acc;
   box-shadow: 0 0 10px rgba(0, 122, 204, 0.6);
 }
 
-buttonz {
+.editor-container .buttonz {
   padding: 6px 14px;
   font-size: 16px;
   cursor: pointer;
@@ -61,7 +69,7 @@ buttonz {
   z-index: 0;
 }
 
-buttonz::before {
+.editor-container .buttonz::before {
   content: '';
   position: absolute;
   top: 50%;
@@ -75,33 +83,32 @@ buttonz::before {
   transform: translate(-50%, -50%);
 }
 
-buttonz:hover::before {
+.editor-container .buttonz:hover::before {
   width: 0;
   height: 0;
 }
 
-buttonz:hover {
+.editor-container .buttonz:hover {
   border-color: #fff;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
 }
 
-.code-windows {
+.editor-container .code-windows {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 10px;
   width: 100%;
   margin-left: 0; /* Default margin-left value */
-
   justify-content: center;
 }
 
 @media (max-width: 768px) {
-  .code-windows {
+  .editor-container .code-windows {
     margin-left: 150px; /* Adjusted margin-left for mobile devices */
   }
 }
 
-.code-container {
+.editor-container .code-container {
   position: relative;
   border: 2px solid #333;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
@@ -113,11 +120,11 @@ buttonz:hover {
   transition: transform 0.3s ease-in-out;
 }
 
-.code-container:hover {
+.editor-container .code-container:hover {
   transform: scale(1.02);
 }
 
-.code-editor {
+.editor-container .code-editor {
   font-family: 'Fira Code', monospace;
   font-size: 14px;
   line-height: 1.6;
