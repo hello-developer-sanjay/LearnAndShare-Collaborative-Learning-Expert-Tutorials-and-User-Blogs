@@ -78,26 +78,66 @@ const Content = styled.p`
 `;
 
 const CallToAction = styled.button`
-  background-color: #4CAF50;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 20px 0;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(45deg, #ff6f00, #ffcc80);
+    color: #1a1a1a;
+    padding: 0.6rem 0.8rem;
+    border: 2px solid #ff6f00;
+    border-radius: 30px;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s, color 0.3s;
+    cursor: pointer;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
 
-  &:hover {
-    background-color: #45a049;
-    transform: scale(1.1);
-  }
-`;
+    &:hover {
+      background: linear-gradient(to bottom right, #8a2be2, #4a90e2);
+      color: #fff;
+      transform: translateY(-7px);
+      box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.5);
+    }
 
-const CarouselContainer = styled.div`
+    &:before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: linear-gradient(45deg, #ff6f00, #ffcc80);
+      border-radius: 30px;
+      transform: scaleX(0);
+      transform-origin: bottom right;
+      transition: transform 0.3s;
+    }
+
+    &:hover:before {
+      transform: scaleX(1);
+      transform-origin: bottom left;
+    }
+
+    &:after {
+      content: 'Explore'; /* Display better text here */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    &:hover:after {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.2);
+    }
+  `;const CarouselContainer = styled.div`
   width: 100%;
 
   .slick-slide {
