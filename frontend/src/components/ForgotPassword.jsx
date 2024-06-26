@@ -8,7 +8,7 @@ const ForgotPassword = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('https://hogwartsedx-api-15jun.onrender.com/forgot-password', { email });
+            await axios.post('https://hogwartsedx-api-26jun.onrender.com/forgot-password', { email });
             setMessage('Password reset email sent');
         } catch (error) {
             console.error(error);
