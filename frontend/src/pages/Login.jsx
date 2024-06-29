@@ -9,13 +9,37 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 const Container = styled.div`
+ position: relative;
+  min-height: 90vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  min-height: 50vh;
-  padding: 2rem;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('https://sanjaybasket.s3.ap-south-1.amazonaws.com/background.webp') no-repeat center center fixed;
+    background-size: cover;
+    filter: blur(5px);
+    z-index: -1;
+    transition: filter 0.3s ease-in-out;
+  }
+
+  &:hover::before {
+    filter: blur(3px);
+  }
 `;
 
 const LoginForm = styled.form`
@@ -31,6 +55,14 @@ const LoginForm = styled.form`
     transform: perspective(1000px) rotateY(0);
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
   }
+`;
+const TitleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  animation: ${fadeIn} 1s ease-in-out;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 `;
 
 const fadeIn = keyframes`
@@ -51,6 +83,10 @@ const Title = styled.h2`
   margin-bottom: 2rem;
   animation: ${fadeIn} 1s ease-in-out;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+`;
+const LogoImage = styled.img`
+  height: 3rem; /* Adjust height as needed */
+  width: auto;
 `;
 
 const Input = styled.input`
@@ -185,8 +221,11 @@ const Login = () => {
   return (
     <Container>
       <LoginForm onSubmit={handleSubmit}>
-        <Title aria-label="HogwartsEdx Title">HogwartsEdx</Title>
-        <Input
+<TitleContainer>
+          <LogoImage src="https://sanjaybasket.s3.ap-south-1.amazonaws.com/certifications/logo.png" alt="EventEase Logo" />
+          <Title aria-label="HogwartsEdx Title">HogwartsEdx</Title>
+        </TitleContainer>
+                <Input
           type="email"
           placeholder="Email"
           name="email"
@@ -219,7 +258,7 @@ const Login = () => {
           )}
         </Button>
         <GoogleButton onClick={handleGoogleLogin} aria-label="Login with Google">
-          <GoogleIcon icon={faEye} />
+          <GoogleIcon icon={faGoogle} />
           Login with Google
         </GoogleButton>
         <ForgotPasswordLink to="/forgot-password" aria-label="Forgot Password Link">
