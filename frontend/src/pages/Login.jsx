@@ -14,34 +14,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Container = styled.div`
- position: relative;
-  min-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+ display: flex;
   justify-content: center;
-  color: #fff;
-  text-align: center;
-  padding: 20px;
-  overflow: hidden;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('https://sanjaybasket.s3.ap-south-1.amazonaws.com/background.webp') no-repeat center center fixed;
-    background-size: cover;
-    filter: blur(5px);
-    z-index: -1;
-    transition: filter 0.3s ease-in-out;
-  }
-
-  &:hover::before {
-    filter: blur(3px);
-  }
+  align-items: center;
+  min-height: 50vh;
+  padding: 2rem;
 `;
 
 const LoginForm = styled.form`
