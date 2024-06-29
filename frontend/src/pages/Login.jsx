@@ -6,10 +6,12 @@ import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { RingLoader } from 'react-spinners';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 const Container = styled.div`
  position: relative;
