@@ -6,15 +6,13 @@ import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { RingLoader } from 'react-spinners';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 const Container = styled.div`
- display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   min-height: 50vh;
@@ -35,14 +33,6 @@ const LoginForm = styled.form`
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
   }
 `;
-const TitleContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 2rem;
-  animation: ${fadeIn} 1s ease-in-out;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-`;
 
 const fadeIn = keyframes`
   0% {
@@ -62,10 +52,6 @@ const Title = styled.h2`
   margin-bottom: 2rem;
   animation: ${fadeIn} 1s ease-in-out;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-`;
-const LogoImage = styled.img`
-  height: 3rem; /* Adjust height as needed */
-  width: auto;
 `;
 
 const Input = styled.input`
@@ -195,16 +181,14 @@ const Login = () => {
 
   const handleGoogleLogin = () => {
     window.location.href = 'https://hogwartsedx-api-26jun.onrender.com/api/auth/google';
+
   };
 
   return (
     <Container>
       <LoginForm onSubmit={handleSubmit}>
-<TitleContainer>
-          <LogoImage src="https://sanjaybasket.s3.ap-south-1.amazonaws.com/certifications/logo.png" alt="EventEase Logo" />
-          <Title aria-label="HogwartsEdx Title">HogwartsEdx</Title>
-        </TitleContainer>
-                <Input
+        <Title aria-label="HogwartsEdx Title">HogwartsEdx</Title>
+        <Input
           type="email"
           placeholder="Email"
           name="email"
