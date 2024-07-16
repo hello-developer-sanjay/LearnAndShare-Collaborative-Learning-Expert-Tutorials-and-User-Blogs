@@ -1,4 +1,5 @@
 # HogwartsEdX - Where Magic Meets Technology for Next-Level Learning
+![HogwartsEdX Logo](https://sanjaybasket.s3.ap-south-1.amazonaws.com/HogwartsEdX/hogwarts_logo.png)
 
 Welcome to **HogwartsEdX**, a magical platform where technology and learning converge to create an enchanting educational experience. Whether you're a wizard, witch, or Muggle, our platform offers a seamless and captivating journey through the realms of knowledge and coding.
 
