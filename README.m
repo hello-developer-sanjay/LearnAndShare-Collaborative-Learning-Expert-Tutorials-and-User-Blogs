@@ -6,7 +6,6 @@
     <title>HogwartsEdX - Where Magic Meets Technology for Next-Level Learning</title>
 </head>
 <body>
-
 <h1>HogwartsEdX - Where Magic Meets Technology for Next-Level Learning</h1>
 
 <p>Welcome to <strong>HogwartsEdX</strong>, a magical platform where technology and learning converge to create an enchanting educational experience. Whether you're a wizard, witch, or Muggle, our platform offers a seamless and captivating journey through the realms of knowledge and coding.</p>
