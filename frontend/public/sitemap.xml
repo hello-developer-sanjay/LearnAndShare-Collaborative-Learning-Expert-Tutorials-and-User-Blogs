@@ -2,52 +2,46 @@
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-
-
-  <!-- Navigation links HogwartsEdx -->
-
- <url>
+  <!-- Navigation links LearnAndShare -->
+  <url>
     <loc>https://learnandshare.vercel.app</loc>
-  <lastmod>2024-08-07</lastmod>  </url>
+    <lastmod>2024-08-07</lastmod>
+  </url>
 
-
- <url>
+  <url>
     <loc>https://learnandshare.vercel.app/category</loc>
-  <lastmod>2024-08-07</lastmod>  </url>
+    <lastmod>2024-08-07</lastmod>
+  </url>
 
-<url>
+  <url>
     <loc>https://learnandshare.vercel.app/add-post</loc>
-  <lastmod>2024-08-07</lastmod>  </url>
+    <lastmod>2024-08-07</lastmod>
+  </url>
 
-
-
-<url>
+  <url>
     <loc>https://learnandshare.vercel.app/login</loc>
-  <lastmod>2024-08-07</lastmod>  </url>
+    <lastmod>2024-08-07</lastmod>
+  </url>
 
-
-<url>
+  <url>
     <loc>https://learnandshare.vercel.app/certificate-verification</loc>
-  <lastmod>2024-08-07</lastmod>  </url>
+    <lastmod>2024-08-07</lastmod>
+  </url>
 
-   <url>
+  <url>
     <loc>https://learnandshare.vercel.app/editor/</loc>
-  <lastmod>2024-08-07</lastmod>  </url>
+    <lastmod>2024-08-07</lastmod>
+  </url>
 
-
-
-  <!-- VS Code Posts on  HogwartsEdx -->
-
-<url>
+  <!-- VS Code Posts on HogwartsEdx -->
+  <url>
     <loc>https://learnandshare.vercel.app/post/visual-studio-code-vs-code-or-introduction-or-overview-or-features-or-installation-guide-or-extensions</loc>
-  <lastmod>2024-08-07</lastmod>  </url>
+    <lastmod>2024-08-07</lastmod>
+  </url>
 
-
-
-
-<url>
+  <url>
     <loc>https://learnandshare.vercel.app/post/visual-studio-vs-visual-studio-code-whats-the-key-difference</loc>
-  <lastmod>2024-08-07</lastmod>  </url>
+    <lastmod>2024-08-07</lastmod>
+  </url>
 
-  
 </urlset>
