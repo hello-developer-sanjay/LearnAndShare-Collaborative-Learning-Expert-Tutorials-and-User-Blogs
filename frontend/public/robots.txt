@@ -1,4 +1,3 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://learnandshare.vercel.app/sitemap.xml
