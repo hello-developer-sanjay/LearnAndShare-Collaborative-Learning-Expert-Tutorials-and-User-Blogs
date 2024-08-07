@@ -3,8 +3,8 @@ import { useState } from 'react';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
 import styled from 'styled-components';
-import SecurityImage from '../assets/security.gif'; // Import your image
-import { Helmet } from "react-helmet";  // Import Helmet
+import SecurityImage from '../assets/security.gif'; 
+import { Helmet } from "react-helmet"; 
 
 const Container = styled.div`
   display: flex;
@@ -101,31 +101,32 @@ function SignInSignUp({ showCloseButton }) {
     <Container>
        <Helmet>
     
-    <title>HogwartsEdx Login - Unlock the Magic of Learning</title>
+    <title>Login | LearnAndShare - Access Customized Learning, Certificates, and Expert Content</title>
  <meta
    name="description"
    content="
-Welcome to HogwartsEdx - the premier online learning platform inspired by the magical world of Harry Potter. Log in to access your personalized dashboard, where cutting-edge technology meets enchanting education. Whether you're an aspiring wizard or a tech enthusiast, HogwartsEdx offers a comprehensive range of courses in data science, artificial intelligence, software development, cybersecurity, and more. Join our community to experience interactive lessons, immersive virtual classrooms, and hands-on projects that bring learning to life. Sign in now to start your journey with HogwartsEdx and unlock the magic of advanced technology and education!"
+Log in to LearnAndShare to access your personalized learning journey, curated educational content, and community-driven insights. Join our vibrant community founded by Sanjay Patidar, where technology meets education to deliver top-notch tutorials, articles, and user-generated blogs. Create and follow customized categories, mark completed posts, and earn certificates to validate your mastery in various subjects. Receive timely notifications on new content and stay updated with the latest educational discoveries. Experience an unparalleled learning environment that combines comprehensive resources with the transformative power of technology. Sign in now to unlock endless learning possibilities."
  />
  
 
- <meta property="og:title" content=" HogwartsEdx Login - Unlock the Magic of Learning" />
- <meta property="og:description" content="The VerifyCertificate page provides users with a seamless interface for verifying and downloading certificates. Users can search for certificates using criteria such as user name, unique ID, and date, with real-time feedback provided via loading indicators and error messages. Upon successful verification, detailed certificate information is displayed, including the user's name, certificate category, and issuance date. Users can conveniently download certificates in PDF format directly from the interface. The page ensures accessibility with labeled form fields and optimized color contrast, while advanced styles and responsive design enhance the user experience across different devices. Implemented with React's state management and Axios for data fetching, the page utilizes the file-saver library for downloading certificates. Styled-components and keyframe animations are employed for a modern design, with intersection observer handling animations and visibility. This comprehensive functionality overview underscores the VerifyCertificate page's utility, accessibility, and user-centric design"/> 
+ <meta property="og:title" content="Login | LearnAndShare - Access Customized Learning, Certificates, and Expert Content" />
+ <meta property="og:description" content="Log in to LearnAndShare to access your personalized learning journey, curated educational content, and community-driven insights. Join our vibrant community founded by Sanjay Patidar, where technology meets education to deliver top-notch tutorials, articles, and user-generated blogs. Create and follow customized categories, mark completed posts, and earn certificates to validate your mastery in various subjects. Receive timely notifications on new content and stay updated with the latest educational discoveries. Experience an unparalleled learning environment that combines comprehensive resources with the transformative power of technology. Sign in now to unlock endless learning possibilities."/> 
  <meta property="og:type" content="website" />
- <meta property="og:url" content="https://HogwartsEdX.vercel.app/login" />
- <meta property="og:image" content="https://sanjaybasket.s3.ap-south-1.amazonaws.com/HogwartsEdX/hogwartscertify.png" />
+ <meta property="og:url" content="https://learnandshare.vercel.app/login" />
+ <meta property="og:image" content="https://sanjaybasket.s3.ap-south-1.amazonaws.com/learnandshare-logo.png" />
  <meta property="og:image:alt" content="Sanjay Patidar" />
- <meta property="og:site_name" content=" HogwartsEdx Login - Unlock the Magic of Learning" />
-  <link rel="canonical" href="https://HogwartsEdX.vercel.app/login" />
+ <meta property="og:site_name" content="Login | LearnAndShare - Access Customized Learning, Certificates, and Expert Content" />
+  <link rel="canonical" href="https://learnandshare.vercel.app/login" />
 
  <meta name="twitter:card" content="summary_large_image" />
- <meta name="twitter:title" content="HogwartsEdx Login - Unlock the Magic of Learning" />
- <meta name="twitter:description" content="Welcome to HogwartsEdx - the premier online learning platform inspired by the magical world of Harry Potter. Log in to access your personalized dashboard, where cutting-edge technology meets enchanting education. Whether you're an aspiring wizard or a tech enthusiast, HogwartsEdx offers a comprehensive range of courses in data science, artificial intelligence, software development, cybersecurity, and more. Join our community to experience interactive lessons, immersive virtual classrooms, and hands-on projects that bring learning to life. Sign in now to start your journey with HogwartsEdx and unlock the magic of advanced technology and education!" />
- <meta name="twitter:image" content="https://sanjaybasket.s3.ap-south-1.amazonaws.com/HogwartsEdX/hogwartscertify.png" />
+ <meta name="twitter:title" content="Login | LearnAndShare - Access Customized Learning, Certificates, and Expert Content" />
+ <meta name="twitter:description" content="Log in to LearnAndShare to access your personalized learning journey, curated educational content, and community-driven insights. Join our vibrant community founded by Sanjay Patidar, where technology meets education to deliver top-notch tutorials, articles, and user-generated blogs. Create and follow customized categories, mark completed posts, and earn certificates to validate your mastery in various subjects. Receive timely notifications on new content and stay updated with the latest educational discoveries. Experience an unparalleled learning environment that combines comprehensive resources with the transformative power of technology. Sign in now to unlock endless learning possibilities." />
+ <meta name="twitter:image" content="https://sanjaybasket.s3.ap-south-1.amazonaws.com/learnandshare-logo.png" />
  <meta name="twitter:site" content="@sanjaypatidar" />
  <meta name="twitter:creator" content="@sanjaypatidar" />
 
- <meta name="keywords" content="portfolio,verification , certificate verify , certfication verification, signup , eduxcel ,founder: Sanjay patidar , tech, education, careers, opportunity, personal-portfolio,developer_sanju,sanjay, Sanjay, SANJAY, Sanjay Patidar, SANJAY PATIDAR, SANJAY WEB DEVELOPER, SANJAY DEVELOPER, Full Stack Web Developer, Mern Stack Web Developer, sanjay patidar, sanjay-patidar, professional, web developer portfolio, coder, web development, UI/UX design, Chandigarh University, EduXcel, Indore,contact, developer, programmer, engineer, AI, Artificial Intelligence ,tech enthusiastic, creativity ,creator, work , technology, coding, projects, experiences, resume, cv" />
+ <meta name="keywords" content="LearnAndShare login, personalized learning, educational content, community insights, technology education, user blogs, curated tutorials, educational articles, certificate validation, learning categories, user notifications, educational discoveries, learning platform, tech tutorials, online learning, user-generated content, learning journey, educational resources
+portfolio,verification , certificate verify , certfication verification, signup , eduxcel ,founder: Sanjay patidar , tech, education, careers, opportunity, personal-portfolio,developer_sanju,sanjay, Sanjay, SANJAY, Sanjay Patidar, SANJAY PATIDAR, SANJAY WEB DEVELOPER, SANJAY DEVELOPER, Full Stack Web Developer, Mern Stack Web Developer, sanjay patidar, sanjay-patidar, professional, web developer portfolio, coder, web development, UI/UX design, Chandigarh University, EduXcel, Indore,contact, developer, programmer, engineer, AI, Artificial Intelligence ,tech enthusiastic, creativity ,creator, work , technology, coding, projects, experiences, resume, cv" />
  <meta name="author" content="Sanjay Patidar" />        <script type="application/ld+json">
        {JSON.stringify({
          '@context': 'http://schema.org',
@@ -296,16 +297,16 @@ Welcome to HogwartsEdx - the premier online learning platform inspired by the ma
          ],
          "worksFor": {
            "@type": "Organization",
-           "name": "HogwartsEdX" 
+           "name": "LearnAndShare" 
          },
-         "url": "https://HogwartsEdX.vercel.app/",
+         "url": "https://learnandshare.vercel.app/",
          "sameAs": [
            "https://www.linkedin.com/in/sanjay-patidar-25b580292/",
            "https://github.com/hello-developer-sanjay",
            "https://www.instagram.com/sanjay_patidar_mcmxcviii/",
-           "https://HogwartsEdX.vercel.app/",
-                      "https://HogwartsEdX.vercel.app/login",
-                      "https://HogwartsEdX.vercel.app/certificate-verification",
+           "https://learnandshare.vercel.app/",
+                      "https://learnandshare.vercel.app/login",
+                      "https://learnandshare.vercel.app/certificate-verification",
            
 
 
@@ -321,7 +322,7 @@ Welcome to HogwartsEdx - the premier online learning platform inspired by the ma
       <AuthBox className={`auth-box ${isSignUp ? 'register' : 'login'}`}>
       
         <FormContainer>
-          <Title>{isSignUp ? 'Sign Up - HogwartsEdx' : 'Sign In - HogwartsEdx'}</Title>
+          <Title>{isSignUp ? 'Sign Up - LearnAndShare' : 'Sign In - LearnAndShare'}</Title>
           <div>{isSignUp ? <Register /> : <Login />}</div>
           <ToggleFormText onClick={toggleForm}>
             {isSignUp
