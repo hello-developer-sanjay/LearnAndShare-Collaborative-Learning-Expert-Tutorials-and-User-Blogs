@@ -163,7 +163,7 @@ const CodeEditor = () => {
         <meta property="og:title" content="Code Editor - Customize and Download Your Code" />
         <meta property="og:description" content="Experience a powerful code editor with syntax highlighting, multiple themes, and download options. Perfect for developers and coding enthusiasts." />
         <meta property="og:image" content="https://sanjaybasket.s3.ap-south-1.amazonaws.com/HogwartsEdX/code-image.webp" />
-        <meta property="og:url" content="https://hogwartsedx.vercel.app/editor" />
+        <meta property="og:url" content="https://learnandshare.vercel.app/editor" />
         <meta property="og:type" content="website" />
       
         <meta name="twitter:card" content="summary_large_image" />
