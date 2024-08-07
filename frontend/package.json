@@ -3,12 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-   "scripts": {
+  "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "install:all": "npm install --legacy-peer-deps"
+    "install:all": "npm install $NPM_FLAGS"
   },
   "dependencies": {
     "@codemirror/lang-css": "^6.2.1",
