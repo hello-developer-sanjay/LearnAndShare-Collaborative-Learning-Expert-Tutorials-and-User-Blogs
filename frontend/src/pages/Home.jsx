@@ -453,12 +453,7 @@ Furthermore, LearnAndShare offers a unique feature where users can choose to fol
           </div>
         </Slider>
       </CarouselContainer>
-      <Section ref={el => sectionsRef.current[0] = el}>
-        <Title>Welcome to LearnAndShare</Title>
-      </Section>
-      <Section ref={el => sectionsRef.current[1] = el}>
-        <Subtitle>Unleash the Magic of Learning</Subtitle>
-      </Section>
+      
       <Section ref={el => sectionsRef.current[2] = el}>
         <Content>Explore courses that take you on a magical journey through technology and beyond. Learn with the best, from the best, and become the best version of yourself.</Content>
       </Section>
