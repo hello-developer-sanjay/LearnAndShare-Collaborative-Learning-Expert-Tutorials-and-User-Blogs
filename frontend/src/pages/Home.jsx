@@ -223,7 +223,7 @@ LearningLog is an innovative educational platform that merges engaging content w
 Furthermore, LearningLog offers a unique feature where users can choose to follow or unfollow specific categories, allowing for a customized learning journey. By following a category, users receive timely notifications via their registered email whenever new posts are added, empowering them to stay updated on the latest educational discoveries and content. With LearningLog, the possibilities for learning are endless, combining comprehensive educational resources with the transformative power of technology for an unparalleled learning experience."
 />
 
-<link rel="icon" type="image/svg+xml" href="src/assets/hogwarts_logo.png" />
+<link rel="icon" type="image/svg+xml" href="src/assets/learninglog-logo.png" />
 
 <meta property="og:title" content="LearningLog | Educational Blogs, Tutorials, and Articles | Post Your Insights" />
 <meta property="og:description" content="LearningLog is an innovative educational platform that merges engaging content with cutting-edge learning experiences. At LearningLog, users can create curated category modules and posts tailored to their interests and learning goals. With a focus on personalized learning, users can mark completed posts within specific categories, earning certificates that validate their mastery in various subjects. These certificates can be easily verified through the dedicated 'certificate-verification' page, ensuring credibility and recognition of user achievements.
