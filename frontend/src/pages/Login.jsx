@@ -187,7 +187,7 @@ const Login = () => {
   return (
     <Container>
       <LoginForm onSubmit={handleSubmit}>
-        <Title aria-label="HogwartsEdx Title">HogwartsEdx</Title>
+        <Title aria-label="HogwartsEdx Title">LearnAndShare</Title>
         <Input
           type="email"
           placeholder="Email"
