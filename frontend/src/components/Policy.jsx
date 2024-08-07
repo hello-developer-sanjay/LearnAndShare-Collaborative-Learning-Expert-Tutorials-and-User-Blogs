@@ -137,7 +137,7 @@ const Policy = () => {
         <Container>
             {!policyAccepted ? (
                 <div>
-                    <Heading>Welcome to HogwartsEdx</Heading>
+                    <Heading>Welcome to LearnAndShare</Heading>
                     <Paragraph>
                         Before you can submit a post, please read and accept our comprehensive privacy policy.
                     </Paragraph>
@@ -186,7 +186,7 @@ const Policy = () => {
                         <li>The right to withdraw consent for the processing of your personal data</li>
                     </List>
                     <Paragraph>
-                        To exercise these rights, please contact us at <Link href="mailto:privacy@hogwartsedx.com" aria-label="Email privacy team at HogwartsEdx">privacy@hogwartsedx.com</Link>. For more information, visit the official <Link href="https://www.meity.gov.in/content/cyber-laws" aria-label="Visit the IT Act official website">IT Act website</Link>.
+                        To exercise these rights, please contact us at <Link href="mailto:privacy@learnandshare.com" aria-label="Email privacy team at LearnAndShare">privacy@learnandshare.com</Link>. For more information, visit the official <Link href="https://www.meity.gov.in/content/cyber-laws" aria-label="Visit the IT Act official website">IT Act website</Link>.
                     </Paragraph>
 
                     <SubHeading>Security Measures</SubHeading>
@@ -196,7 +196,7 @@ const Policy = () => {
 
                     <SubHeading>Contact Information</SubHeading>
                     <Paragraph>
-                        If you have any questions or concerns about our privacy policy, please contact us at <Link href="mailto:privacy@hogwartsedx.com" aria-label="Email privacy team at HogwartsEdx">privacy@hogwartsedx.com</Link>.
+                        If you have any questions or concerns about our privacy policy, please contact us at <Link href="mailto:privacy@learnandshare.com" aria-label="Email privacy team at learnandshare">privacy@learnandshare.com</Link>.
                     </Paragraph>
 
                     <AcceptButton onClick={handleAcceptPolicy} aria-label="Accept privacy policy">Accept Policy</AcceptButton>
