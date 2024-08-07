@@ -214,39 +214,39 @@ const Home = () => {
     <HomeContainer>
       <Helmet>
     
-    <title>LearningLog | Educational Blogs, Tutorials, and Articles | Post Your Insights</title>
+    <title>LearnAndShare | Collaborative Learning, Expert Tutorials, and User Blogs</title>
 <meta
  name="description"
  content="
-LearningLog is an innovative educational platform that merges engaging content with cutting-edge learning experiences. At LearningLog, users can create curated category modules and posts tailored to their interests and learning goals. With a focus on personalized learning, users can mark completed posts within specific categories, earning certificates that validate their mastery in various subjects. These certificates can be easily verified through the dedicated 'certificate-verification' page, ensuring credibility and recognition of user achievements.
+LearnAndShare is an innovative educational platform merging engaging content with cutting-edge learning experiences. At LearnAndShare, users can create curated category modules and posts tailored to their interests and learning goals. With a focus on personalized learning, users can mark completed posts within specific categories, earning certificates that validate their mastery in various subjects. These certificates can be easily verified through the dedicated 'certificate-verification' page, ensuring credibility and recognition of user achievements.
 
-Furthermore, LearningLog offers a unique feature where users can choose to follow or unfollow specific categories, allowing for a customized learning journey. By following a category, users receive timely notifications via their registered email whenever new posts are added, empowering them to stay updated on the latest educational discoveries and content. With LearningLog, the possibilities for learning are endless, combining comprehensive educational resources with the transformative power of technology for an unparalleled learning experience."
+Furthermore, LearnAndShare offers a unique feature where users can choose to follow or unfollow specific categories, allowing for a customized learning journey. By following a category, users receive timely notifications via their registered email whenever new posts are added, empowering them to stay updated on the latest educational discoveries and content. With LearnAndShare, the possibilities for learning are endless, combining comprehensive educational resources with the transformative power of technology for an unparalleled learning experience."
 />
 
-<link rel="icon" type="image/svg+xml" href="src/assets/learninglog-logo.png" />
+<link rel="icon" type="image/svg+xml" href="src/assets/learnandshare-logo.png" />
 
-<meta property="og:title" content="LearningLog | Educational Blogs, Tutorials, and Articles | Post Your Insights" />
-<meta property="og:description" content="LearningLog is an innovative educational platform that merges engaging content with cutting-edge learning experiences. At LearningLog, users can create curated category modules and posts tailored to their interests and learning goals. With a focus on personalized learning, users can mark completed posts within specific categories, earning certificates that validate their mastery in various subjects. These certificates can be easily verified through the dedicated 'certificate-verification' page, ensuring credibility and recognition of user achievements.
+<meta property="og:title" content="LearnAndShare | Collaborative Learning, Expert Tutorials, and User Blogs" />
+<meta property="og:description" content="LearnAndShare is an innovative educational platform merging engaging content with cutting-edge learning experiences. At LearnAndShare, users can create curated category modules and posts tailored to their interests and learning goals. With a focus on personalized learning, users can mark completed posts within specific categories, earning certificates that validate their mastery in various subjects. These certificates can be easily verified through the dedicated 'certificate-verification' page, ensuring credibility and recognition of user achievements.
 
-Furthermore, LearningLog offers a unique feature where users can choose to follow or unfollow specific categories, allowing for a customized learning journey. By following a category, users receive timely notifications via their registered email whenever new posts are added, empowering them to stay updated on the latest educational discoveries and content. With LearningLog, the possibilities for learning are endless, combining comprehensive educational resources with the transformative power of technology for an unparalleled learning experience."/> 
+Furthermore, LearnAndShare offers a unique feature where users can choose to follow or unfollow specific categories, allowing for a customized learning journey. By following a category, users receive timely notifications via their registered email whenever new posts are added, empowering them to stay updated on the latest educational discoveries and content. With LearnAndShare, the possibilities for learning are endless, combining comprehensive educational resources with the transformative power of technology for an unparalleled learning experience."/> 
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://HogwartsEdX.vercel.app/" />
-<meta property="og:image" content="https://sanjaybasket.s3.ap-south-1.amazonaws.com/HogwartsEdX/hogwarts_logo.png" />
+<meta property="og:url" content="https://learnandshare.vercel.app/" />
+<meta property="og:image" content="https://sanjaybasket.s3.ap-south-1.amazonaws.com/learnandshare-logo.png" />
 <meta property="og:image:alt" content="LearningLog" />
-<meta property="og:site_name" content=" LearningLog | Educational Blogs, Tutorials, and Articles | Post Your Insights" />
-<link rel="canonical" href="https://HogwartsEdX.vercel.app/" />
+<meta property="og:site_name" content="LearnAndShare | Collaborative Learning, Expert Tutorials, and User Blogs" />
+<link rel="canonical" href="https://learnandshare.vercel.app/" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="LearningLog | Educational Blogs, Tutorials, and Articles | Post Your Insights" />
+<meta name="twitter:title" content="LearnAndShare | Collaborative Learning, Expert Tutorials, and User Blogs" />
 <meta name="twitter:description" content="
-LearningLog is an innovative educational platform that merges engaging content with cutting-edge learning experiences. At LearningLog, users can create curated category modules and posts tailored to their interests and learning goals. With a focus on personalized learning, users can mark completed posts within specific categories, earning certificates that validate their mastery in various subjects. These certificates can be easily verified through the dedicated 'certificate-verification' page, ensuring credibility and recognition of user achievements.
+LearnAndShare is an innovative educational platform merging engaging content with cutting-edge learning experiences. At LearnAndShare, users can create curated category modules and posts tailored to their interests and learning goals. With a focus on personalized learning, users can mark completed posts within specific categories, earning certificates that validate their mastery in various subjects. These certificates can be easily verified through the dedicated 'certificate-verification' page, ensuring credibility and recognition of user achievements.
 
-Furthermore, LearningLog offers a unique feature where users can choose to follow or unfollow specific categories, allowing for a customized learning journey. By following a category, users receive timely notifications via their registered email whenever new posts are added, empowering them to stay updated on the latest educational discoveries and content. With LearningLog, the possibilities for learning are endless, combining comprehensive educational resources with the transformative power of technology for an unparalleled learning experience." />
-<meta name="twitter:image" content="https://sanjaybasket.s3.ap-south-1.amazonaws.com/learninglog-logo.png" />
+Furthermore, LearnAndShare offers a unique feature where users can choose to follow or unfollow specific categories, allowing for a customized learning journey. By following a category, users receive timely notifications via their registered email whenever new posts are added, empowering them to stay updated on the latest educational discoveries and content. With LearnAndShare, the possibilities for learning are endless, combining comprehensive educational resources with the transformative power of technology for an unparalleled learning experience." />
+<meta name="twitter:image" content="https://sanjaybasket.s3.ap-south-1.amazonaws.com/learnandshare-logo.png" />
 
 
-<meta name="twitter:site" content="@LearningLog" />
-<meta name="twitter:creator" content="@LearningLog" />
+<meta name="twitter:site" content="@LearnAndShare" />
+<meta name="twitter:creator" content="@LearnAndShare" />
 
 <meta name="keywords" content="educational blogs, tutorials, informative articles, personalized learning, curated modules, certificate verification, category notifications, learning journey, educational content, expert-written articles, how-to guides, academic resources, user-generated content, learning platform, online education, study resources, learning insights, educational discoveries, engaging content, educational achievements" />
 <meta name="author" content="Sanjay Patidar" />        <script type="application/ld+json">
@@ -419,15 +419,15 @@ Furthermore, LearningLog offers a unique feature where users can choose to follo
        ],
        "worksFor": {
          "@type": "Organization",
-         "name": "HogwartsEdX" 
+         "name": "LearnAndShare" 
        },
-       "url": "https://HogwartsEdX.vercel.app/",
+       "url": "https://learnandshare.vercel.app/",
        "sameAs": [
          "https://www.linkedin.com/in/sanjay-patidar-25b580292/",
          "https://github.com/hello-developer-sanjay",
          "https://www.instagram.com/sanjay_patidar_mcmxcviii/",
-         "https://HogwartsEdX.vercel.app/",
-                    "https://HogwartsEdX.vercel.app/certificate-verification",
+         "https://learnandshare.vercel.app/",
+                    "https://learnandshare.vercel.app/certificate-verification",
          
 
 
@@ -454,7 +454,7 @@ Furthermore, LearningLog offers a unique feature where users can choose to follo
         </Slider>
       </CarouselContainer>
       <Section ref={el => sectionsRef.current[0] = el}>
-        <Title>Welcome to LearningLog</Title>
+        <Title>Welcome to LearnAndShare</Title>
       </Section>
       <Section ref={el => sectionsRef.current[1] = el}>
         <Subtitle>Unleash the Magic of Learning</Subtitle>
