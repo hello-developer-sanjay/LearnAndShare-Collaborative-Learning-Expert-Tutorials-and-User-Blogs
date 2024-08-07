@@ -116,7 +116,7 @@ const links = [
     { to: "/certificate-verification", text: "Certificate Verification" },
 
     { to: "/dashboard", text: "Dashboard" },
-    { to: "https://hogwartsedx.vercel.app/sitemap.xml", text: "Sitemap" },
+    { to: "https://learnandshare.vercel.app/sitemap.xml", text: "Sitemap" },
 
 ];
 
@@ -130,7 +130,7 @@ const Footer = () => {
                 <FooterAbout />
             </div>
             <div className="footer-bottom">
-                <p>&copy; 2024 HogwartsEdX. All Rights Reserved.</p>
+                <p>&copy; 2024 LearnAndShare. All Rights Reserved.</p>
             </div>
         </footer>
     );
@@ -174,8 +174,8 @@ const FooterLogo = () => {
 
     return (
         <animated.div ref={logoRef} className="footer-logo" style={logoSpring}>
-            <h1>HogwartsEdX</h1>
-            <p>Where Magic Meets Technology for Next-Level Learning</p>
+            <h1>LearnAndShare</h1>
+            <p>Where Technology Powers Next-Level Learning</p>
             <AnimatePresence>
       <SocialIconsContainer>
       {socialButtons.map((button, index) => (
@@ -375,8 +375,8 @@ const FooterAbout = () => {
 
     return (
         <animated.div ref={aboutRef} className="footer-about" style={aboutSpring}>
-            <h2>About HogwartsEdX</h2>
-            <p>Founded by Sanjay Patidar, HogwartsEdX is a place where magic meets technology. Our mission is to provide top-notch education in the magical arts of technology. Join us and embark on a journey of discovery and learning.</p>
+            <h2>About LearnAndShare</h2>
+            <p>Founded by Sanjay Patidar, LearnAndShare combines technology and education to deliver top-tier learning experiences. Join us to explore, learn, and grow in the world of tech.</p>
             
         </animated.div>
     );
