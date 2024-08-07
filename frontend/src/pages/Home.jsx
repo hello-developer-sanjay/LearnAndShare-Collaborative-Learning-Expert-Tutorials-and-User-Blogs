@@ -454,7 +454,7 @@ Furthermore, LearningLog offers a unique feature where users can choose to follo
         </Slider>
       </CarouselContainer>
       <Section ref={el => sectionsRef.current[0] = el}>
-        <Title>Welcome to HogwartsEdX</Title>
+        <Title>Welcome to LearningLog</Title>
       </Section>
       <Section ref={el => sectionsRef.current[1] = el}>
         <Subtitle>Unleash the Magic of Learning</Subtitle>
