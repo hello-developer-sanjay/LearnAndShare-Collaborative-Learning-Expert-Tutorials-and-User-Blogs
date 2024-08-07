@@ -212,7 +212,7 @@ const VerifyCertificate = () => {
           
     <Helmet>
     
-    <title>Verify Your Certificates - HogwartsEdX | Fast and Easy Certificate Verification and Download</title>
+    <title>Verify Your Certificates - LearnAndShare | Fast and Easy Certificate Verification and Download</title>
  <meta
    name="description"
    content="
@@ -247,17 +247,17 @@ Interactive elements like buttons have advanced styles and hover effects to enha
  />
  
 
- <meta property="og:title" content=" Verify Your Certificates - HogwartsEdX | Fast and Easy Certificate Verification and Download" />
+ <meta property="og:title" content=" Verify Your Certificates - LearnAndShare | Fast and Easy Certificate Verification and Download" />
  <meta property="og:description" content="The VerifyCertificate page provides users with a seamless interface for verifying and downloading certificates. Users can search for certificates using criteria such as user name, unique ID, and date, with real-time feedback provided via loading indicators and error messages. Upon successful verification, detailed certificate information is displayed, including the user's name, certificate category, and issuance date. Users can conveniently download certificates in PDF format directly from the interface. The page ensures accessibility with labeled form fields and optimized color contrast, while advanced styles and responsive design enhance the user experience across different devices. Implemented with React's state management and Axios for data fetching, the page utilizes the file-saver library for downloading certificates. Styled-components and keyframe animations are employed for a modern design, with intersection observer handling animations and visibility. This comprehensive functionality overview underscores the VerifyCertificate page's utility, accessibility, and user-centric design"/> 
  <meta property="og:type" content="website" />
  <meta property="og:url" content="https://HogwartsEdX.vercel.app/certificate-verification" />
  <meta property="og:image" content="https://sanjaybasket.s3.ap-south-1.amazonaws.com/HogwartsEdX/hogwartscertify.png" />
  <meta property="og:image:alt" content="Sanjay Patidar" />
- <meta property="og:site_name" content=" Verify Your Certificates - HogwartsEdX | Fast and Easy Certificate Verification and Download" />
+ <meta property="og:site_name" content=" Verify Your Certificates - LearnAndShare | Fast and Easy Certificate Verification and Download" />
   <link rel="canonical" href="https://HogwartsEdX.vercel.app/certificate-verification" />
 
  <meta name="twitter:card" content="summary_large_image" />
- <meta name="twitter:title" content="Verify Your Certificates - HogwartsEdX | Fast and Easy Certificate Verification and Download" />
+ <meta name="twitter:title" content="Verify Your Certificates - LearnAndShare | Fast and Easy Certificate Verification and Download" />
  <meta name="twitter:description" content="
 The VerifyCertificate page offers users a seamless and user-friendly interface for verifying and downloading certificates. This page allows users to search for certificates using various criteria such as user name, unique ID, and date. It features real-time feedback with loading indicators and error messages, ensuring users are informed of the process status. The page is designed with accessibility in mind, including labeled form fields, high-contrast text for readability, and advanced styles for an enhanced user experience. Upon successful verification, users can view detailed certificate information and download certificates directly from the interface.
 
@@ -462,15 +462,15 @@ Interactive elements like buttons have advanced styles and hover effects to enha
          ],
          "worksFor": {
            "@type": "Organization",
-           "name": "HogwartsEdX" 
+           "name": "LearnAndShare" 
          },
-         "url": "https://HogwartsEdX.vercel.app/",
+         "url": "https://learnandshare.vercel.app/",
          "sameAs": [
            "https://www.linkedin.com/in/sanjay-patidar-25b580292/",
            "https://github.com/hello-developer-sanjay",
            "https://www.instagram.com/sanjay_patidar_mcmxcviii/",
-           "https://HogwartsEdX.vercel.app/",
-                      "https://HogwartsEdX.vercel.app/certificate-verification",
+           "https://learnandshare.vercel.app/",
+                      "https://learnandshare.vercel.app/certificate-verification",
            
 
 
