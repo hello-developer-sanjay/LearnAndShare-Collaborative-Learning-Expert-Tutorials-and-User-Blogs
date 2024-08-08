@@ -180,7 +180,7 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = 'https://hogwartsedx-api-16july.onrender.com/api/auth/google';
+    window.location.href = 'https://eventmanager-api-19july.onrender.com/api/auth/google';
 
   };
 
