@@ -33,7 +33,7 @@ const HomeContainer = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('https://sanjaybasket.s3.ap-south-1.amazonaws.com/wallpaper.jpg;
+    background: url('https://sanjaybasket.s3.ap-south-1.amazonaws.com/wallpaper.jpg');
     background-size: cover;
     filter: blur(5px);
     z-index: -1;
