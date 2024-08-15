@@ -16,7 +16,7 @@ import { RingLoader } from 'react-spinners';
 const Container = styled.div`
     display: flex;
     flex-direction: row;
-    height: 96vh;
+    min-height: 100vh;
 `;
 
 const Content = styled.div`
