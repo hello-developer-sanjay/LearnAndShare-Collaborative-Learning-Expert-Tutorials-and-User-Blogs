@@ -98,6 +98,9 @@ const SidebarContainer = styled.div`
     width: 250px;
     background-color: #2c3e50;
     color: #ecf0f1;
+    position: sticky;
+    top: 0;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     @media (max-width: 768px) {
@@ -110,7 +113,6 @@ const SidebarContainer = styled.div`
         z-index: 1000;
     }
 `;
-
 const SidebarHeader = styled.div`
     padding: 2px;
     font-size: 1.2em;
@@ -123,6 +125,7 @@ const SubtitlesList = styled.ul`
     padding: 0;
     overflow-y: auto;
     flex: 1;
+height: 100%;
 `;
 
 const SubtitleItem = styled.li`
