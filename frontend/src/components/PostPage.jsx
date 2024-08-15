@@ -12,7 +12,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from 'react-helmet';
 import { RingLoader } from 'react-spinners';
-
 const Container = styled.div`
     display: flex;
     flex-direction: row;
